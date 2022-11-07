@@ -1,0 +1,16 @@
+,
+  "ca.org5.mbe.com": {
+        "url": "https://localhost:11054",
+        "httpOptions": {
+		    "verify": false
+		},
+        "tlsCACerts": {
+            "path": "./crypto/org5/tls/ca/ca.org5.mbe.com-cert.pem"
+        },
+        "registrar": [
+            {
+                "enrollId": "mbev1org5",
+                "enrollSecret": "passw0rd"
+            }
+        ]
+    }

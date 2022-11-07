@@ -1,0 +1,381 @@
+{
+	"name": "mbev1",
+  "description": "mbev1",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+  "client": {
+      "organization": "org1"
+    },
+	"channels": {
+		"common": { 
+			"orderers": [ "orderer1.orderer.mbe.com", "orderer2.orderer.mbe.com", "orderer3.orderer.mbe.com", "orderer4.orderer.mbe.com", "orderer5.orderer.mbe.com" ],
+      "peers": {
+				"peer0.org1.mbe.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+        },
+				"peer1.org1.mbe.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+        },
+				"peer0.org2.mbe.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+        },
+				"peer1.org2.mbe.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+        },
+				"peer0.org3.mbe.com": {
+					"endorsingPeer": true,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": true
+        },
+				"peer1.org3.mbe.com": {
+					"endorsingPeer": false,
+					"chaincodeQuery": true,
+					"ledgerQuery": true,
+					"eventSource": false
+        },
+        "peer0.org4.mbe.com": {
+            "endorsingPeer": true,
+            "chaincodeQuery": true,
+            "ledgerQuery": true,
+            "eventSource": true
+},
+        "peer1.org4.mbe.com": {
+            "endorsingPeer": false,
+            "chaincodeQuery": true,
+            "ledgerQuery": true,
+            "eventSource": false
+            ,
+            "peer0.org5.mbe.com": {
+                "endorsingPeer": true,
+                "chaincodeQuery": true,
+                "ledgerQuery": true,
+                "eventSource": true
+    },
+            "peer1.org5.mbe.com": {
+                "endorsingPeer": false,
+                "chaincodeQuery": true,
+                "ledgerQuery": true,
+                "eventSource": false
+    }
+}
+     },
+      "chaincodes": [  ]
+      }
+    },
+	"organizations": {
+		"org1": {
+           "mspid": "org1MSP",
+           "certificateAuthorities": [
+               "ca.org1.mbe.com"
+            ],
+            "adminPrivateKey": {
+				"path": "./crypto/org1/admin/msp/keystore/priv_sk"
+			},
+			"signedCert": {
+				"path": "./crypto/org1/admin/msp/signcerts/Admin@org1.mbe.com-cert.pem"
+			},
+            "peers": [
+				"peer0.org1.mbe.com",
+				"peer1.org1.mbe.com" ]
+				},
+		"org2": {
+           "mspid": "org2MSP",
+           "certificateAuthorities": [
+               "ca.org2.mbe.com"
+            ],
+            "adminPrivateKey": {
+				"path": "./crypto/org2/admin/msp/keystore/priv_sk"
+			},
+			"signedCert": {
+				"path": "./crypto/org2/admin/msp/signcerts/Admin@org2.mbe.com-cert.pem"
+			},
+            "peers": [
+				"peer0.org2.mbe.com",
+				"peer1.org2.mbe.com" ]
+				},
+		"org3": {
+           "mspid": "org3MSP",
+           "certificateAuthorities": [
+               "ca.org3.mbe.com"
+            ],
+            "adminPrivateKey": {
+				"path": "./crypto/org3/admin/msp/keystore/priv_sk"
+			},
+			"signedCert": {
+				"path": "./crypto/org3/admin/msp/signcerts/Admin@org3.mbe.com-cert.pem"
+			},
+            "peers": [
+				"peer0.org3.mbe.com",
+				"peer1.org3.mbe.com" ]
+				},
+		"org4": {
+           "mspid": "org3MSP",
+           "certificateAuthorities": [
+               "ca.org4.mbe.com"
+            ],
+            "adminPrivateKey": {
+				"path": "./crypto/org4/admin/msp/keystore/priv_sk"
+			},
+			"signedCert": {
+				"path": "./crypto/org4/admin/msp/signcerts/Admin@org4.mbe.com-cert.pem"
+			},
+            "peers": [
+				"peer0.org4.mbe.com",
+				"peer1.org4.mbe.com" ]
+				},
+        "org5": {
+           "mspid": "org3MSP",
+           "certificateAuthorities": [
+               "ca.org5.mbe.com"
+            ],
+            "adminPrivateKey": {
+				"path": "./crypto/org5/admin/msp/keystore/priv_sk"
+			},
+			"signedCert": {
+				"path": "./crypto/org5/admin/msp/signcerts/Admin@org5.mbe.com-cert.pem"
+			},
+            "peers": [
+				"peer0.org5.mbe.com",
+				"peer1.org5.mbe.com" ]
+				}
+    },
+	"peers": {
+  "peer0.org1.mbe.com": {
+        "url": "grpcs://localhost:7051",
+        "eventUrl": "grpcs://localhost:7053",
+        "grpcOptions": {
+            "ssl-target-name-override": "peer0.org1.mbe.com"
+        },
+        "tlsCACerts": {
+            "path": "./crypto/org1/tls/peer0/ca.crt"
+        }
+    },
+  "peer1.org1.mbe.com": {
+        "url": "grpcs://localhost:8051",
+        "eventUrl": "grpcs://localhost:8053",
+        "grpcOptions": {
+            "ssl-target-name-override": "peer1.org1.mbe.com"
+        },
+        "tlsCACerts": {
+            "path": "./crypto/org1/tls/peer1/ca.crt"
+        }
+    },
+  "peer0.org2.mbe.com": {
+        "url": "grpcs://localhost:9051",
+        "eventUrl": "grpcs://localhost:9053",
+        "grpcOptions": {
+            "ssl-target-name-override": "peer0.org2.mbe.com"
+        },
+        "tlsCACerts": {
+            "path": "./crypto/org2/tls/peer0/ca.crt"
+        }
+    },
+  "peer1.org2.mbe.com": {
+        "url": "grpcs://localhost:10051",
+        "eventUrl": "grpcs://localhost:10053",
+        "grpcOptions": {
+            "ssl-target-name-override": "peer1.org2.mbe.com"
+        },
+        "tlsCACerts": {
+            "path": "./crypto/org2/tls/peer1/ca.crt"
+        }
+    },
+  "peer0.org3.mbe.com": {
+        "url": "grpcs://localhost:11051",
+        "eventUrl": "grpcs://localhost:11053",
+        "grpcOptions": {
+            "ssl-target-name-override": "peer0.org3.mbe.com"
+        },
+        "tlsCACerts": {
+            "path": "./crypto/org3/tls/peer0/ca.crt"
+        }
+    },
+  "peer1.org3.mbe.com": {
+        "url": "grpcs://localhost:12051",
+        "eventUrl": "grpcs://localhost:12053",
+        "grpcOptions": {
+            "ssl-target-name-override": "peer1.org3.mbe.com"
+        },
+        "tlsCACerts": {
+            "path": "./crypto/org3/tls/peer1/ca.crt"
+        }
+    },
+    "peer0.org4.mbe.com": {
+          "url": "grpcs://localhost:21051",
+          "eventUrl": "grpcs://localhost:21053",
+          "grpcOptions": {
+              "ssl-target-name-override": "peer0.org4.mbe.com"
+          },
+          "tlsCACerts": {
+              "path": "./crypto/org4/tls/peer0/ca.crt"
+          }
+      },
+    "peer1.org4.mbe.com": {
+          "url": "grpcs://localhost:22051",
+          "eventUrl": "grpcs://localhost:22053",
+          "grpcOptions": {
+              "ssl-target-name-override": "peer1.org4.mbe.com"
+          },
+          "tlsCACerts": {
+              "path": "./crypto/org4/tls/peer1/ca.crt"
+          }
+      },
+      "peer0.org5.mbe.com": {
+            "url": "grpcs://localhost:31051",
+            "eventUrl": "grpcs://localhost:31053",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.org5.mbe.com"
+            },
+            "tlsCACerts": {
+                "path": "./crypto/org5/tls/peer0/ca.crt"
+            }
+        },
+      "peer1.org5.mbe.com": {
+            "url": "grpcs://localhost:32051",
+            "eventUrl": "grpcs://localhost:32053",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.org5.mbe.com"
+            },
+            "tlsCACerts": {
+                "path": "./crypto/org5/tls/peer1/ca.crt"
+            }
+        }
+   },
+	"certificateAuthorities": {
+  "ca.org1.mbe.com": {
+        "url": "https://localhost:7054",
+        "httpOptions": {
+		    "verify": false
+		},
+        "tlsCACerts": {
+            "path": "./crypto/org1/tls/ca/ca.org1.mbe.com-cert.pem"
+        },
+        "registrar": [
+            {
+                "enrollId": "mbev1org1",
+                "enrollSecret": "passw0rd"
+            }
+        ]
+    },
+  "ca.org2.mbe.com": {
+        "url": "https://localhost:8054",
+        "httpOptions": {
+		    "verify": false
+		},
+        "tlsCACerts": {
+            "path": "./crypto/org2/tls/ca/ca.org2.mbe.com-cert.pem"
+        },
+        "registrar": [
+            {
+                "enrollId": "mbev1org2",
+                "enrollSecret": "passw0rd"
+            }
+        ]
+    },
+  "ca.org3.mbe.com": {
+        "url": "https://localhost:9054",
+        "httpOptions": {
+		    "verify": false
+		},
+        "tlsCACerts": {
+            "path": "./crypto/org3/tls/ca/ca.org3.mbe.com-cert.pem"
+        },
+        "registrar": [
+            {
+                "enrollId": "mbev1org3",
+                "enrollSecret": "passw0rd"
+            }
+        ]
+    },
+    "ca.org4.mbe.com": {
+          "url": "https://localhost:10054",
+          "httpOptions": {
+              "verify": false
+          },
+          "tlsCACerts": {
+              "path": "./crypto/org4/tls/ca/ca.org4.mbe.com-cert.pem"
+          },
+          "registrar": [
+              {
+                  "enrollId": "mbev1org4",
+                  "enrollSecret": "passw0rd"
+              }
+          ]
+      },
+      "ca.org5.mbe.com": {
+            "url": "https://localhost:11054",
+            "httpOptions": {
+                "verify": false
+            },
+            "tlsCACerts": {
+                "path": "./crypto/org5/tls/ca/ca.org5.mbe.com-cert.pem"
+            },
+            "registrar": [
+                {
+                    "enrollId": "mbev1org5",
+                    "enrollSecret": "passw0rd"
+                }
+            ]
+        }
+},
+	"orderers": {
+		"orderer1.orderer.mbe.com": {
+			"url": "grpcs://localhost:7050",
+			"grpcOptions": {
+				"ssl-target-name-override": "orderer1.orderer.mbe.com"
+			},
+			"tlsCACerts": {
+				"path": "./crypto/orderer/orderer1/tls/ca.crt"
+			}
+		},
+		"orderer2.orderer.mbe.com": {
+			"url": "grpcs://localhost:8050",
+			"grpcOptions": {
+				"ssl-target-name-override": "orderer2.orderer.mbe.com"
+			},
+			"tlsCACerts": {
+				"path": "./crypto/orderer/orderer2/tls/ca.crt"
+			}
+		},
+		"orderer3.orderer.mbe.com": {
+			"url": "grpcs://localhost:9050",
+			"grpcOptions": {
+				"ssl-target-name-override": "orderer3.orderer.mbe.com"
+			},
+			"tlsCACerts": {
+				"path": "./crypto/orderer/orderer3/tls/ca.crt"
+			}
+		},
+		"orderer4.orderer.mbe.com": {
+			"url": "grpcs://localhost:10050",
+			"grpcOptions": {
+				"ssl-target-name-override": "orderer4.orderer.mbe.com"
+			},
+			"tlsCACerts": {
+				"path": "./crypto/orderer/orderer4/tls/ca.crt"
+			}
+		},
+		"orderer5.orderer.mbe.com": {
+			"url": "grpcs://localhost:11050",
+			"grpcOptions": {
+				"ssl-target-name-override": "orderer5.orderer.mbe.com"
+			},
+			"tlsCACerts": {
+				"path": "./crypto/orderer/orderer5/tls/ca.crt"
+			}
+		}
+    }
+}

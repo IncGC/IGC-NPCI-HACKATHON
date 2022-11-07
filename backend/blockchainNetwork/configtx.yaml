@@ -1,0 +1,250 @@
+---
+Organizations:
+    - &orderer
+        Name: orderer
+        ID: ordererMSP
+        MSPDir: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('ordererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('ordererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('ordererMSP.admin')"
+    - &org1
+        Name: org1MSP
+        ID: org1MSP
+        MSPDir: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/peerOrganizations/org1.mbe.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('org1MSP.admin', 'org1MSP.peer', 'org1MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('org1MSP.admin', 'org1MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('org1MSP.admin')"      
+            Endorsement:
+                Type: Signature
+                Rule: "OR('org1MSP.peer')"        
+        AnchorPeers: 
+            - Host: peer0.org1.mbe.com
+              Port: 7051 
+    - &org2
+        Name: org2MSP
+        ID: org2MSP
+        MSPDir: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/peerOrganizations/org2.mbe.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('org2MSP.admin', 'org2MSP.peer', 'org2MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('org2MSP.admin', 'org2MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('org2MSP.admin')"      
+            Endorsement:
+                Type: Signature
+                Rule: "OR('org2MSP.peer')"        
+        AnchorPeers: 
+            - Host: peer0.org2.mbe.com
+              Port: 9051 
+    - &org3
+        Name: org3MSP
+        ID: org3MSP
+        MSPDir: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/peerOrganizations/org3.mbe.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('org3MSP.admin', 'org3MSP.peer', 'org3MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('org3MSP.admin', 'org3MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('org3MSP.admin')"      
+            Endorsement:
+                Type: Signature
+                Rule: "OR('org3MSP.peer')"        
+        AnchorPeers: 
+            - Host: peer0.org3.mbe.com
+              Port: 11051 
+
+
+    - &org4
+        Name: org4MSP
+        ID: org4MSP
+        MSPDir: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/peerOrganizations/org4.mbe.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('org4MSP.admin', 'org4MSP.peer', 'org4MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('org4MSP.admin', 'org4MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('org4MSP.admin')"      
+            Endorsement:
+                Type: Signature
+                Rule: "OR('org4MSP.peer')"        
+        AnchorPeers: 
+            - Host: peer0.org4.mbe.com
+              Port: 13051      
+
+
+    - &org5
+        Name: org5MSP
+        ID: org5MSP
+        MSPDir: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/peerOrganizations/org5.mbe.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('org5MSP.admin', 'org5MSP.peer', 'org5MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('org5MSP.admin', 'org5MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('org5MSP.admin')"      
+            Endorsement:
+                Type: Signature
+                Rule: "OR('org5MSP.peer')"        
+        AnchorPeers: 
+            - Host: peer0.org5.mbe.com
+              Port: 15051         
+Capabilities:
+    Channel: &ChannelCapabilities
+        V2_0: true
+    Orderer: &OrdererCapabilities
+        V2_0: true
+    Application: &ApplicationCapabilities
+        V2_0: true
+
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+
+    Capabilities:
+        <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+    OrdererType: etcdraft
+    Addresses:
+        - orderer1.orderer.mbe.com:7050
+        - orderer2.orderer.mbe.com:7050
+        - orderer3.orderer.mbe.com:7050
+        - orderer4.orderer.mbe.com:7050
+        - orderer5.orderer.mbe.com:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 98 MB
+        PreferredMaxBytes: 512 KB
+    EtcdRaft:
+        Consenters:
+            - Host: orderer1.orderer.mbe.com
+              Port: 7050
+              ClientTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer1.orderer.mbe.com/tls/server.crt
+              ServerTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer1.orderer.mbe.com/tls/server.crt 
+            - Host: orderer2.orderer.mbe.com
+              Port: 7050
+              ClientTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer2.orderer.mbe.com/tls/server.crt
+              ServerTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer2.orderer.mbe.com/tls/server.crt 
+            - Host: orderer3.orderer.mbe.com
+              Port: 7050
+              ClientTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer3.orderer.mbe.com/tls/server.crt
+              ServerTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer3.orderer.mbe.com/tls/server.crt 
+            - Host: orderer4.orderer.mbe.com
+              Port: 7050
+              ClientTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer4.orderer.mbe.com/tls/server.crt
+              ServerTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer4.orderer.mbe.com/tls/server.crt 
+            - Host: orderer5.orderer.mbe.com
+              Port: 7050
+              ClientTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer5.orderer.mbe.com/tls/server.crt
+              ServerTLSCert: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/ordererOrganizations/orderer.mbe.com/orderers/orderer5.orderer.mbe.com/tls/server.crt 
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Profiles:
+    RaftOrderer:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+            - *orderer
+            Capabilities:
+                <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - <<: *orderer
+        Consortiums:
+            Consortiumcommon:
+                Organizations:
+                   - *org1
+                   - *org2
+                   - *org3
+                   - *org4
+                   - *org5
+    common:
+        Consortium: Consortiumcommon
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *org1
+                - *org2
+                - *org3
+                - *org4
+                - *org5
+            Capabilities:
+                <<: *ApplicationCapabilities

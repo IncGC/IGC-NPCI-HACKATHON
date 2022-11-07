@@ -1,0 +1,71 @@
+    
+OrdererOrgs:
+  - Name: orderer
+    Domain: orderer.mbe.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname : orderer1
+        SANS:
+          - "localhost"
+          - "127.0.0.1"
+    
+      - Hostname : orderer2
+        SANS:
+          - "localhost"
+          - "127.0.0.1"
+    
+      - Hostname : orderer3
+        SANS:
+          - "localhost"
+          - "127.0.0.1"
+    
+      - Hostname : orderer4
+        SANS:
+          - "localhost"
+          - "127.0.0.1"
+    
+      - Hostname : orderer5
+        SANS:
+          - "localhost"
+          - "127.0.0.1"
+    
+PeerOrgs:
+  - Name: org1 
+    Domain: org1.mbe.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1 
+      
+  - Name: org2 
+    Domain: org2.mbe.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1 
+      
+  - Name: org3 
+    Domain: org3.mbe.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1 
+
+  - Name: org4 
+    Domain: org4.mbe.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1 
+      
+  - Name: org5 
+    Domain: org5.mbe.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1 
