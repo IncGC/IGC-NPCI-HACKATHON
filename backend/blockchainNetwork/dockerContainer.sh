@@ -1,3 +1,22 @@
+echo "Deleting exiting containers"
+
+docker rm -f $(docker ps -aq)
+
+echo "Deleting existing networks"
+
+docker network prune
+
+echo "Deleting existing volumes"
+
+docker volume rm $(docker volume ls)
+
+set -e
+
+echo "Docker is cleared"
+
+# docker rmi $(docker images -q)
+
+
 echo "Orderer container up"
 cd orderer
 sh start_container.sh
