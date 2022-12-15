@@ -1,0 +1,48 @@
+{
+	"name": "test-network",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw"
+		},
+		"enableAuthentication": true,
+		"organization": "Org1MSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"common": {
+			"peers": {
+				"peer0.org1.mbe.com": {}
+			}
+		}
+	},
+	"organizations": {
+		"Org1MSP": {
+			"mspid": "Org1MSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/org1.mbe.com/users/User1@org1.mbe.com/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0.org1.mbe.com"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/org1.mbe.com/users/User1@org1.mbe.com/msp/signcerts/User1@org1.mbe.com-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.org1.mbe.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/org1.mbe.com/peers/peer0.org1.mbe.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.org1.mbe.com:7051"
+		}
+	}
+}

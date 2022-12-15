@@ -1,0 +1,60 @@
+
+# SPDX-License-Identifier: Apache-2.0
+version: '2.1'
+
+volumes:
+  pgdata:
+  walletstore:
+
+networks:
+  mbev1:
+    external:
+      name: network_mbev1
+
+services:
+
+  explorerdb.mbe.com:
+    image: hyperledger/explorer-db:latest
+    container_name: explorerdb.mbe.com
+    hostname: explorerdb.mbe.com
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - mbev1
+
+  explorer.mbe.com:
+    image: hyperledger/explorer:latest
+    container_name: explorer.mbe.com
+    hostname: explorer.mbe.com
+    environment:
+      - DATABASE_HOST=explorerdb.mbe.com
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - LOG_LEVEL_APP=info
+      - LOG_LEVEL_DB=info
+      - LOG_LEVEL_CONSOLE=debug
+      - LOG_CONSOLE_STDOUT=true
+      - DISCOVERY_AS_LOCALHOST=false
+      - PORT=${PORT:-8080}
+    volumes:
+      - ${EXPLORER_CONFIG_FILE_PATH}:/opt/explorer/app/platform/fabric/config.json
+      - ${EXPLORER_PROFILE_DIR_PATH}:/opt/explorer/app/platform/fabric/connection-profile
+      - ${FABRIC_CRYPTO_PATH}:/tmp/crypto
+      - walletstore:/opt/explorer/wallet
+    ports:
+      - ${PORT:-8080}:${PORT:-8080}
+    depends_on:
+      explorerdb.mbe.com:
+        condition: service_healthy
+    networks:
+      - mbev1
