@@ -16,18 +16,18 @@ type InvestorDetailsChaincode struct {
 }
 
 type InvestorDetails struct {
-	Id           string    `json:"Id"`
-	CreatedOn    time.Time `json:"CreatedOn"`
-	CreatedBy    string    `json:"CreatedBy"`
-	IsDelete     bool      `json:"IsDelete"`
-	PanCardNum   string    `json:"PanCardNum"`
+	Id          string    `json:"Id"`
+	CreatedOn   time.Time `json:"CreatedOn"`
+	CreatedBy   string    `json:"CreatedBy"`
+	IsDelete    bool      `json:"IsDelete"`
+	PanCardNum  string    `json:"PanCardNum"`
 	FirstName   string    `json:"FirstName"`
-	LastName     string    `json:"LastName"`
-	Gender       string    `json:"Gender"`
-	FatherName        string    `json:"FatherName"`
-	DOB        string    `json:"DOB"`
+	LastName    string    `json:"LastName"`
+	Gender      string    `json:"Gender"`
+	FatherName  string    `json:"FatherName"`
+	DOB         string    `json:"DOB"`
 	Address     string    `json: "Address"`
-	Nationality   string    `json:"Nationality"`
+	Nationality string    `json:"Nationality"`
 	AadharNum   string    `json:"AadharNum"`
 }
 
@@ -50,18 +50,18 @@ func (cc *InvestorDetailsChaincode) create(stub shim.ChaincodeStubInterface, arg
 	}
 
 	data := InvestorDetails{
-		Id:           args[0],
-		CreatedOn:    dateValue1,
-		CreatedBy:    args[2],
-		IsDelete:     boolValue3,
-		PanCardNum:   args[4],
+		Id:          args[0],
+		CreatedOn:   dateValue1,
+		CreatedBy:   args[2],
+		IsDelete:    boolValue3,
+		PanCardNum:  args[4],
 		FirstName:   args[5],
-		LastName:     args[6],
-		Gender:       args[7],
-		FatherName:        args[8],
-		DOB:        args[9],
+		LastName:    args[6],
+		Gender:      args[7],
+		FatherName:  args[8],
+		DOB:         args[9],
 		Address:     args[10],
-		Nationality:   args[11],
+		Nationality: args[11],
 		AadharNum:   args[12],
 	}
 
@@ -113,18 +113,18 @@ func (cc *InvestorDetailsChaincode) update(stub shim.ChaincodeStubInterface, arg
 	}
 
 	data := InvestorDetails{
-		Id:           args[0],
-		CreatedOn:    dateValue1,
-		CreatedBy:    args[2],
-		IsDelete:     boolValue3,
-		PanCardNum:   args[4],
+		Id:          args[0],
+		CreatedOn:   dateValue1,
+		CreatedBy:   args[2],
+		IsDelete:    boolValue3,
+		PanCardNum:  args[4],
 		FirstName:   args[5],
-		LastName:     args[6],
-		Gender:       args[7],
-		FatherName:        args[8],
-		DOB:        args[9],
+		LastName:    args[6],
+		Gender:      args[7],
+		FatherName:  args[8],
+		DOB:         args[9],
 		Address:     args[10],
-		Nationality:   args[11],
+		Nationality: args[11],
 		AadharNum:   args[12],
 	}
 
