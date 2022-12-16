@@ -1,224 +1,292 @@
 const express = require("express");
 var router = express.Router();
-const bodyparser = require("body-parser");
 const { registerUser } = require("../app/registerUser");
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const keys = require('../config/keys');
-const helper = require('../utils/helper');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const keys = require("../config/keys");
+const helper = require("../utils/helper");
+const passport = require("passport");
+var moment = require("moment");
+const mailer = require("../utils/Mailer");
+const {
+  USER_STATUS
+} = require("../utils/helper");
 
-const passport = require('passport');
-var moment = require('moment');
+const UserModel = require("../models/User");
+const {
+  HandleResponseError,
+  ObjectExistsError,
+} = require("../utils/HandleResponseError");
+const { response } = require("express");
 
 var logger = helper.getLogger("Routes");
 
-router.post("/SignUp", async function (req, res) {
-try{
+router.post("/createUser", async (req, res) => {
+  try {
+    let { firstName, lastName, email, phoneNumber, role } = req.body;
+    // let { userId, msp, orgId } = req.user
 
-  const {firstName, lastName, email,phoneNumber, panCard, password}= req.body;
+    let exists = await UserModel.find({ email: email });
+    // registering in wallet
+    await registerUser({ OrgMSP: "org1MSP", userId: email });
 
-  var created_on = moment(new Date()).format();
-  var modifed_on = moment(new Date()).format();
-  var modifed_by = "Admin";
+    if (exists.length > 0) {
+      throw new ObjectExistsError({
+        message: "User with this email already exists",
+      });
+    }
 
-  var mongodb = global.db;
-  logger.debug("User name : " + email);
-  if (!email) {
-    res.json(getErrorMessage("'email'"));
-    return;
+    const salt = await bcrypt.genSalt(10);
+    let generatedPassword = "pwd_" + email.split("@")[0];
+    // let generatedPassword = "pwd_"
+
+    let hashedpassword = await bcrypt.hash(generatedPassword, salt);
+    let msp = "org1MSP";
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      password: hashedpassword,
+      phoneNumber,
+      role,
+      status: USER_STATUS.ACTIVE,
+      // organization: "org1MSP",
+      msp: msp,
+      // createdBy: "userId"
+    };
+
+    let userResult = await UserModel.create(userData);
+    // Sending the mail
+    let userInfo = `Hi ${firstName}, your login credantials have been created .
+      your username is : ${email} and your password is ${generatedPassword}. thank you `;
+
+    await mailer.main(email, "credentials", userInfo);
+
+    // registering in wallet
+    await registerUser({ OrgMSP: "org1MSP", userId: email });
+
+    userResult = { ...userResult._doc };
+
+    delete userResult["password"];
+
+    res.status(200).json(userResult);
+  } catch (err) {
+    HandleResponseError(err, res);
   }
+});
 
-  mongodb.collection("users").find({ email: req.body.email }).toArray(async function (err, exiRes) {
-    console.log("exiRes", exiRes)
-    if (exiRes.length > 0) {
+router.get(
+  "",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      let { orgId } = req.user || "org1MSP";
+      let { id } = req.query || "";
 
-      return res.status(200).json({ success: false, message: 'User Already Exists' });
-    } else {
+      let filter = { organization: orgId, status: "active" };
 
-      let response = await registerUser({ OrgMSP: "org1MSP", userId: email });
+      if (id && id != "") filter["_id"] = id;
 
-      logger.debug("response is  : " + response);
-
-      logger.debug(
-        "-- returned from registering the email %s for organization %s",
-        email,
+      let users = await UserModel.find(filter).select(
+        "-password -organization"
       );
-      if (response && typeof response !== "string") {
-        logger.debug(
-          "Successfully registered the email %s for organization %s",
-          email,
-        );
+      res.status(200).json(users);
+    } catch (err) {
+      HandleResponseError(err, res);
+    }
+  }
+);
 
-        const salt = await bcrypt.genSalt(10);
-        var hashedpassword = await bcrypt.hash(req.body.password, salt);
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-        var newusers = {
-          email: req.body.email,
-          status: 'Active',
-          firstName,
-          lastName,
-          phoneNumber,
-          panCard,
-          password: hashedpassword,
-          created_on: created_on,
-          modified_on: modifed_on,
-          modified_by: modifed_by,
-        };
+  let exiRes = await UserModel.findOne({
+    email,
+    status: helper.USER_STATUS.ACTIVE,
+  }).populate("organization", "companyName");
 
-        var userlogs = {
-          email: req.body.email,
-          status: "Active",
-          userdesc: req.body.userdesc,
-          usermail: req.body.usermail,
-          modified_on: modifed_on,
-          modified_by: modifed_by
-        };
+  console.log({ exiRes });
 
-        mongodb.collection("users").insertOne(newusers).then(result => {
-          console.log("result is", result, result["ops"][0]["_id"])
-          if (result) {
-            mongodb.collection("userlogs").insertOne(userlogs).then(result1 => {
-              return res.status(200).json({ success: true, message: 'User Registered Successfully' });
+  if (exiRes) {
+    //Check password
+    bcrypt.compare(password, exiRes.password).then((isMatch) => {
+      if (isMatch) {
+        //User matched
+        const payload = {
+          userId: exiRes._id,
+          email: exiRes.email,
+          role: exiRes.role,
+          // msp: exiRes.organization.companyName,
+          // orgId: exiRes.organization._id
+        }; //Create JWT Payload
+
+        //Sign Token
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3600000 },
+          (err, token) => {
+            res.json({
+              success: true,
+              userId: exiRes._id,
+              token: "Bearer " + token,
+              role: exiRes.role,
+              firstName: exiRes.firstName,
+              lastName: exiRes.lastName,
             });
           }
-        });
-
+        );
       } else {
-        logger.debug(
-          "Failed to register the email %s for organization %s with::%s",
-          email,
-          response
-        );
-        res.json({
-          success: false,
-          message: response
-        });
+        return res
+          .status(200)
+          .json({ success: false, message: "Password Incorrect" });
       }
-    }
-  });
-
-}catch(err){
-  res.send(err);
-}
-});
-
-
-router.post('/login', (req, res) => {
-
-  const email = req.body.email;
-  const password = req.body.password;
-
-  var mongodb = global.db;
-  var query = { $and: [{ email: req.body.email }, { status: "Active" }] };
-  //Find the user by email
-  mongodb.collection("users").findOne(query).then(exiRes => {
-    //Check for user
-    if (exiRes) {
-      //Check password
-      bcrypt.compare(password, exiRes.password)
-        .then(isMatch => {
-          if (isMatch) {
-            //User matched
-            const payload = { id: exiRes._id, email: exiRes.email, msp: exiRes.org };//Create JWT Payload
-            console.log("payLoad", payload)
-            //Sign Token
-            jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600000 }, (err, token) => {
-              res.json({
-                success: true,
-                token: 'Bearer ' + token,
-              })
-            });
-          } else {
-            return res.status(200).json({ success: false, message: "Password Incorrect" });
-          }
-        });
-    } else {
-      return res.status(200).json({ success: false, message: "User not found" });
-    }
-  });
-});
-
-router.post('/forgot', async(req, res)=>{
-  const {email }= req.body;
-
-  var mongodb = global.db;
-  var query = { $and: [{ email: req.body.email }, { status: "Active" }] };
-  mongodb
-  .collection("users")
-  .findOne(query)
-  .then((exiRes) => {
-    console.log(exiRes);
-    if(exiRes){
-      const payload={
-        userId:exiRes._id,
-        email:exiRes.email,
-        password:exiRes.password
-      };
-      res.send("Your password has been successfully sent to your registered mail ID");
-      let text=JSON.stringify(payload);
-      // let userInfo=`Hi ${email},  your password is ${payload}. thank you `
-      // mailer.main(email, "password", userInfo);
-    console.log(payload);
-    }
- else{
-    res.send("User not found! ")
+    });
+  } else {
+    return res.status(200).json({ success: false, message: "User not found" });
   }
 });
-});
 
-// const router = require('express').Router();
+router.get(
+  "",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      let { orgId } = req.user || "org1MSP";
+      let { id } = req.query || "";
 
-const{HandleError}= require('../utils/HandleResponseError');
-const {CHAINCODE_ACTIONS, CHAIN_CHANNEL, CHAINCODE_NAMES, getNow, CHAINCODE_CHANNEL}=require('../utils/helper');
-const {MOCK_LIVE_MARKET_DATA}=require('../utils/mockData');
-const {invokeTransaction}= require('../app/invoke');
+      let filter = { organization: orgId, status: "active" };
 
-router.post('/liveMarket', async (req, res)=>{
-    try{
-        let{ securityCode, issuerName, couponRate, maturity, volume, price, yield, currency, noOfTokens}=req.body;
-           
-        console.log(req.body);
-        const tokenValue= parseInt(volume)/parseInt(noOfTokens);
+      if (id && id != "") filter["_id"] = id;
 
-        console.log("your token value is here :"+tokenValue);
-        let data = {
-            securityCode, 
-            issuerName, 
-            couponRate,
-            maturity,
-            volume,
-            price,
-            yield,
-            currency,
-            tokenValue,
-            CreatedOn: getNow(),
-            // CreatedBy:req.user.id,
-            isDelete: false
+      let users = await UserModel.find(filter).select(
+        "-password -organization"
+      );
+      res.status(200).json(users);
+    } catch (err) {
+      HandleResponseError(err, res);
+    }
+  }
+);
+
+router.post(
+  "/changePassword",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    var mongodb = global.db;
+    var modifed_on = moment(new Date()).format();
+    var modifed_by = req.user.email;
+    const salt = await bcrypt.genSalt(10);
+    var hashedpassword = await bcrypt.hash(req.body.newpassword, salt);
+    var query = { email: req.body.email };
+    var newValues = {
+      $set: {
+        password: hashedpassword,
+        modified_on: modifed_on,
+        modified_by: modifed_by,
+      },
+    };
+
+    mongodb
+      .collection("users")
+      .updateOne(query, newValues, function (err, exiRes) {
+        if (exiRes["result"].n > 0) {
+          let response = {
+            success: true,
+            message: "Password changed successfully for the given user",
+          };
+          console.log(exiRes["result"]);
+          res.status(200).json(response);
+        } else {
+          let response = {
+            success: false,
+            message: "No Such User Exists or Operation Failed",
+          };
+          res.status(200).json(response);
         }
-        let jsonobj= JSON.stringify(data)
-        console.log("your data is here: "+jsonobj);
-        let message = await invokeTransaction({
-            // metaInfo:{userName:req.user.email, org:"org1MSP"},
-            metaInfo:{userName:"pintookumar@inclusivegrowthchain.com", org:"org1MSP"},
-            // metaInfo:defaultValue,
-            chainCodeAction:"create",
-            channelName:"common",
-            data:data,
-            chainCodeFunctionName:'create',
-            chainCodeName:"token"
-        })
-        console.log("hi")
-        console.log(message);
-        res.status(201).json(data);
-    }catch(err){
-        // HandleError(err,res);
-      res.send("err");
-      console.log("you got the error here! ")
-      }
-})
+      });
+  }
+);
 
+router.post(
+  "/editUser",
+  passport.authenticate("jwt", { session: false }),
+ async (req, res) => {
+    var mongodb = global.db;
+    var query = { email: req.body.email };
+    var modifed_on = moment(new Date()).format();
+    var modifed_by = req.user.email;
+    var newValues = {
+      $set: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        modified_on: modifed_on,
+        modified_by: modifed_by,
 
+      },
+    };
 
+    mongodb
+      .collection("users")
+      .updateOne(query, newValues, function (err, exiRes) {
+        if (exiRes["result"].n > 0) {
+          let response = {
+            success: true,
+            message: "User info changed successfully",
+          };
+          console.log(exiRes["result"]);
+          res.status(200).json(response);
+        } else {
+          let response = {
+            success: false,
+            message: "No Such User Exists or Operation Failed",
+          };
+          res.status(200).json(response);
+        }
+      });
+  }
+);
 
+router.get("/getUserDetails", async (req, res) => {
+  try {
+    var mongodb = global.db;
+
+    mongodb
+      .collection("users")
+      .find(
+        { email: req.body.email },
+        {
+          projection: {
+            _id: 1,
+            profileImg: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            phoneNumber: 1,
+            role: 1,
+            status: 1,
+          },
+        }
+      )
+      .toArray(async function (err, exiRes) {
+        if (exiRes.length > 0) {
+          response = { success: true, message: exiRes };
+          return res.status(200).json({
+            status: "Success",
+            results: exiRes.length,
+            data: { response },
+          });
+        } else {
+          response = { success: false, message: "No Active user exists" };
+          res.status(200).json(response);
+        }
+      });
+  } catch (err) {
+    HandleResponseError(res, err);
+    res.send(err);
+  }
+});
 
 module.exports = router;

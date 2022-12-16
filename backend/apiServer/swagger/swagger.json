@@ -1,0 +1,471 @@
+{
+    "info": {
+        "title": "Rest API Portal For MicroBond Exchange",
+        "version": "v1",
+        "description": "RESTful API Description for MicroBond Exchange"
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "host": "localhost:9090",
+    "basePath": "/api/v1",
+    "securityDefinitions": {
+        "JWT": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "scheme": "bearer",
+            "in": "header",
+            "description": "Bearer <token>"
+        }
+    },
+    "swagger": "2.0",
+    "paths": {
+        "/createUser": {
+            "channel": "common",
+            "post": {
+                "tags": [
+                    "User DashBoard"
+                ],
+                "description": "Create user",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Create User",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                },
+                                "orgName": {
+                                    "type": "string"
+                                },
+                                "role": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create user"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "channel": "common",
+            "post": {
+                "tags": [
+                    "User DashBoard"
+                ],
+                "description": "Login user",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Login User",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                },
+                                "orgName": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login user"
+                    }
+                }
+            }
+        },
+        "/userList": {
+            "channel": "common",
+            "post": {
+                "tags": [
+                    "User DashBoard"
+                ],
+                "description": "User List",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User List",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User List"
+                    }
+                }
+            }
+        },
+        "/editUser": {
+            "channel": "common",
+            "post": {
+                "tags": [
+                    "User DashBoard"
+                ],
+                "description": "Edit User",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Edit User",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "role": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Edit User"
+                    }
+                }
+            }
+        },
+        "/changePassword": {
+            "channel": "common",
+            "post": {
+                "tags": [
+                    "User DashBoard"
+                ],
+                "description": "User List",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User List",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User List"
+                    }
+                }
+            }
+        },
+        "/token/liveMarket": {
+            "channel": "common",
+            "post": {
+                "tags": [
+                    "Token"
+                ],
+                "description": "Create Investor details",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Create Investor details",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "Id": {
+                                    "type": "string"
+                                },
+                                "CreatedOn": {
+                                    "type": "string"
+                                },
+                                "CreatedBy": {
+                                    "type": "string"
+                                },
+                                "IsDelete": {
+                                    "type": "boolean"
+                                },
+                                "Investor detailsNo": {
+                                    "type": "string"
+                                },
+                                "ShipperNumber": {
+                                    "type": "string"
+                                },
+                                "ProductList": {
+                                    "type": "string"
+                                },
+                                "TransportMode": {
+                                    "type": "string"
+                                },
+                                "StartedAt": {
+                                    "type": "string"
+                                },
+                                "DeliverAt": {
+                                    "type": "string"
+                                },
+                                "DDCRStatus": {
+                                    "type": "string"
+                                },
+                                "Notes": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create Investor details"
+                    }
+                }
+            }
+        },
+        "/token/{id}": {
+            "channel": "common",
+            "get": {
+                "tags": [
+                    "Token"
+                ],
+                "description": "get",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "type": "string",
+                        "description": "The ID for the asset.\n"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get by id"
+                    }
+                }
+            }
+        },
+        "/investor/Investor details/update": {
+            "channel": "common",
+            "put": {
+                "tags": [
+                    "Investor details"
+                ],
+                "description": "Update Investor details",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Create Investor details",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "Id": {
+                                    "type": "string"
+                                },
+                                "CreatedOn": {
+                                    "type": "string"
+                                },
+                                "CreatedBy": {
+                                    "type": "string"
+                                },
+                                "IsDelete": {
+                                    "type": "boolean"
+                                },
+                                "Investor detailsNo": {
+                                    "type": "string"
+                                },
+                                "ShipperNumber": {
+                                    "type": "string"
+                                },
+                                "ProductList": {
+                                    "type": "string"
+                                },
+                                "TransportMode": {
+                                    "type": "string"
+                                },
+                                "StartedAt": {
+                                    "type": "string"
+                                },
+                                "DeliverAt": {
+                                    "type": "string"
+                                },
+                                "DDCRStatus": {
+                                    "type": "string"
+                                },
+                                "Notes": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Investor details"
+                    }
+                }
+            }
+        },
+        "/token/Investor details/delete": {
+            "channel": "common",
+            "delete": {
+                "tags": [
+                    "Investor details"
+                ],
+                "description": "delete",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "body",
+                        "type": "string",
+                        "description": "The ID for the asset.\n"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete by id"
+                    }
+                }
+            }
+        },
+        "/token/Investor details/history/{id}": {
+            "channel": "common",
+            "get": {
+                "tags": [
+                    "Investor details"
+                ],
+                "description": "get",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "type": "string",
+                        "description": "The ID for the asset.\n"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get history by id"
+                    }
+                }
+            }
+        },
+        "/token/Investor details/querystring": {
+            "channel": "common",
+            "post": {
+                "tags": [
+                    "Investor details"
+                ],
+                "description": "querystring",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "querystring",
+                        "required": true,
+                        "in": "body",
+                        "type": "string",
+                        "description": "The ID for the asset.\n"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "querystring"
+                    }
+                }
+            }
+        },
+   "defination":{}
+    }
+}

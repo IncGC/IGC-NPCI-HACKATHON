@@ -20,8 +20,9 @@ const ConnectDB= require('./config/dbConfig');
 //Routes import
 
 
-const usermanagement = require('./routes/usermgmt');
-const token= require('./routes/token');
+// const usermanagement = require('./routes/usermgmt');
+// const token= require('./routes/token');
+
 
 //Connecting MongoDB
 
@@ -88,8 +89,24 @@ Mongoose.connection.once('open', ()=>{
 
 // Use of Routes
 
-app.use('/api/v1',usermanagement);
+// app.use('/api/v1',usermanagement);
+app.use('/api/v1', require('./routes'))
+
 // app.use('/market', token);
+
+
+///Swagger interface
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger/swagger.json');
+
+app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument),
+);
+
+
 // Nomalize port 
 function normalizePort(val){
   var port= parseInt(val,10);

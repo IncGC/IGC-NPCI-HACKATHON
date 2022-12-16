@@ -9,14 +9,17 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey    = keys.secretOrKey;
 module.exports =  passport => {
     passport.use(new JwtStrategy(opts,(jwt_payload, done)=>{
-        var mongodb = global.db;
-        var query =  { "_id": ObjectID(jwt_payload.id)} ;
-        mongodb.collection("users").findOne(query).then(exiRes =>{
-            if(exiRes){
-                return done(null,exiRes);
-            }
-            return done(null,false);
-        })
+
+        done(null, jwt_payload)
+
+        // var mongodb = global.db;
+        // var query =  { "_id": ObjectID(jwt_payload.id)} ;
+        // mongodb.collection("users").findOne(query).then(exiRes =>{
+        //     if(exiRes){
+        //         return done(null,exiRes);
+        //     }
+        //     return done(null,false);
+        // })
     })
 )}
 
