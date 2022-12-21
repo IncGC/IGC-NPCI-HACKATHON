@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 const { String, ObjectId } = mongoose.Schema.Types;
 
-const userSchema = new schema({
+const NseData = new schema({
     firstName: String,
     lastName: String,
     fatherName:String,
@@ -13,15 +13,8 @@ const userSchema = new schema({
     gender:String,
     address:String,
     DOB:String,
-    role: String,
-    OrgMSP:String,
-    status: String,
     panCard:String,
     aadharCard: String,    
-    phoneOtp:String,
-    role: String,
-    nse_registerd:Boolean,
-    createdBy: { type: ObjectId, ref: 'User' }
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Nse', NseData);

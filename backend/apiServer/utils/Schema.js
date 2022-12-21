@@ -35,11 +35,31 @@ const TOKEN_SCHEMA = [
     { name: "TokenValue" },
 ]
 
+const USER_SCHEMA = [
+    { name: "Id" },
+    { name: "Participant_id" },
+    { name: "CreatedOn" },
+    { name: "CreatedBy" },
+    { name: "IsDelete" },
+    { name: "FirstName" },
+    { name: "LastName" },
+    { name: "FatherName" },
+    { name: "Nationality" },
+    { name: "Email" },
+    { name: "PhoneNumber" },
+    { name: "Gender" },
+    { name: "Address" },
+    { name: "DOB" },
+    { name: "Role" },
+    { name: "PanCard" },
+    { name: "AadharCard" },
+]
 
 exports.getSchema = (chaincodeName)=>{
     switch(chaincodeName){
         case CHAINCODE_NAMES.INVESTORDETAILS: return INVESTORDETAILS_SCHEMA
         case CHAINCODE_NAMES.TOKEN: return TOKEN_SCHEMA
+        case CHAINCODE_NAMES.USERS : return USER_SCHEMA
         default: 
             throw new CustomError({ code: 404, message: `Schema for chaincodename : ${chaincodeName} does not exists` })
     }

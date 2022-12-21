@@ -1,0 +1,115 @@
+
+const NseModel = require("../models/NseData");
+const PanCardModel = require("../models/PanCard");
+
+const {
+    ObjectExistsError
+} = require("../utils/HandleResponseError")
+
+
+exports.NseMockData =  async(req, res)=>{
+  try{
+    const {firstName,lastName,fatherName,Nationality,email,phoneNumber,panCard,aadharCard,gender,address,DOB}= req.body;
+    console.log("sadfghjhgfds")
+   
+    let exists = await NseModel.findOne({ email: email });
+    console.log("sadfghjhgfds")
+
+    if (exists) {
+      res.send({
+        message: "User with this email already exists",
+      });
+      return
+    }
+
+    console.log("qwertyuioiuytr")
+    const userData = {firstName,lastName,fatherName, Nationality,email,phoneNumber,panCard,aadharCard,gender,address,DOB};
+
+    let NseUserDataResult = await NseModel.create(userData);
+    NseUserDataResult = { ...NseUserDataResult._doc };
+
+
+    res.status(200).json({
+        status_code: 200,
+        message:"Successfully posted data",
+        data:NseUserDataResult
+    });
+
+
+  }catch(err){
+    res.send("err")
+  }
+}
+
+exports.getNseData = async (req, res)=>{
+  try{
+    const {panCard, aadharCard} = req.body;
+    const Nsedata= await NseModel.findOne({panCard,aadharCard})
+    
+    if (!Nsedata){
+      res.status(200).json({
+        status:400,
+        message:"No data found"
+      })
+      return
+    }
+    res.status(200).json({
+        status_code: 200,
+        message:"Fetched Data Successfully ",
+        data:Nsedata
+    });
+
+  }catch(err){
+    res.send(err, res);
+  }
+}
+
+exports.PanCardMockData= async(req, res)=>{
+  try{
+    const {firstName,lastName,fatherName,Nationality,phoneNumber,email,panCard,aadharCard,gender,address,DOB}= req.body;
+    let exists = await PanCardModel.find({ phoneNumber: phoneNumber });
+    if (exists.length > 0) {
+      throw new ObjectExistsError({
+        message: "User with this phoneNumber already exists",
+      });
+    }
+
+    const userData = {firstName,lastName,fatherName, Nationality,phoneNumber,email,panCard,aadharCard,gender,address,DOB};
+
+    let panCardDataResult = await PanCardModel.create(userData);
+    panCardDataResult = { ...panCardDataResult._doc };
+
+
+    res.status(200).json({
+        status_code: 200,
+        message:"Successfully posted data",
+        data:panCardDataResult
+    });
+
+  }catch(err){
+    res.send("Unexpected error")
+  }
+}
+
+exports.getPancarddata = async (req, res)=>{
+  try{
+    const {panCard} = req.body;
+    const panCarddata= await PanCardModel.findOne({panCard})
+    
+    if (!panCarddata){
+      res.status(200).json({
+        status:400,
+        message:"No data found"
+      })
+      return
+    }
+    res.status(200).json({
+        status_code: 200,
+        message:"Fetched Data Successfully ",
+        data:panCarddata
+    });
+
+  }catch(err){
+    res.send("Unexpected Error");
+  }
+}

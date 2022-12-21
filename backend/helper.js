@@ -8,27 +8,152 @@ const helper = require("../utils/helper");
 const passport = require("passport");
 var moment = require("moment");
 const mailer = require("../utils/Mailer");
-const {
-  USER_STATUS
-} = require("../utils/helper");
-
+const { USER_STATUS } = require("../utils/helper");
+require('dotenv').config()
 const UserModel = require("../models/User");
 const {
   HandleResponseError,
   ObjectExistsError,
+  PHONE_ALREADY_EXISTS_ERR
 } = require("../utils/HandleResponseError");
 const { response } = require("express");
+const otpGenerator = require("otp-generator");
+const fast2sms = require('fast-two-sms')
 
 var logger = helper.getLogger("Routes");
 
+router.post("/Otp", async (req, res) => {
+  try {
+    let { email, phoneNumber } = req.body;
+
+    const phoneExist = await UserModel.findOne({phoneNumber});
+
+  //   if (phoneExist){
+  //     res.status(200).json({
+  //         status:400,
+  //         message:PHONE_ALREADY_EXISTS_ERR
+  //     })
+  //     return;
+  // }
+ 
+
+
+    let investor = email.split("@")[0];
+
+    let otp = otpGenerator.generate(4, {
+      upperCaseAlphabets: false,
+      specialChars: false,
+      lowerCaseAlphabets:false,
+    });
+
+    let userInfo = `Hi ${investor},
+     your login credantials have been created.
+     your username is : ${email} 
+            and
+     your password is: ${otp}. 
+     Thank you `;
+
+    await mailer.main(email, "One Time Password for MicroBond Exchange", userInfo);
+
+    let smsOtp= `Hi ${investor},
+    This is your OTP ${otp}`
+
+
+    var SendingSMS = {authorization : process.env.API_KEY , message : smsOtp ,  numbers : [phoneNumber]} 
+    // let sms = await fast2sms.sendMessage(SendingSMS);
+    const userData = {
+      email,
+      phoneNumber,
+      phoneOtp:otp,
+    };
+  
+    let userResult = await UserModel.create(userData);
+    await UserModel.save();
+    // const {wallet} = await fast2sms.getWalletBalance(process.env.API_KEY)
+    console.log(wallet);
+    res.status(200).send({
+      type:"success",
+      message:"Account created OTP sent to Mobile Number",
+      data:{
+          // userId:user._id,
+          sms,
+          wallet,
+          // userResult
+      }
+  }) 
+  console.log(sms);
+  } catch (err) {
+    res.send(err);
+  }   
+});
+
+router.post('/enterotp', async(req,res,next)=>{
+  try{
+    const {phoneNumber, email, enterOtp} = req.body;
+    const userResult = await UserModel.findOne({email});
+console.log(userResult)
+    if (!userResult){
+      res.send({
+        status:400,
+        message:"User not found"
+      })
+      return;
+    }
+    if (userResult.phoneOtp !== enterOtp){
+      res.send({
+        status:400,
+        message:"Wrong OTP entered"
+      })
+      return;
+    }
+    userResult.phoneOtp = "";
+
+    await userResult.save();
+
+    const payload = {
+      userId: userResult._id,
+      email: userResult.email,
+      // role: exiRes.role,
+      // msp: exiRes.organization.companyName,
+      // orgId: exiRes.organization._id
+    }; //Create JWT Payload
+
+    //Sign Token
+    jwt.sign(
+      payload,
+      keys.secretOrKey,
+      { expiresIn: 3600000 },
+      (err, token) => {
+        res.json({
+          success: true,
+          userId: exiRes._id,
+          token: "Bearer " + token,
+          role: exiRes.role,
+          // firstName: exiRes.firstName,
+          // lastName: exiRes.lastName,
+        });
+      }
+    );
+    res.status(201).json({
+      type:"Success",
+      message:"OTP successfully verified",
+
+    })
+
+  }catch(err){
+    res.send(err)
+  }
+})
+
 router.post("/createUser", async (req, res) => {
   try {
-    let { firstName, lastName, email, phoneNumber, role } = req.body;
+    let { firstName, lastName, email, phoneNumber, role, OrgMSP } = req.body;
     // let { userId, msp, orgId } = req.user
 
-    let exists = await UserModel.find({ email: email });
     // registering in wallet
-    await registerUser({ OrgMSP: "org1MSP", userId: email });
+    await registerUser({ OrgMSP: OrgMSP, userId: email });
+
+    let exists = await UserModel.find({ email: email });
 
     if (exists.length > 0) {
       throw new ObjectExistsError({
@@ -51,7 +176,7 @@ router.post("/createUser", async (req, res) => {
       role,
       status: USER_STATUS.ACTIVE,
       // organization: "org1MSP",
-      msp: msp,
+      msp: OrgMSP,
       // createdBy: "userId"
     };
 
@@ -63,7 +188,7 @@ router.post("/createUser", async (req, res) => {
     await mailer.main(email, "credentials", userInfo);
 
     // registering in wallet
-    await registerUser({ OrgMSP: "org1MSP", userId: email });
+    await registerUser({ OrgMSP: OrgMSP, userId: email });
 
     userResult = { ...userResult._doc };
 
@@ -102,8 +227,7 @@ router.post("/login", async (req, res) => {
 
   let exiRes = await UserModel.findOne({
     email,
-    status: helper.USER_STATUS.ACTIVE,
-  }).populate("organization", "companyName");
+  });
 
   console.log({ exiRes });
 
@@ -211,7 +335,7 @@ router.post(
 router.post(
   "/editUser",
   passport.authenticate("jwt", { session: false }),
- async (req, res) => {
+  async (req, res) => {
     var mongodb = global.db;
     var query = { email: req.body.email };
     var modifed_on = moment(new Date()).format();
@@ -224,7 +348,6 @@ router.post(
         phoneNumber: req.body.phoneNumber,
         modified_on: modifed_on,
         modified_by: modifed_by,
-
       },
     };
 

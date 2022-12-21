@@ -23,7 +23,7 @@
     },
     "swagger": "2.0",
     "paths": {
-        "/createUser": {
+        "/admin/createUser": {
             "channel": "common",
             "post": {
                 "tags": [
@@ -39,20 +39,23 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "username": {
+                                "FirstName": {
                                     "type": "string"
                                 },
-                                "password": {
+                                "lastName": {
                                     "type": "string"
                                 },
-                                "orgName": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "phoneNumber": {
                                     "type": "string"
                                 },
                                 "role": {
                                     "type": "string"
                                 },
-                                "email": {
-                                    "type": "string"
+                                "OrgMSP":{
+                                    "type":"string"
                                 }
                             }
                         }
@@ -65,7 +68,7 @@
                 }
             }
         },
-        "/login": {
+        "/admin/login": {
             "channel": "common",
             "post": {
                 "tags": [
@@ -86,9 +89,6 @@
                                 },
                                 "password": {
                                     "type": "string"
-                                },
-                                "orgName": {
-                                    "type": "string"
                                 }
                             }
                         }
@@ -101,7 +101,7 @@
                 }
             }
         },
-        "/userList": {
+        "/admin/userList": {
             "channel": "common",
             "post": {
                 "tags": [
@@ -136,7 +136,7 @@
                 }
             }
         },
-        "/editUser": {
+        "/admin/editUser": {
             "channel": "common",
             "post": {
                 "tags": [
@@ -180,7 +180,7 @@
                 }
             }
         },
-        "/changePassword": {
+        "/admin/changePassword": {
             "channel": "common",
             "post": {
                 "tags": [
@@ -251,29 +251,32 @@
                                 "IsDelete": {
                                     "type": "boolean"
                                 },
-                                "Investor detailsNo": {
+                                "securityCode": {
                                     "type": "string"
                                 },
-                                "ShipperNumber": {
+                                "issuerName": {
                                     "type": "string"
                                 },
-                                "ProductList": {
+                                "couponRate": {
                                     "type": "string"
                                 },
-                                "TransportMode": {
+                                "maturity": {
                                     "type": "string"
                                 },
-                                "StartedAt": {
+                                "volume": {
                                     "type": "string"
                                 },
-                                "DeliverAt": {
+                                "price": {
                                     "type": "string"
                                 },
-                                "DDCRStatus": {
+                                "yield": {
                                     "type": "string"
                                 },
-                                "Notes": {
+                                "currency": {
                                     "type": "string"
+                                },
+                                "tokenValue":{
+                                    "type":"string"
                                 }
                             }
                         }
@@ -314,9 +317,9 @@
                 }
             }
         },
-        "/investor/Investor details/update": {
+        "/investor/": {
             "channel": "common",
-            "put": {
+            "post": {
                 "tags": [
                     "Investor details"
                 ],
@@ -347,28 +350,34 @@
                                 "IsDelete": {
                                     "type": "boolean"
                                 },
-                                "Investor detailsNo": {
+                                "PanCardNum": {
                                     "type": "string"
                                 },
-                                "ShipperNumber": {
+                                "FirstName": {
                                     "type": "string"
                                 },
-                                "ProductList": {
+                                "LastName": {
                                     "type": "string"
                                 },
-                                "TransportMode": {
+                                "SurName": {
                                     "type": "string"
                                 },
-                                "StartedAt": {
+                                "Gender": {
                                     "type": "string"
                                 },
-                                "DeliverAt": {
+                                "FatherName": {
                                     "type": "string"
                                 },
-                                "DDCRStatus": {
+                                "DOB": {
                                     "type": "string"
                                 },
-                                "Notes": {
+                                "Address": {
+                                    "type": "string"
+                                },
+                                "Nationality": {
+                                    "type": "string"
+                                },
+                                "AadharNum": {
                                     "type": "string"
                                 }
                             }
@@ -382,35 +391,7 @@
                 }
             }
         },
-        "/token/Investor details/delete": {
-            "channel": "common",
-            "delete": {
-                "tags": [
-                    "Investor details"
-                ],
-                "description": "delete",
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "body",
-                        "type": "string",
-                        "description": "The ID for the asset.\n"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "delete by id"
-                    }
-                }
-            }
-        },
-        "/token/Investor details/history/{id}": {
+        "/investor/{id}": {
             "channel": "common",
             "get": {
                 "tags": [
@@ -434,34 +415,6 @@
                 "responses": {
                     "200": {
                         "description": "get history by id"
-                    }
-                }
-            }
-        },
-        "/token/Investor details/querystring": {
-            "channel": "common",
-            "post": {
-                "tags": [
-                    "Investor details"
-                ],
-                "description": "querystring",
-                "security": [
-                    {
-                        "JWT": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "querystring",
-                        "required": true,
-                        "in": "body",
-                        "type": "string",
-                        "description": "The ID for the asset.\n"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "querystring"
                     }
                 }
             }

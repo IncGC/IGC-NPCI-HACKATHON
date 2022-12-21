@@ -17,7 +17,6 @@ router.post('/', async (req, res)=>{
             isDelete: false,
             PanCardNum,
             FirstName,
-            LastName,
             SurName,
             Gender,
             FatherName,
