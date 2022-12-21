@@ -89,11 +89,7 @@ Mongoose.connection.once('open', ()=>{
 
 // Use of Routes
 
-// app.use('/api/v1',usermanagement);
 app.use('/api/v1', require('./routes'))
-
-// app.use('/market', token);
-
 
 ///Swagger interface
 
