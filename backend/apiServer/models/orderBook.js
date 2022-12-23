@@ -5,14 +5,17 @@ const { String, ObjectId } = mongoose.Schema.Types;
 const orderBook = new schema({
     MBEid: String,
     ISINnum: String,
-    OrderId: String,
+    IssuerName:String,
+    CouponRate:String,
+    MaturityDate:String,
+    yield:String,
+    currency:String,
+    ReqToken:String,
+    PricePerToken:String,
     orderType:String,
-    quantity: String,
     price: String,
-    Date: String,
     CBDCbalance:String,
-    tokenBalance:String,
-
+    NumOfToken:String,
     // createdBy: { type: ObjectId, ref: 'User' }
 }, { timestamps: true });
 

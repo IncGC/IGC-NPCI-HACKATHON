@@ -1,3 +1,4 @@
+const OrderBookModel = require('../models/orderBook');
 
 
 class LimitOrder {
@@ -322,6 +323,16 @@ class LimitOrderBook {
   }
 }
 
+const MBEid = "4231";
+
+let orderlist =  OrderBookModel.findOne({MBEid});
+let userid= orderlist.MBEid;
+
+console.log(userid);
+// let orderlistjson = JSON.stringify(orderlist);
+// console.log(orderlist);
+// console.log(orderlistjson);
+
 let order1 = new LimitOrder(1, "RELIANCE HOME FINANCE LIMITED", "bid", 1020, 8);
 let order2 = new LimitOrder(
   2,
@@ -370,8 +381,8 @@ result = book.add(order8);
 result = book.add(order9);
 result = book.add(order10);
 
-console.log(book);
+// console.log(book);
 
-console.log(result);
+// console.log(result);
 
-book.clear();
+// book.clear();

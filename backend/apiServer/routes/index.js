@@ -17,7 +17,7 @@ router.get("/getUserDetails", investor.InvestorDetails);
 
 
 router.post('/order', order.orderbook);
-router.post('/order', order.orderbookget);
+router.get('/order', order.orderbookget);
 
 router.route('/nse_data').post(data.NseMockData).get(data.getNseData)  
   

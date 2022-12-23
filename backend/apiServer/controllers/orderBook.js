@@ -2,11 +2,10 @@ const OrderBookModel = require('../models/orderBook');
 
 exports.orderbook = async(req,res)=>{
     try {
-        let{ MBEid, ISINnum, OrderId , orderType,quantity,price,Date,CBDCbalance,tokenBalance }= req.body;
+        let{ MBEid, ISINnum,IssuerName, CouponRate, MaturityDate,yield,currency,ReqToken,PricePerToken , orderType,price,CBDCbalance,NumOfToken }= req.body;
 
         const orderData={
-            MBEid, ISINnum, OrderId , orderType,quantity,price,Date,CBDCbalance,tokenBalance
-        }
+            MBEid, ISINnum,IssuerName, CouponRate, MaturityDate,yield,currency,ReqToken,PricePerToken , orderType,price,CBDCbalance,NumOfToken }
 
         const orderBook = await OrderBookModel.create(orderData);
 
