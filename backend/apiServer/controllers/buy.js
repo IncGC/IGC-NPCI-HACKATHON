@@ -1,6 +1,6 @@
-const bidModel= require("../models/bid");
+const buyModel= require("../models/buy");
 
-exports.bidpost=async(req,res)=>{
+exports.buypost=async(req,res)=>{
     try{
        let {
         isin,
@@ -15,7 +15,7 @@ exports.bidpost=async(req,res)=>{
         tokenValue
        } = req.body;
 
-       const bidData = {
+       const buyData = {
         isin,
         issuerName,
         couponRate,
@@ -28,28 +28,28 @@ exports.bidpost=async(req,res)=>{
         tokenValue
        }
 
-       const bidResult = await bidModel.create({bidData});
+       const buyResult = await buyModel.create({buyData});
 
        res.status(200).json({
         status:200,
-        message:bidResult
+        message:buyResult
        })
     }catch(err){
         res.send(err)
     }
 }
 
-exports.bidGet = async(req,res)=>{
+exports.buyGet = async(req,res)=>{
     try{
         let{
             isin
         }= req.body;
 
-        const bidResult = await bidModel.findOne({isin});
+        const buyResult = await buyModel.findOne({isin});
 
        res.status(200).json({
         status:200,
-        message:bidResult
+        message:buyResult
        })
     }catch(err){
         res.send(err)

@@ -7,7 +7,24 @@ const otp= require("../controllers/otp")
 const data = require("../controllers/data")
 const order = require('../controllers/orderBook');
 const investor = require("../controllers/investor");
-const holding = require("../controllers/holding");
+const tokenize = require("../controllers/tokenize");
+const ask = require('../controllers/ask');
+const bid = require('../controllers/bid');
+const buy = require('../controllers/buy');
+const trasactions = require('../controllers/trasactions');
+
+router.post('/ask', ask.askpost);
+router.get('/ask',ask.askGet);
+
+router.post('/bid',bid.bidpost);
+router.get('/bid', bid.bidGet);
+
+router.post('/buy', buy.buypost);
+router.get('/buy', buy.buyGet);
+
+router.post('/transactions', trasactions.trasactions);
+router.get('/transactions', trasactions.getTrasactions)
+
 router.post("/create_investor", investor.createInvestor);
 router.post("/login", investor.login);
 
@@ -20,8 +37,8 @@ router.get("/getUserDetails", investor.InvestorDetails);
 router.post('/order', order.orderbook);
 router.get('/order', order.orderbookget);
 
-router.post('/holding', holding.holdingAPI);
-router.get('/holding', holding.holdingAPIGet);
+router.post('/tokenize', tokenize.tokenizeAPI);
+router.get('/tokenize', tokenize.tokenizeAPIGet);
 
 router.route('/nse_data').post(data.NseMockData).get(data.getNseData)  
   
