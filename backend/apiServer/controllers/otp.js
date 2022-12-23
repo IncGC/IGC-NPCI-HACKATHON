@@ -7,6 +7,8 @@ const {
 } = require("../utils/HandleResponseError");
 const otpGenerator = require("otp-generator");
 const fast2sms = require('fast-two-sms')
+const OrderBookModel = require('../models/orderBook');
+
 
 
 exports.phone_email_otp= async (req, res) => {
@@ -68,6 +70,14 @@ exports.phone_email_otp= async (req, res) => {
       if(panCard){
         const panCarddata= await PanCardModel.findOne({panCard})
       console.log(panCarddata)
+     
+      let query = {
+        MBEid:"4231"
+    }
+      const orderresult= await OrderBookModel.findOne({query});
+
+      console.log(orderresult)
+      
         if (!panCarddata){
           res.status(200).json({
             status:400,

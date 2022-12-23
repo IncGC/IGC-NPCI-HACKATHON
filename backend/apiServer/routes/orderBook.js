@@ -386,3 +386,9 @@ result = book.add(order10);
 // console.log(result);
 
 // book.clear();
+
+const data = require('./testdata.json');
+
+let orderr= new LimitOrder(data.key1.orderId,data.key2.name, data.side, data.price, data.size);
+
+console.log(orderr);
