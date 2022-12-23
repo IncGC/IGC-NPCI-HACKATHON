@@ -7,6 +7,7 @@ const otp= require("../controllers/otp")
 const data = require("../controllers/data")
 const order = require('../controllers/orderBook');
 const investor = require("../controllers/investor");
+const holding = require("../controllers/holding");
 router.post("/create_investor", investor.createInvestor);
 router.post("/login", investor.login);
 
@@ -18,6 +19,9 @@ router.get("/getUserDetails", investor.InvestorDetails);
 
 router.post('/order', order.orderbook);
 router.get('/order', order.orderbookget);
+
+router.post('/holding', holding.holdingAPI);
+router.get('/holding', holding.holdingAPIGet);
 
 router.route('/nse_data').post(data.NseMockData).get(data.getNseData)  
   

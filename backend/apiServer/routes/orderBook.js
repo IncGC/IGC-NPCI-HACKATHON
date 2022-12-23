@@ -326,7 +326,7 @@ class LimitOrderBook {
 const MBEid = "4231";
 
 let orderlist =  OrderBookModel.findOne({MBEid});
-let userid= orderlist.MBEid;
+let userid= orderlist;
 
 console.log(userid);
 // let orderlistjson = JSON.stringify(orderlist);
