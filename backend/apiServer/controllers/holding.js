@@ -38,7 +38,7 @@ exports.holdingAPIGet= async(req,res)=>{
 
         res.status(200).json({
             status:200,
-            message:holdingResult
+            message:"holdingResult"
         })
     } catch(err){
         res.send(err)
