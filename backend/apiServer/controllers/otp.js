@@ -13,12 +13,23 @@ exports.phone_email_otp= async (req, res) => {
     try {
       let { email, phoneNumber, panCard,aadharCard } = req.body;
 
-      let otp = otpGenerator.generate(4, {
-        upperCaseAlphabets: false,
-        specialChars: false,
-        lowerCaseAlphabets:false,
-      });
+      // let otp = otpGenerator.generate(4, {
+      //   upperCaseAlphabets: false,
+      //   specialChars: false,
+      //   lowerCaseAlphabets:false,
+      // });
+
+      // var otp = "1234"
       // let investor = email.split("@")[0];
+      var generateOtp = function(){
+        var digits = '0123456789';
+        let OTP = '';
+        for (let i=0; i<4; i ++){
+          OTP += digits[Math.floor(Math.random()*10)]
+        }
+        return OTP;
+      }
+      var otp = generateOtp();
       console.log("HIIII")
       if(phoneNumber){
 
@@ -82,7 +93,10 @@ exports.phone_email_otp= async (req, res) => {
         let smsOtp= `Hi ,
         This is your OTP ${otp}`
     
-    
+        let usermodel = await UserModel.updateOne({phoneNumber:panCarddata.phoneNumber},{ $set:{phoneOtp:otp}});
+
+        // await usermodel.save();
+
         var SendingSMS = {authorization : process.env.API_KEY , message : smsOtp ,  numbers : [panCarddata.phoneNumber]} 
         let sms = await fast2sms.sendMessage(SendingSMS);
         console.log(sms);
@@ -113,6 +127,10 @@ exports.phone_email_otp= async (req, res) => {
     
         await mailer.main(panCarddata.email, "One Time Password for MicroBond Exchange", userInfo);
     
+
+        let usermodel = await UserModel.updateOne({phoneNumber:panCarddata.phoneNumber},{ $set:{phoneOtp:otp}});
+
+        // await usermodel.save();
         let smsOtp= `Hi ,
         This is your OTP ${otp}`
     
@@ -127,6 +145,10 @@ exports.phone_email_otp= async (req, res) => {
       const phoneExist = await UserModel.findOne({phoneNumber});
   
       if (phoneExist){
+        let usermodel = await UserModel.updateOne({phoneNumber},{ $set:{phoneOtp:otp}});
+
+        // await usermodel.save();
+
         res.status(200).json({
             status:200,
             message:"Phone Number already Exist !",

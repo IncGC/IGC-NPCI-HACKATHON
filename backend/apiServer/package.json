@@ -16,6 +16,7 @@
         "fabric-network": "^2.2.15",
         "fast-two-sms": "^3.0.0",
         "jsonwebtoken": "^8.5.1",
+        "limit-order-book": "^0.3.0",
         "log4js": "^6.7.0",
         "moment": "^2.29.4",
         "mongoose": "^5.12.15",
