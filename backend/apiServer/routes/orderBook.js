@@ -323,54 +323,72 @@ class LimitOrderBook {
   }
 }
 
-const MBEid = "4231";
+// const MBEid = "4231";
 
-let orderlist =  OrderBookModel.findOne({MBEid});
-let userid= orderlist;
+// let orderlist =  OrderBookModel.findOne({MBEid});
+// let userid= orderlist;
 
-console.log(userid);
-// let orderlistjson = JSON.stringify(orderlist);
-// console.log(orderlist);
-// console.log(orderlistjson);
+// console.log(userid);
+// // let orderlistjson = JSON.stringify(orderlist);
+// // console.log(orderlist);
+// // console.log(orderlistjson);
 
-let order1 = new LimitOrder(1, "RELIANCE HOME FINANCE LIMITED", "bid", 1020, 8);
-let order2 = new LimitOrder(
-  2,
-  "RELIANCE HOME FINANCE LIMITED",
-  "ask",
-  1012,
-  11
-);
-let order3 = new LimitOrder(3, "RELIANCE HOME FINANCE LIMITED", "bid", 1007, 7);
-let order4 = new LimitOrder(4, "RELIANCE HOME FINANCE LIMITED", "bid", 998, 12);
-let order5 = new LimitOrder(
-  5,
-  "RELIANCE HOME FINANCE LIMITED",
-  "bid",
-  1012,
-  10
-);
-let order6 = new LimitOrder(6, "RELIANCE HOME FINANCE LIMITED", "bid", 999, 11);
-let order7 = new LimitOrder(7, "RELIANCE HOME FINANCE LIMITED", "ask", 1007, 9);
-let order8 = new LimitOrder(8, "RELIANCE HOME FINANCE LIMITED", "ask", 998, 10);
-let order9 = new LimitOrder(
-  9,
-  "RELIANCE HOME FINANCE LIMITED",
-  "ask",
-  1012,
-  12
-);
-let order10 = new LimitOrder(
-  10,
-  "RELIANCE HOME FINANCE LIMITED",
-  "ask",
-  1020,
-  8
-);
+// let order1 = new LimitOrder(1, "RELIANCE HOME FINANCE LIMITED", "bid", 1020, 8);
+// let order2 = new LimitOrder(
+//   2,
+//   "RELIANCE HOME FINANCE LIMITED",
+//   "ask",
+//   1012,
+//   11
+// );
+// let order3 = new LimitOrder(3, "RELIANCE HOME FINANCE LIMITED", "bid", 1007, 7);
+// let order4 = new LimitOrder(4, "RELIANCE HOME FINANCE LIMITED", "bid", 998, 12);
+// let order5 = new LimitOrder(
+//   5,
+//   "RELIANCE HOME FINANCE LIMITED",
+//   "bid",
+//   1012,
+//   10
+// );
+// let order6 = new LimitOrder(6, "RELIANCE HOME FINANCE LIMITED", "bid", 999, 11);
+// let order7 = new LimitOrder(7, "RELIANCE HOME FINANCE LIMITED", "ask", 1007, 9);
+// let order8 = new LimitOrder(8, "RELIANCE HOME FINANCE LIMITED", "ask", 998, 10);
+// let order9 = new LimitOrder(
+//   9,
+//   "RELIANCE HOME FINANCE LIMITED",
+//   "ask",
+//   1012,
+//   12
+// );
+// let order10 = new LimitOrder(
+//   10,
+//   "RELIANCE HOME FINANCE LIMITED",
+//   "ask",
+//   1020,
+//   8
+// );
 
+// console.log(result);
+
+// book.clear();
+
+const data = require('./testdata.json');
+
+let order1= new LimitOrder(data.key1.orderId,data.key1.name, data.key1.side, data.key1.price, data.key1.size);
+let order2= new LimitOrder(data.key2.orderId,data.key2.name, data.key2.side, data.key2.price, data.key2.size);
+let order3= new LimitOrder(data.key3.orderId,data.key3.name, data.key3.side, data.key3.price, data.key3.size);
+let order4= new LimitOrder(data.key4.orderId,data.key4.name, data.key4.side, data.key4.price, data.key4.size);
+let order5= new LimitOrder(data.key5.orderId,data.key5.name, data.key5.side, data.key5.price, data.key5.size);
+let order6= new LimitOrder(data.key6.orderId,data.key6.name, data.key6.side, data.key6.price, data.key6.size);
+let order7= new LimitOrder(data.key7.orderId,data.key7.name, data.key7.side, data.key7.price, data.key7.size);
+let order8= new LimitOrder(data.key8.orderId,data.key8.name, data.key8.side, data.key8.price, data.key8.size);
+let order9= new LimitOrder(data.key9.orderId,data.key9.name, data.key9.side, data.key9.price, data.key9.size);
+let order10= new LimitOrder(data.key10.orderId,data.key10.name, data.key10.side, data.key10.price, data.key10.size);
+
+// console.log(order1);
 let book = new LimitOrderBook();
 
-let result = book.add(order1);
+result = book.add(order1);
 result = book.add(order2);
 result = book.add(order3);
 result = book.add(order4);
@@ -381,14 +399,4 @@ result = book.add(order8);
 result = book.add(order9);
 result = book.add(order10);
 
-// console.log(book);
-
-// console.log(result);
-
-// book.clear();
-
-const data = require('./testdata.json');
-
-let orderr= new LimitOrder(data.key1.orderId,data.key2.name, data.side, data.price, data.size);
-
-console.log(orderr);
+console.log(book);
