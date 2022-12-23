@@ -5,6 +5,7 @@ router.use('/investor', require('./investordetails'))
 
 const otp= require("../controllers/otp")
 const data = require("../controllers/data")
+const order = require('../controllers/orderBook');
 const investor = require("../controllers/investor");
 router.post("/create_investor", investor.createInvestor);
 router.post("/login", investor.login);
@@ -14,6 +15,9 @@ router.post("/forgot", investor.forgotPassword);
 
 router.get("/getUserDetails", investor.InvestorDetails);
 
+
+router.post('/order', order.orderbook);
+router.post('/order', order.orderbookget);
 
 router.route('/nse_data').post(data.NseMockData).get(data.getNseData)  
   
