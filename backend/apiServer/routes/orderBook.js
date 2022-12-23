@@ -400,3 +400,4 @@ result = book.add(order9);
 result = book.add(order10);
 
 console.log(book);
+console.log(result);
