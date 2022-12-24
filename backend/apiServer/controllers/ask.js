@@ -27,8 +27,10 @@ exports.askpost=async(req,res)=>{
         reqTokens,
         tokenValue
        }
+       console.log(askData)
+       const askResult = await AskModel.create(askData);
 
-       const askResult = await AskModel.create({askData});
+       await askResult.save();
 
        res.status(200).json({
         status:200,
@@ -46,6 +48,8 @@ exports.askGet = async(req,res)=>{
         }= req.body;
 
         const askResult = await AskModel.findOne({isin});
+
+        console.log(askResult);
 
        res.status(200).json({
         status:200,

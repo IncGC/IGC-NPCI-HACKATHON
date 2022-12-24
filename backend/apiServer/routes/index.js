@@ -11,7 +11,7 @@ const tokenize = require("../controllers/tokenize");
 const ask = require('../controllers/ask');
 const bid = require('../controllers/bid');
 const buy = require('../controllers/buy');
-const trasactions = require('../controllers/trasactions');
+const trasactions = require('../controllers/transactions');
 
 router.post('/ask', ask.askpost);
 router.get('/ask',ask.askGet);
@@ -22,8 +22,8 @@ router.get('/bid', bid.bidGet);
 router.post('/buy', buy.buypost);
 router.get('/buy', buy.buyGet);
 
-router.post('/transactions', trasactions.trasactions);
-router.get('/transactions', trasactions.getTrasactions)
+router.post('/transactions', trasactions.transaction);
+router.get('/transactions/:_id', trasactions.getTrasactions)
 
 router.post("/create_investor", investor.createInvestor);
 router.post("/login", investor.login);
@@ -39,6 +39,9 @@ router.get('/order', order.orderbookget);
 
 router.post('/tokenize', tokenize.tokenizeAPI);
 router.get('/tokenize', tokenize.tokenizeAPIGet);
+
+router.post('/org', data.orgPost);
+router.get('/org', data.orgGet);
 
 router.route('/nse_data').post(data.NseMockData).get(data.getNseData)  
   

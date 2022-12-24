@@ -342,8 +342,7 @@ class LimitOrderBook {
 //   11
 // );
 // let order3 = new LimitOrder(3, "RELIANCE HOME FINANCE LIMITED", "bid", 1007, 7);
-// let order4 = new LimitOrder(4, "RELIANCE HOME FINANCE LIMITED", "bid", 998, 12);
-// let order5 = new LimitOrder(
+// let order4 = new LimitOrder(4, "My
 //   5,
 //   "RELIANCE HOME FINANCE LIMITED",
 //   "bid",

@@ -44,11 +44,11 @@ exports.tokenizeAPI= async(req,res)=>{
 exports.tokenizeAPIGet= async(req,res)=>{
     try{
         let { isin }=req.body;
-        tokenizeResult = await tokenizeModel.findOne({isin})
+        tokenizeResult = await tokenizeModel.findById({_id})
 
         res.status(200).json({
             status:200,
-            message:"tokenizeResult"
+            message:tokenizeResult
         })
     } catch(err){
         res.send(err)

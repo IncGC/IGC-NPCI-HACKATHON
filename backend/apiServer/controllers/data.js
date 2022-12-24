@@ -1,11 +1,53 @@
 
 const NseModel = require("../models/NseData");
 const PanCardModel = require("../models/PanCard");
-
+const orgModel = require("../models/org");
 const {
     ObjectExistsError
 } = require("../utils/HandleResponseError")
 
+
+exports.orgPost = async(req,res)=>{
+  try{
+    let {
+      orgID,
+      marketOpen
+    }=req.body;
+
+    const orgData= {
+      orgID,
+      marketOpen
+    }
+
+    const orgResult= await orgModel.create({orgData});
+
+    res.status(200).json({
+      status:200,
+      message:orgResult
+    })
+  }catch(err){
+    res.send(err)
+  }
+}
+
+exports.orgGet = async(req,res)=>{
+  try{
+    let {
+      orgID
+    }=req.body;
+
+  
+
+    const orgResult= await orgModel.findOne({orgID});
+
+    res.status(200).json({
+      status:200,
+      message:orgResult
+    })
+  }catch(err){
+    res.send(err)
+  }
+}
 
 exports.NseMockData =  async(req, res)=>{
   try{
