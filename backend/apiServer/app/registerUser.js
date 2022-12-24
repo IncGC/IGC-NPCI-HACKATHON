@@ -2,7 +2,7 @@ const { Wallets } = require("fabric-network");
 const FabricCAServices = require('fabric-ca-client');
 
 const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require("../utils/CAUtil")
-const { buildCCPOrg1, buildCCPOrg2, buildWallet, buildCCPOrg3, buildCCPOrg4, buildCCPOrg5 } = require("../utils/AppUtils");
+const { buildCCPOrg1, buildCCPOrg2, buildWallet, buildCCPOrg3 } = require("../utils/AppUtils");
 const { getCCP,getWallets,getCredentials } = require("../utils/buildCCP");
 
 

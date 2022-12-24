@@ -73,51 +73,7 @@ Organizations:
                 Rule: "OR('org3MSP.peer')"        
         AnchorPeers: 
             - Host: peer0.org3.mbe.com
-              Port: 11051 
-
-
-    - &org4
-        Name: org4MSP
-        ID: org4MSP
-        MSPDir: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/peerOrganizations/org4.mbe.com/msp
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('org4MSP.admin', 'org4MSP.peer', 'org4MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('org4MSP.admin', 'org4MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('org4MSP.admin')"      
-            Endorsement:
-                Type: Signature
-                Rule: "OR('org4MSP.peer')"        
-        AnchorPeers: 
-            - Host: peer0.org4.mbe.com
-              Port: 13051      
-
-
-    - &org5
-        Name: org5MSP
-        ID: org5MSP
-        MSPDir: /home/pintu2/npciHackathon/blockchainNetwork/crypto-config/peerOrganizations/org5.mbe.com/msp
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('org5MSP.admin', 'org5MSP.peer', 'org5MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('org5MSP.admin', 'org5MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('org5MSP.admin')"      
-            Endorsement:
-                Type: Signature
-                Rule: "OR('org5MSP.peer')"        
-        AnchorPeers: 
-            - Host: peer0.org5.mbe.com
-              Port: 15051         
+              Port: 11051        
 Capabilities:
     Channel: &ChannelCapabilities
         V2_0: true
@@ -233,8 +189,6 @@ Profiles:
                    - *org1
                    - *org2
                    - *org3
-                   - *org4
-                   - *org5
     common:
         Consortium: Consortiumcommon
         <<: *ChannelDefaults
@@ -244,7 +198,5 @@ Profiles:
                 - *org1
                 - *org2
                 - *org3
-                - *org4
-                - *org5
             Capabilities:
                 <<: *ApplicationCapabilities

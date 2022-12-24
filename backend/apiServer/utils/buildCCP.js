@@ -14,12 +14,6 @@ exports.getCCP = (org) => {
         case 3:
             ccp = buildCCPOrg3();
             break;
-        case 4:
-            ccp = buildCCPOrg4();
-            break;
-        case 5:
-            ccp = buildCCPOrg5();
-            break;
     }
     return ccp;
 }
@@ -35,12 +29,6 @@ exports.getWallets = (org) => {
             break;
         case 3:
             wallet = path.join(__dirname, '../wallets', "org3wallet")
-            break;
-        case 4:
-            wallet = path.join(__dirname, '../wallets', "org4wallet")
-            break;
-        case 5:
-            wallet = path.join(__dirname, '../wallets', "org5wallet")
             break;
     }
     // console.log("wallet value is", wallet)
@@ -63,14 +51,7 @@ exports.getCredentials = async (org) => {
             adminid = 'mbev3org1';
             adminpwd = 'passw0rd';
             break;
-        case 4:
-            adminid = 'mbev3org1';
-            adminpwd = 'passw0rd';
-            break;
-        case 5:
-            adminid = 'mbev2org1';
-            adminpwd = 'passw0rd';
-            break;
+
     }
     // console.log("adminid, adminpwd", adminid, adminpwd)
     return [adminid, adminpwd];

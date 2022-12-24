@@ -21,19 +21,4 @@ sh approve_chaincode.sh
 
 echo "Approval by Org3 container  successfully"
 
-echo "Approval for org4 container is started "
-cd ../org4
-
-sh approve_chaincode.sh
-
-echo "Approval by Org4 container  successfully"
-
-
-echo "Approval for org5 container is started "
-cd ../org5
-
-sh approve_chaincode.sh
-
-echo "Approval by Org5 container  successfully"
-
 set -e

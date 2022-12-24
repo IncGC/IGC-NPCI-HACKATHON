@@ -23,6 +23,11 @@ const {
 } = require("../utils/HandleResponseError");
 const { response } = require("express");
 
+
+//  registerUser({ OrgMSP: "org1MSP", userId: "prudhvi" });
+
+
+
 exports.createInvestor = async (req, res) => {
   try {
     const {
@@ -155,8 +160,6 @@ exports.createInvestor = async (req, res) => {
     const userResult1 = await UserModel.findOne({ panCard }).select(
       "-password"
     );
-    // delete userResult["password"];
-    // console.log("userResult"+userResult.JSON.stringyfy())
     
         console.log(userResult1);
  

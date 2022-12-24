@@ -42,18 +42,6 @@ sh start_container.sh
 
 echo "org3 container up successfully"
 
-echo "org4 container up"
-cd ../org4
-sh start_container.sh
-
-echo "org4 container up successfully"
-
-echo "org5 container up"
-cd ../org5
-sh start_container.sh
-
-echo "org5 container up successfully"
-
 cd ..
 sh packageinstallchaincode.sh
 
