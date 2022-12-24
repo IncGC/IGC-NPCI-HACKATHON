@@ -32,17 +32,7 @@ exports.phone_email_otp= async (req, res) => {
         return OTP;
       }
       var otp = generateOtp();
-      console.log("HIIII")
-      if(phoneNumber){
-
-      let smsOtp= `Hi,
-      This is your OTP ${otp}`
-  
-  
-      var SendingSMS = {authorization : process.env.API_KEY , message : smsOtp ,  numbers : [phoneNumber]} 
-      let sms = await fast2sms.sendMessage(SendingSMS);
-      console.log(sms);
-      }
+      console.log("HIIII")  
   
       if(email){
         let investor = email.split("@")[0];
@@ -61,9 +51,21 @@ exports.phone_email_otp= async (req, res) => {
         phoneNumber,
         phoneOtp:otp,
       };
+      let userExis = await UserModel.findOne({email});
+      if (userExis){
+        await userExis.updateOne({email},{$set:{phoneOtp:otp}})
+        await userExis.save();
+        res.status(200).json({
+          status:200,
+          message:"User Exist ! Updated OTP sent Successfully !!"
+        })
+        return
 
-      let userResult = await UserModel.create(userData);
-      await userResult.save();
+      }else{
+        let userResult = await UserModel.create(userData);
+        await userResult.save();
+      }
+      
 
       }
       console.log("HIIII")
@@ -150,8 +152,7 @@ exports.phone_email_otp= async (req, res) => {
         console.log(sms);
       }
   
-     
-  
+     if(phoneNumber){
       const phoneExist = await UserModel.findOne({phoneNumber});
   
       if (phoneExist){
@@ -164,13 +165,26 @@ exports.phone_email_otp= async (req, res) => {
             message:"Phone Number already Exist !",
         })
         return;
+    }else{
+
+      let smsOtp= `Hi,
+      This is your OTP ${otp}`
+  
+  
+      var SendingSMS = {authorization : process.env.API_KEY , message : smsOtp ,  numbers : [phoneNumber]} 
+      let sms = await fast2sms.sendMessage(SendingSMS);
+      console.log(sms);
     }
+
+     }
+  
+      
       const {wallet} = await fast2sms.getWalletBalance(process.env.API_KEY);
       console.log(wallet);
       res.status(200).json({
         status_code:200,
         message:" OTP sent Successfully",
-       
+        
     })   
     } catch (err) {
       res.send("err");
