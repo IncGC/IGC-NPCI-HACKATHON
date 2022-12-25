@@ -36,9 +36,8 @@ exports.USER_STATUS = {
 
 
 exports.CHAINCODE_NAMES = {
-	TOKEN:'token',
-	INVESTORDETAILS:'investordetails',
-	USERS:'Users'
+	TOKENIZE:'Tokenize',
+	TRASANSATIONS:'Transactions'
 }
 
 

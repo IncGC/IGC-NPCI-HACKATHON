@@ -45,33 +45,9 @@
 					"chaincodeQuery": true,
 					"ledgerQuery": true,
 					"eventSource": false
-        },
-				"peer0.org4.mbe.com": {
-					"endorsingPeer": true,
-					"chaincodeQuery": true,
-					"ledgerQuery": true,
-					"eventSource": true
-        },
-				"peer1.org4.mbe.com": {
-					"endorsingPeer": false,
-					"chaincodeQuery": true,
-					"ledgerQuery": true,
-					"eventSource": false
-        },
-				"peer0.org5.mbe.com": {
-					"endorsingPeer": true,
-					"chaincodeQuery": true,
-					"ledgerQuery": true,
-					"eventSource": true
-        },
-				"peer1.org5.mbe.com": {
-					"endorsingPeer": false,
-					"chaincodeQuery": true,
-					"ledgerQuery": true,
-					"eventSource": false
         }
      },
-      "chaincodes": [ "tokencc:v1.0" ]
+      "chaincodes": [ "Tokenizecc:v1.0", "Transactionscc:v1.0" ]
       }
     },
 	"organizations": {
@@ -119,36 +95,6 @@
             "peers": [
 				"peer0.org3.mbe.com",
 				"peer1.org3.mbe.com" ]
-				},
-		"org4": {
-           "mspid": "org4MSP",
-           "certificateAuthorities": [
-               "ca.org4.mbe.com"
-            ],
-            "adminPrivateKey": {
-				"path": "./crypto/org4/admin/msp/keystore/priv_sk"
-			},
-			"signedCert": {
-				"path": "./crypto/org4/admin/msp/signcerts/Admin@org4.mbe.com-cert.pem"
-			},
-            "peers": [
-				"peer0.org4.mbe.com",
-				"peer1.org4.mbe.com" ]
-				},
-		"org5": {
-           "mspid": "org5MSP",
-           "certificateAuthorities": [
-               "ca.org5.mbe.com"
-            ],
-            "adminPrivateKey": {
-				"path": "./crypto/org5/admin/msp/keystore/priv_sk"
-			},
-			"signedCert": {
-				"path": "./crypto/org5/admin/msp/signcerts/Admin@org5.mbe.com-cert.pem"
-			},
-            "peers": [
-				"peer0.org5.mbe.com",
-				"peer1.org5.mbe.com" ]
 				}
     },
 	"peers": {
@@ -211,46 +157,6 @@
         "tlsCACerts": {
             "path": "./crypto/org3/tls/peer1/ca.crt"
         }
-    },
-  "peer0.org4.mbe.com": {
-        "url": "grpcs://localhost:13051",
-        "eventUrl": "grpcs://localhost:13053",
-        "grpcOptions": {
-            "ssl-target-name-override": "peer0.org4.mbe.com"
-        },
-        "tlsCACerts": {
-            "path": "./crypto/org4/tls/peer0/ca.crt"
-        }
-    },
-  "peer1.org4.mbe.com": {
-        "url": "grpcs://localhost:14051",
-        "eventUrl": "grpcs://localhost:14053",
-        "grpcOptions": {
-            "ssl-target-name-override": "peer1.org4.mbe.com"
-        },
-        "tlsCACerts": {
-            "path": "./crypto/org4/tls/peer1/ca.crt"
-        }
-    },
-  "peer0.org5.mbe.com": {
-        "url": "grpcs://localhost:15051",
-        "eventUrl": "grpcs://localhost:15053",
-        "grpcOptions": {
-            "ssl-target-name-override": "peer0.org5.mbe.com"
-        },
-        "tlsCACerts": {
-            "path": "./crypto/org5/tls/peer0/ca.crt"
-        }
-    },
-  "peer1.org5.mbe.com": {
-        "url": "grpcs://localhost:16051",
-        "eventUrl": "grpcs://localhost:16053",
-        "grpcOptions": {
-            "ssl-target-name-override": "peer1.org5.mbe.com"
-        },
-        "tlsCACerts": {
-            "path": "./crypto/org5/tls/peer1/ca.crt"
-        }
     }
    },
 	"certificateAuthorities": {
@@ -295,36 +201,6 @@
         "registrar": [
             {
                 "enrollId": "mbeorg3",
-                "enrollSecret": "IGCnetwork"
-            }
-        ]
-    },
-  "ca.org4.mbe.com": {
-        "url": "https://localhost:10054",
-        "httpOptions": {
-		    "verify": false
-		},
-        "tlsCACerts": {
-            "path": "./crypto/org4/tls/ca/ca.org4.mbe.com-cert.pem"
-        },
-        "registrar": [
-            {
-                "enrollId": "mbeorg4",
-                "enrollSecret": "IGCnetwork"
-            }
-        ]
-    },
-  "ca.org5.mbe.com": {
-        "url": "https://localhost:11054",
-        "httpOptions": {
-		    "verify": false
-		},
-        "tlsCACerts": {
-            "path": "./crypto/org5/tls/ca/ca.org5.mbe.com-cert.pem"
-        },
-        "registrar": [
-            {
-                "enrollId": "mbeorg5",
                 "enrollSecret": "IGCnetwork"
             }
         ]

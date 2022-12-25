@@ -3,6 +3,7 @@ const { Wallets, Gateway } = require('fabric-network');
 const path = require("path");
 const { buildWallet } = require('../utils/AppUtils');
 const { CHAINCODE_ACTIONS } = require("../utils/helper");
+const { getSchema } = require('../utils/Schema')
 
 
 let defaultValue = { userName: "mbev1org1", org: "org1MSP" }
@@ -16,8 +17,11 @@ exports.invokeTransaction = async ({
     chainCodeAction
 }) => {
 
+
+    console.log("hiihihihihih")
     // getting schema
     let schema = getSchema(chainCodeName)
+    console.log("chainCodeName");
 
     let num = Number(metaInfo.org.match(/\d/g).join(""));
 
@@ -25,7 +29,7 @@ exports.invokeTransaction = async ({
 
     const walletPath = await getWallets(num);
 
-    // console.log("wallet path is",walletPath);
+    console.log("wallet path is",walletPath);
 
     const wallet = await buildWallet(Wallets, walletPath);
 

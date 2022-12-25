@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const passport = require('passport')
-router.use('/token', require('./token'))
-router.use('/investor', require('./investordetails'))
+router.use('/token', require('./tokenize'))
+router.use('/transactions', require('./transactions'))
 
 const otp= require("../controllers/otp")
 const data = require("../controllers/data")

@@ -12,9 +12,10 @@ docker volume rm $(docker volume ls)
 
 set -e
 
-echo "Docker is cleared"
 
 # docker rmi $(docker images -q)
+
+echo "Docker is cleared"
 
 
 echo "Orderer container up"
