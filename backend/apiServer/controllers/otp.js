@@ -28,7 +28,7 @@ exports.phone_email_otp = async (req, res) => {
       return OTP;
     };
     var otp = generateOtp();
-    console.log("HIIII");
+    console.log(otp);
 
     if (email) {
       let investor = email.split("@")[0];
@@ -65,7 +65,7 @@ exports.phone_email_otp = async (req, res) => {
         await userResult.save();
       }
     }
-    console.log("HIIII");
+    // console.log("HIIII");
     if (panCard) {
       const panCarddata = await PanCardModel.findOne({ panCard });
       console.log(panCarddata);
@@ -212,15 +212,16 @@ exports.phone_email_verification = async (req, res, next) => {
   try {
     const { phoneNumber, email, enterOtp, aadharCard, panCard } = req.body;
     const userResult = await UserModel.findOne({ phoneNumber });
+    const userResultemail = await UserModel.findOne({email});
     console.log(userResult);
-    if (!userResult) {
+    if (!userResult || !userResultemail) {
       res.send({
         status: 400,
         message: "User not found",
       });
       return;
     }
-    if (userResult.phoneOtp !== enterOtp) {
+    if (userResult.phoneOtp !== enterOtp || userResultemail.phoneOtp !== enterOtp) {
       res.send({
         status: 400,
         message: "Wrong OTP entered",
