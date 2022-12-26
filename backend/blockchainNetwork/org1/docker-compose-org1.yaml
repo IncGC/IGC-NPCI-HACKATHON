@@ -125,7 +125,7 @@ services:
     
   cli-org1:
     container_name: cli-org1
-    image: hyperledger/fabric-tools:latest
+    image: hyperledger/fabric-tools
     tty: true
     stdin_open: true
     environment:

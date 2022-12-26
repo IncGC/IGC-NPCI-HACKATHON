@@ -36,7 +36,7 @@ exports.USER_STATUS = {
 
 
 exports.CHAINCODE_NAMES = {
-	TOKENIZE:'Tokenize',
+	Bond:'Bond',
 	TRASANSATIONS:'Transactions'
 }
 

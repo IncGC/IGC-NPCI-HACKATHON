@@ -47,7 +47,7 @@
 					"eventSource": false
         }
      },
-      "chaincodes": [ "Tokenizecc:v1.0", "Transactionscc:v1.0" ]
+      "chaincodes": [ "Bondcc:v1.0", "Transactionscc:v1.0" ]
       }
     },
 	"organizations": {

@@ -21,6 +21,9 @@ const userSchema = new schema({
     phoneOtp:String,
     role: String,
     nse_registerd:Boolean,
+    bondholdingID: { type: ObjectId, ref: 'Bond' },
+    tokenholdingID:{type: ObjectId, ref :"Token"},
+    transactionId: {type: ObjectId, ref : "Transaction"},
     createdBy: { type: ObjectId, ref: 'User' }
 }, { timestamps: true });
 

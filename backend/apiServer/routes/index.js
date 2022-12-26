@@ -1,13 +1,13 @@
 const router = require('express').Router()
 const passport = require('passport')
-router.use('/token', require('./tokenize'))
+router.use('/token', require('./bond'))
 router.use('/transactions', require('./transactions'))
 
 const otp= require("../controllers/otp")
 const data = require("../controllers/data")
 const order = require('../controllers/orderBook');
 const investor = require("../controllers/investor");
-const tokenize = require("../controllers/tokenize");
+const Bond = require("../controllers/Bond");
 const ask = require('../controllers/ask');
 const bid = require('../controllers/bid');
 const buy = require('../controllers/buy');
@@ -37,8 +37,8 @@ router.get("/getUserDetails", investor.InvestorDetails);
 router.post('/order', order.orderbook);
 router.get('/order', order.orderbookget);
 
-router.post('/tokenize', tokenize.tokenizeAPI);
-router.get('/tokenize', tokenize.tokenizeAPIGet);
+router.post('/Bond', Bond.BondAPI);
+router.get('/Bond', Bond.BondAPIGet);
 
 router.post('/org', data.orgPost);
 router.get('/org', data.orgGet);
