@@ -10,7 +10,6 @@ import (
 
 	"github.com/hyperledger/fabric-chaincode-go/shim"
 	"github.com/hyperledger/fabric-protos-go/peer"
-	"golang.org/x/text/currency"
 )
 
 type BondChaincode struct {
