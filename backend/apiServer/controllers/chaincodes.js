@@ -22,8 +22,8 @@ exports.bond= async(req,res)=>{
         } = req.body;
 
         const bondData= {
-            Id:"1234",
-            CreatedOn:new Date(),
+            Id:generateId(),
+            CreatedOn:getNow(),
             CreatedBy: "admin",
             IsDelete:false,
             IsHidden:false,
@@ -85,8 +85,8 @@ exports.bondHoldings= async(req,res)=>{
         }= req.body;
 
         const bondHoldingData={
-            Id:"1234",
-            CreatedOn:new Date(),
+            Id:generateId(),
+            CreatedOn:getNow(),
             CreatedBy: "admin",
             IsDelete:false,
             IsHidden:false,
@@ -146,8 +146,8 @@ exports.TokenHolding= async(req,res)=>{
         }= req.body;
 
         const TokenHoldingData={
-            Id:"1234",
-            CreatedOn:new Date(),
+            Id:generateId(),
+            CreatedOn:getNow(),
             CreatedBy: "admin",
             IsDelete:false,
             IsHidden:false,
@@ -201,8 +201,8 @@ exports.Transactions = async(req,res)=>{
     } = req.body;
 
     const transactionData={
-        Id:"1234",
-        CreatedOn:new Date(),
+        Id:generateId(),
+        CreatedOn:getNow(),
         CreatedBy: "admin",
         IsDelete:false,
         IsHidden:false,

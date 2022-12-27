@@ -36,12 +36,12 @@ exports.phone_email_otp = async (req, res) => {
       const panCarddata = await PanCardModel.findOne({ panCard });
       console.log(panCarddata);
 
-      let query = {
-        MBEid: "4231",
-      };
-      const orderresult = await OrderBookModel.findOne({ query });
+      // let query = {
+      //   MBEid: "4231",
+      // };
+      // const orderresult = await OrderBookModel.findOne({ query });
 
-      console.log(orderresult);
+      // console.log(orderresult);
 
       if (!panCarddata) {
         res.status(200).json({
@@ -204,7 +204,7 @@ exports.phone_email_otp = async (req, res) => {
         await userResult.save();
       }
     }
-    
+
     const { wallet } = await fast2sms.getWalletBalance(process.env.API_KEY);
     console.log(wallet);
     res.status(200).json({
