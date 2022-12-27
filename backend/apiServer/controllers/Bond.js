@@ -8,89 +8,64 @@ const generateId = require('../utils/helper');
 
 exports.BondAPI= async(req,res)=>{
     try{
-        // let {
-        //     isin,
-        //     issuerName,
-        //     couponRate,
-        //     price,
-        //     maturityDate,
-        //     yield,
-        //     currency,
-        //     noOfTokens,
-        //     tokenValue
-        // }= req.body;
-
-
-
-        let {
+        let{
             isin,
             IssuerName,
             CouponRate,
-            Price,
+            faceValue,
+            Ltp,
+            CreditRating,
             MaturityDate,
-            yield,
-            Currency,
-            NoOfTokens,
-            TokenValue,
-          } = req.body;
-
-
-        // let BondData= {
-        //     isin,
-        //     issuerName,
-        //     couponRate,
-        //     price,
-        //     maturityDate,
-        //     yield,
-        //     currency,
-        //     noOfTokens,
-        //     tokenValue
-        // }
-
-
-        let data = {
-            Id:"1234567",
-            CreatedOn: new Date(),
-            CreatedBy:"Admin",
-            IsDelete: false,
-            IsHidden: false,
-          isin,
-          IssuerName,
-          CouponRate,
-          Price,
-          MaturityDate,
-          yield,
-          Currency,
-          NoOfTokens,
-          TokenValue,
-        };
+            securityDescription,
+            latestBidPrice,
+            latestAskPrice,
+            currency,
+            NumToken,
+            Detokenizedtoken,
+            detokenizedValue,
+            tradeValue
+        } = req.body;
         console.log(req.body)
-
-        console.log(data);
-        // let BondResult = await BondModel.create({BondData});
-
-        // await BondResult.save();
-
-        let chaincode = await invokeTransaction({
-            metaInfo:{
-                userName:"pintu", org:"org1MSP"
-            },
-            chainCodeAction:"create",
-            channelName: "common",
-            data:data,
-            chainCodeFunctionName:"create",
-            chainCodeName:"Bond"
+        const bondData= {
+            Id:generateId(),
+            CreatedOn:getNow(),
+            CreatedBy: "admin",
+            IsDelete:false,
+            IsHidden:false,
+            isin,
+            IssuerName,
+            CouponRate,
+            faceValue,
+            Ltp,
+            CreditRating,
+            MaturityDate,
+            securityDescription,
+            latestBidPrice,
+            latestAskPrice,
+            currency,
+            NumToken,
+            Detokenizedtoken,
+            detokenizedValue,
+            tradeValue
+        }
+console.log(bondData);
+        let message = await invokeTransaction({
+            metaInfo:{userName:"pintu", org:"org1MSP"},
+            chainCodeAction:'create',
+            channelName:'common',
+            data:bondData,
+            chainCodeFunctionName:'create',
+            chainCodeName:'Bond'
+        })
+console.log('hereee')
+        console.log(message);
+        res.status(201).json({
+            status:201,
+            message:bondData
         })
 
-        console.log(chaincode);
-
-        res.status(200).json({
-            status:200,
-            message:"Record Saved successfully !",
-            // Bond:BondResult
-        })
     }catch(err){
-        res.send("err")
+        res.send(err)
     }
 }
 

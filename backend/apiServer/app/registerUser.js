@@ -10,11 +10,11 @@ exports.registerUser = async ({ OrgMSP, userId }) => {
 
     let org = Number(OrgMSP.match(/\d/g).join(""));
 
-    console.log("orga value is",org, OrgMSP,userId)
+    // console.log("orga value is",org, OrgMSP,userId)
 
     let ccp = getCCP(org);
 
-    console.log("CCP value is",ccp)
+    // console.log("CCP value is",ccp)
 
     let walletPath = getWallets(org);
 

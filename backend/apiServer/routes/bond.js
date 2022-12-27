@@ -13,72 +13,66 @@ const moment = require('moment')
 const { invokeTransaction } = require("../app/invoke");
 
 router.post("/liveMarket", async (req, res) => {
-  try {
-    console.log("hiiiiiiiiii")
-    let {
-      isin,
-      IssuerName,
-      CouponRate,
-      faceValue,
-      Ltp,
-      CreditRating,
-      MaturityDate,
-      securityDescription,
-      latestBidPrice,
-      latestAskPrice,
-      currency,
-      NumToken,
-      Detokenizedtoken,
-      detokenizedValue,
-      tradeValue
-    } = req.body;
-    console.log("data"+ req.body)
-    console.log("hiiiiiiiiii")
+ try{
+        let{
+            isin,
+            IssuerName,
+            CouponRate,
+            faceValue,
+            Ltp,
+            CreditRating,
+            MaturityDate,
+            securityDescription,
+            latestBidPrice,
+            latestAskPrice,
+            currency,
+            NumToken,
+            Detokenizedtoken,
+            detokenizedValue,
+            tradeValue
+        } = req.body;
+console.log(req.body)
+        const bondData= {
+          Id:generateId(),
+          CreatedOn:getNow(),
+          CreatedBy: "admin",
+          IsDelete:false,
+          IsHidden:false,
+          isin,
+          IssuerName,
+          CouponRate,
+          faceValue,
+          Ltp,
+          CreditRating,
+          MaturityDate,
+          securityDescription,
+          latestBidPrice,
+          latestAskPrice,
+          currency,
+          NumToken,
+          Detokenizedtoken,
+          detokenizedValue,
+          tradeValue
+        }
+console.log(bondData);
+        let message = await invokeTransaction({
+            metaInfo:{userName:"pintu", org:"org1MSP"},
+            chainCodeAction:'create',
+            channelName:'common',
+            data:bondData,
+            chainCodeFunctionName:'create',
+            chainCodeName:'Bond'
+        })
+console.log('hereee')
+        console.log(message);
+        res.status(201).json({
+            status:201,
+            message:bondData
+        })
 
-    let id = generateId()
-    console.log("wewehiiiiiiiiii")
-
-    var created_on = moment(new Date()).format();
-    console.log("dfghjkhiiiiiiiiii")
-    
-    let data = {
-        Id:id,
-        CreatedOn: created_on,
-        CreatedBy:"Admin",
-        IsDelete: false,
-        IsHidden: false,
-        isin,
-        IssuerName,
-        CouponRate,
-        faceValue,
-        Ltp,
-        CreditRating,
-        MaturityDate,
-        securityDescription,
-        latestBidPrice,
-        latestAskPrice,
-        currency,
-        NumToken,
-        Detokenizedtoken,
-        detokenizedValue,
-        tradeValue
-    };
-    let message = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
-      chainCodeAction: "create",
-      channelName: "common",
-      data: data,
-      chainCodeFunctionName: "create",
-      chainCodeName: "Bond",
-    });
-    console.log(message);
-    res.status(201).json({
-        status:200,
-        message:message
-    });
-  } catch (err) {
-    res.send("err");
-  }
+    }catch(err){
+        res.send(err)
+    }
 });
 
 module.exports = router;

@@ -29,7 +29,7 @@ exports.invokeTransaction = async ({
 
     const walletPath = await getWallets(num);
 
-    console.log("wallet path is",walletPath);
+    // console.log("wallet path is",walletPath);
 
     const wallet = await buildWallet(Wallets, walletPath);
 

@@ -20,7 +20,7 @@ exports.bond= async(req,res)=>{
             detokenizedValue,
             tradeValue
         } = req.body;
-
+console.log(req.body)
         const bondData= {
             Id:generateId(),
             CreatedOn:getNow(),
@@ -43,16 +43,16 @@ exports.bond= async(req,res)=>{
             detokenizedValue,
             tradeValue
         }
-
+console.log(bondData);
         let message = await invokeTransaction({
             metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction:CHAINCODE_ACTIONS.CREATE,
-            channelName:CHAINCODE_CHANNEL,
+            chainCodeAction:'create',
+            channelName:'common',
             data:bondData,
             chainCodeFunctionName:'create',
-            chainCodeName:CHAINCODE_NAMES.BOND
+            chainCodeName:'Bond'
         })
-
+console.log('hereee')
         console.log(message);
         res.status(201).json({
             status:201,
