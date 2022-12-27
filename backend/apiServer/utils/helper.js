@@ -39,7 +39,11 @@ exports.CHAINCODE_NAMES = {
 	BOND:'Bond',
 	TRASANSATIONS:'Transactions',
 	BONDHOLDING: 'BondHolding',
-	TOKENHOLDING: 'TokenHolding'
+	TOKENHOLDING: 'TokenHolding',
+	BUYORDER:'BuyOrder',
+	SELLORDER:'SellOrder',
+	PURCHASELOG:'PurchaseLog',
+	MBEMARKET:'MBEmartket'
 }
 
 
