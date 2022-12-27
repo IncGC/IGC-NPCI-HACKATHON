@@ -22,16 +22,10 @@ router.route('/market').post(chaincode.mbeMarket).get(chaincode.getMbeMarket);
 router.route('/sellOrder').post(chaincode.sellOrder).get(chaincode.getSellOrder);
 router.route('/buyOrder').post(chaincode.buyOrder).get(chaincode.getBuyOrder);
 router.route('/purchaseLog').post(chaincode.purchaseLog).get(chaincode.getPurchaseLog);
-router.post('/ask', ask.askpost);
-router.get('/ask',ask.askGet);
-
-router.post('/bid',bid.bidpost);
-router.get('/bid', bid.bidGet);
-
-router.post('/buy', buy.buypost);
-router.get('/buy', buy.buyGet);
-
-router.post('/transactions', trasactions.transaction);
+router.route('/ask').post( ask.askpost).get(ask.askGet);
+router.route('/bid').post(bid.bidpost).get(bid.bidGet);
+router.route('/buy').post( buy.buypost).get(buy.buyGet)
+router.route('/transactions').post( trasactions.transaction);
 router.get('/transactions/:_id', trasactions.getTrasactions)
 
 router.post("/create_investor", investor.createInvestor);
@@ -43,14 +37,11 @@ router.post("/forgot", investor.forgotPassword);
 router.get("/getUserDetails", investor.InvestorDetails);
 
 
-router.post('/order', order.orderbook);
-router.get('/order', order.orderbookget);
+router.route('/order').post(order.orderbook).get(order.orderbookget);
 
-router.post('/Bond', Bond.BondAPI);
-router.get('/Bond', Bond.BondAPIGet);
+router.route('/Bond').post(Bond.BondAPI).get(Bond.BondAPIGet)
 
-router.post('/org', data.orgPost);
-router.get('/org', data.orgGet);
+router.route('/org').post(data.orgPost).get(data.orgGet)
 
 router.route('/nse_data').post(data.NseMockData).get(data.getNseData)  
   

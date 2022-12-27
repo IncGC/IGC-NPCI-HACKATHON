@@ -16,21 +16,21 @@ type TransactionsChaincode struct {
 }
 
 type Transactions struct {
-	Id           string    `json:"Id"`
-	CreatedOn    time.Time `json:"CreatedOn"`
-	CreatedBy    string    `json:"CreatedBy"`
-	IsDelete     bool      `json:"IsDelete"`
-	IsHidden     bool      `json:"IsHidden"`
-	trnxID       string    `json:"trnxID"`
-	isin         string    `json:"isin"`
-	userID       string    `json:"userID"`
-	noOfTokens   string    `json:"noOfTokens"`
-	date         string    `json:"date"`
-	nature       string    `json:"nature"`
-	status       string    `json: "status"`
-	authrization string    `json:"authrization"`
-	amount       string    `json:"amount"`
-	certificate  string    `json:"certificate"`
+	Id            string    `json:"Id"`
+	CreatedOn     time.Time `json:"CreatedOn"`
+	CreatedBy     string    `json:"CreatedBy"`
+	IsDelete      bool      `json:"IsDelete"`
+	IsHidden      bool      `json:"IsHidden"`
+	trnxID        string    `json:"trnxID"`
+	isin          string    `json:"isin"`
+	userID        string    `json:"userID"`
+	noOfTokens    string    `json:"noOfTokens"`
+	date          string    `json:"date"`
+	nature        string    `json:"nature"`
+	status        string    `json: "status"`
+	authorization string    `json:"authorization"`
+	amount        string    `json:"amount"`
+	certificate   string    `json:"certificate"`
 }
 
 func (cc *TransactionsChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
@@ -58,21 +58,21 @@ func (cc *TransactionsChaincode) create(stub shim.ChaincodeStubInterface, arg []
 	}
 
 	data := Transactions{
-		Id:           args[0],
-		CreatedOn:    dateValue1,
-		CreatedBy:    args[2],
-		IsDelete:     boolValue3,
-		IsHidden:     boolValue4,
-		trnxID:       args[5],
-		isin:         args[6],
-		userID:       args[7],
-		noOfTokens:   args[8],
-		date:         args[9],
-		nature:       args[10],
-		status:       args[11],
-		authrization: args[12],
-		amount:       args[13],
-		certificate:  args[14],
+		Id:            args[0],
+		CreatedOn:     dateValue1,
+		CreatedBy:     args[2],
+		IsDelete:      boolValue3,
+		IsHidden:      boolValue4,
+		trnxID:        args[5],
+		isin:          args[6],
+		userID:        args[7],
+		noOfTokens:    args[8],
+		date:          args[9],
+		nature:        args[10],
+		status:        args[11],
+		authorization: args[12],
+		amount:        args[13],
+		certificate:   args[14],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -129,21 +129,21 @@ func (cc *TransactionsChaincode) update(stub shim.ChaincodeStubInterface, arg []
 	}
 
 	data := Transactions{
-		Id:           args[0],
-		CreatedOn:    dateValue1,
-		CreatedBy:    args[2],
-		IsDelete:     boolValue3,
-		IsHidden:     boolValue4,
-		trnxID:       args[5],
-		isin:         args[6],
-		userID:       args[7],
-		noOfTokens:   args[8],
-		date:         args[9],
-		nature:       args[10],
-		status:       args[11],
-		authrization: args[12],
-		amount:       args[13],
-		certificate:  args[14],
+		Id:            args[0],
+		CreatedOn:     dateValue1,
+		CreatedBy:     args[2],
+		IsDelete:      boolValue3,
+		IsHidden:      boolValue4,
+		trnxID:        args[5],
+		isin:          args[6],
+		userID:        args[7],
+		noOfTokens:    args[8],
+		date:          args[9],
+		nature:        args[10],
+		status:        args[11],
+		authorization: args[12],
+		amount:        args[13],
+		certificate:   args[14],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)

@@ -16,28 +16,26 @@ type BondChaincode struct {
 }
 
 type Bond struct {
-	Id           string    `json:"Id"`
-	CreatedOn    time.Time `json:"CreatedOn"`
-	CreatedBy    string    `json:"CreatedBy"`
-	IsDelete     bool      `json:"IsDelete"`
-	IsHidden     bool      `json:"IsHidden"`
-	isin         string    `json:"isin"`
-	IssuerName   string    `json:"IssuerName"`
-	CouponRate   string    `json:"CouponRate"`
-	faceValue        string    `json:"faceValue"`
-	Ltp string    `json:"Ltp"`
+	Id                  string    `json:"Id"`
+	CreatedOn           time.Time `json:"CreatedOn"`
+	CreatedBy           string    `json:"CreatedBy"`
+	IsDelete            bool      `json:"IsDelete"`
+	IsHidden            bool      `json:"IsHidden"`
+	isin                string    `json:"isin"`
+	IssuerName          string    `json:"IssuerName"`
+	CouponRate          string    `json:"CouponRate"`
+	faceValue           string    `json:"faceValue"`
+	Ltp                 string    `json:"Ltp"`
 	CreditRating        string    `json:"CreditRating"`
-	MaturityDate     string    `json: "MaturityDate"`
-	securityDescription   string    `json:"securityDescription"`
-	latestBidPrice   string    `json:"latestBidPrice"`
-	latestAskPrice 	string `json :"latestAskPrice"`
-	currency 	string `json :"currency"`
-	NumToken 	string `json :"NumToken"`
-	Detokenizedtoken 	string `json :"Detokenizedtoken"`
-	detokenizedValue 	string `json :"detokenizedValue"`
-	tradeValue 	string `json :"tradeValue"`
-
-
+	MaturityDate        string    `json: "MaturityDate"`
+	securityDescription string    `json:"securityDescription"`
+	latestBidPrice      string    `json:"latestBidPrice"`
+	latestAskPrice      string    `json :"latestAskPrice"`
+	currency            string    `json :"currency"`
+	NumToken            string    `json :"NumToken"`
+	Detokenizedtoken    string    `json :"Detokenizedtoken"`
+	detokenizedValue    string    `json :"detokenizedValue"`
+	tradeValue          string    `json :"tradeValue"`
 }
 
 func (cc *BondChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
@@ -66,26 +64,26 @@ func (cc *BondChaincode) create(stub shim.ChaincodeStubInterface, arg []string) 
 	}
 
 	data := Bond{
-		Id:           args[0],
-		CreatedOn:    dateValue1,
-		CreatedBy:    args[2],
-		IsDelete:     boolValue3,
-		IsHidden:     boolValue4,
-		isin:         args[5],
-		IssuerName:   args[6],
-		CouponRate:   args[7],
-		faceValue:        args[8],
-		Ltp: args[9],
+		Id:                  args[0],
+		CreatedOn:           dateValue1,
+		CreatedBy:           args[2],
+		IsDelete:            boolValue3,
+		IsHidden:            boolValue4,
+		isin:                args[5],
+		IssuerName:          args[6],
+		CouponRate:          args[7],
+		faceValue:           args[8],
+		Ltp:                 args[9],
 		CreditRating:        args[10],
-		MaturityDate:     args[11],
-		securityDescription:   args[12],
-		latestBidPrice:   args[13],
-		latestAskPrice: args[14],
-		currency: args[15],
-		NumToken: args[16],
-		Detokenizedtoken: args[17],
-		detokenizedValue: args[18],
-		tradeValue: args[19],
+		MaturityDate:        args[11],
+		securityDescription: args[12],
+		latestBidPrice:      args[13],
+		latestAskPrice:      args[14],
+		currency:            args[15],
+		NumToken:            args[16],
+		Detokenizedtoken:    args[17],
+		detokenizedValue:    args[18],
+		tradeValue:          args[19],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -143,28 +141,27 @@ func (cc *BondChaincode) update(stub shim.ChaincodeStubInterface, arg []string) 
 	}
 
 	data := Bond{
-		Id:           args[0],
-		CreatedOn:    dateValue1,
-		CreatedBy:    args[2],
-		IsDelete:     boolValue3,
-		IsHidden:     boolValue4,
-		isin:         args[5],
-		IssuerName:   args[6],
-		CouponRate:   args[7],
-		faceValue:        args[8],
-		Ltp: args[9],
+		Id:                  args[0],
+		CreatedOn:           dateValue1,
+		CreatedBy:           args[2],
+		IsDelete:            boolValue3,
+		IsHidden:            boolValue4,
+		isin:                args[5],
+		IssuerName:          args[6],
+		CouponRate:          args[7],
+		faceValue:           args[8],
+		Ltp:                 args[9],
 		CreditRating:        args[10],
-		MaturityDate:     args[11],
-		securityDescription:   args[12],
-		latestBidPrice:   args[13],
-		latestAskPrice: args[14],
-		currency: args[15],
-		NumToken: args[16],
-		Detokenizedtoken: args[17],
-		detokenizedValue: args[18],
-		tradeValue: args[19],
+		MaturityDate:        args[11],
+		securityDescription: args[12],
+		latestBidPrice:      args[13],
+		latestAskPrice:      args[14],
+		currency:            args[15],
+		NumToken:            args[16],
+		Detokenizedtoken:    args[17],
+		detokenizedValue:    args[18],
+		tradeValue:          args[19],
 	}
-
 
 	dataBytes, errMarshal := json.Marshal(data)
 
