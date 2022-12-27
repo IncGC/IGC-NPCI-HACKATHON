@@ -305,8 +305,8 @@ exports.Transactions = async (req, res) => {
       Id: generateId(),
       CreatedOn: getNow(),
       CreatedBy: "admin",
-      IsDelete: false,
-      IsHidden: false,
+      IsDelete: "false",
+      IsHidden: "false",
       trnxID,
       isin,
       userID,
@@ -329,7 +329,7 @@ exports.Transactions = async (req, res) => {
     });
     console.log(message);
 
-    req.send(201).json({
+    res.status(201).json({
       status: 201,
       message: message,
     });

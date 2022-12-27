@@ -36,7 +36,7 @@ router.post('/', async (req, res)=>{
         console.log(message);
         res.status(201).json(data);
     }catch(err){
-        HandleError(err,res);
+        res.send(err);
     }
 })
 
