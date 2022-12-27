@@ -30,41 +30,7 @@ exports.phone_email_otp = async (req, res) => {
     var otp = generateOtp();
     console.log(otp);
 
-    if (email) {
-      let investor = email.split("@")[0];
 
-      let userInfo = `Hi ,
-        your login credantials have been created.
-        your username is : ${email} 
-               and
-        your password is: ${otp}. 
-        Thank you `;
-
-      await mailer.main(
-        email,
-        "One Time Password for MicroBond Exchange",
-        userInfo
-      );
-
-      const userData = {
-        email,
-        phoneNumber,
-        phoneOtp: otp,
-      };
-      let userExis = await UserModel.findOne({ email });
-      if (userExis) {
-        await userExis.updateOne({ email }, { $set: { phoneOtp: otp } });
-        await userExis.save();
-        res.status(200).json({
-          status: 200,
-          message: "User Exist ! Updated OTP sent Successfully !!",
-        });
-        return;
-      } else {
-        let userResult = await UserModel.create(userData);
-        await userResult.save();
-      }
-    }
     // console.log("HIIII");
     if (panCard) {
       const panCarddata = await PanCardModel.findOne({ panCard });
@@ -175,8 +141,14 @@ exports.phone_email_otp = async (req, res) => {
           { phoneNumber },
           { $set: { phoneOtp: otp } }
         );
-
-        // await usermodel.save();
+        // let SendingSMS = {
+        //   authorization: process.env.API_KEY,
+        //   message: smsOtp,
+        //   numbers: [phoneNumber],
+        // };
+        // // await usermodel.save();
+        // let sms = await fast2sms.sendMessage(SendingSMS);
+        // console.log(sms);
 
         res.status(200).json({
           status: 200,
@@ -187,7 +159,7 @@ exports.phone_email_otp = async (req, res) => {
         let smsOtp = `Hi,
       This is your OTP ${otp}`;
 
-        var SendingSMS = {
+        let SendingSMS = {
           authorization: process.env.API_KEY,
           message: smsOtp,
           numbers: [phoneNumber],
@@ -197,6 +169,42 @@ exports.phone_email_otp = async (req, res) => {
       }
     }
 
+    if (email) {
+      let investor = email.split("@")[0];
+
+      let userInfo = `Hi ,
+        your login credantials have been created.
+        your username is : ${email} 
+               and
+        your password is: ${otp}. 
+        Thank you `;
+
+      await mailer.main(
+        email,
+        "One Time Password for MicroBond Exchange",
+        userInfo
+      );
+
+      const userData = {
+        email,
+        phoneNumber,
+        phoneOtp: otp,
+      };
+      let userExis = await UserModel.findOne({ email });
+      if (userExis) {
+        await userExis.updateOne({ email }, { $set: { phoneOtp: otp } });
+        await userExis.save();
+        res.status(200).json({
+          status: 200,
+          message: "User Exist ! Updated OTP sent Successfully !!",
+        });
+        return;
+      } else {
+        let userResult = await UserModel.create(userData);
+        await userResult.save();
+      }
+    }
+    
     const { wallet } = await fast2sms.getWalletBalance(process.env.API_KEY);
     console.log(wallet);
     res.status(200).json({

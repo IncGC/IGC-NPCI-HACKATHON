@@ -14,10 +14,10 @@ const buy = require('../controllers/buy');
 const trasactions = require('../controllers/transactions');
 const chaincode = require("../controllers/chaincodes");
 
-router.post('/bond', chaincode.bond);
-router.post('/bondholding', chaincode.bondHoldings);
-router.post('/tokenholding', chaincode.TokenHolding);
-router.post('/transactions', chaincode.Transactions);
+router.route('/bond').post( chaincode.bond);
+router.route('/bondholding').post( chaincode.bondHoldings);
+router.route('/tokenholding').post( chaincode.TokenHolding);
+router.route('/transactions').post( chaincode.Transactions);
 
 router.post('/ask', ask.askpost);
 router.get('/ask',ask.askGet);
