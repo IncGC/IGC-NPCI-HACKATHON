@@ -18,7 +18,7 @@ exports.invokeTransaction = async ({
 }) => {
 
 
-    console.log("hiihihihihih")
+    // console.log("hiihihihihih")
     // getting schema
     let schema = getSchema(chainCodeName)
     console.log(chainCodeName);
@@ -73,7 +73,7 @@ exports.invokeTransaction = async ({
     const transaction = contract.createTransaction(chainCodeFunctionName);
     const result = await transaction.submit(serializedData);
 
-    // console.log("Result:", result.toString())
+    console.log("Result:", result.toString())
     console.log("TxID:", transaction.getTransactionId());
 
     if (chainCodeAction == CHAINCODE_ACTIONS.GET) {

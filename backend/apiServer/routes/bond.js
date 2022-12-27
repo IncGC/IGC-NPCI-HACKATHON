@@ -33,25 +33,24 @@ router.post("/liveMarket", async (req, res) => {
         } = req.body;
 console.log(req.body)
         const bondData= {
-          Id:generateId(),
-          CreatedOn:getNow(),
-          CreatedBy: "admin",
-          IsDelete:false,
-          IsHidden:false,
-          IsHidden:false,
+          id:generateId(),
+          createdOn:getNow(),
+          createdBy: "admin",
+          isDelete:"false",
+          isHidden:"false",
           isin,
-          IssuerName,
-          CouponRate,
+          issuerName:IssuerName,
+          couponRate:CouponRate,
           faceValue,
-          Ltp,
-          CreditRating,
-          MaturityDate,
+          ltp:Ltp,
+          creditRating:CreditRating,
+          maturityDate:MaturityDate,
           securityDescription,
           latestBidPrice,
           latestAskPrice,
           currency,
-          NumToken,
-          Detokenizedtoken,
+          numToken:NumToken,
+          detokenizedtoken:Detokenizedtoken,
           detokenizedValue,
           tradeValue
         }
@@ -70,7 +69,7 @@ console.log('hereee')
         console.log(message);
         res.status(201).json({
             status:201,
-            message:bondData
+            message:message
         })
 
     }catch(err){

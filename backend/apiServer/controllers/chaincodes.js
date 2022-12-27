@@ -1,683 +1,652 @@
 const { invokeTransaction } = require("../app/invoke");
 
-const {CHAINCODE_ACTIONS, CHAIN_CHANNEL, CHAINCODE_NAMES, getNow, CHAINCODE_CHANNEL, generateId}=require('../utils/helper');
+const {
+  CHAINCODE_ACTIONS,
+  CHAIN_CHANNEL,
+  CHAINCODE_NAMES,
+  getNow,
+  CHAINCODE_CHANNEL,
+  generateId,
+} = require("../utils/helper");
 
-exports.bond= async(req,res)=>{
-    try{
-        let{
-            isin,
-            IssuerName,
-            CouponRate,
-            faceValue,
-            Ltp,
-            CreditRating,
-            MaturityDate,
-            securityDescription,
-            latestBidPrice,
-            latestAskPrice,
-            currency,
-            NumToken,
-            Detokenizedtoken,
-            detokenizedValue,
-            tradeValue
-        } = req.body;
-console.log(req.body)
-        const bondData= {
-            Id:generateId(),
-            CreatedOn:getNow(),
-            CreatedBy: "admin",
-            IsDelete:false,
-            IsHidden:false,
-            isin,
-            IssuerName,
-            CouponRate,
-            faceValue,
-            Ltp,
-            CreditRating,
-            MaturityDate,
-            securityDescription,
-            latestBidPrice,
-            latestAskPrice,
-            currency,
-            NumToken,
-            Detokenizedtoken,
-            detokenizedValue,
-            tradeValue
-        }
-console.log(bondData);
-console.log(invokeTransaction);
-        let message = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction:'create',
-            channelName:'common',
-            data:bondData,
-            chainCodeFunctionName:'create',
-            chainCodeName:'Bond'
-        })
-console.log('hereee')
-        console.log(message);
-        res.status(201).json({
-            status:201,
-            message:bondData
-        })
-
-    }catch(err){
-        res.send(err)
-    }
-}
-
-exports.getbond = async(req,res)=>{
-    try{
-        let {
-            isin
-        }= req.body;
-
-        let query = { selector: { isin } }
-        let queryString = JSON.stringify(query)
-
-        let dataStr = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction: CHAINCODE_ACTIONS.GET,
-            chainCodeFunctionName: 'querystring',
-            chainCodeName: CHAINCODE_NAMES.BOND,
-            channelName: CHAINCODE_CHANNEL,
-            data: queryString
-        })
-        let data = JSON.parse(dataStr)
-
-            console.log(data);
-            res.status(200).json({
-                status:200,
-                message:data
-            })
-    }catch(err){
-        res.send(err)
-    }
-}
-
-
-exports.bondHoldings= async(req,res)=>{
-    try{
-        let{
-            isin,
-            mbeId,
-            IssuerName,
-            CouponRate,
-            faceValue,
-            CreditRating,
-            MaturityDate,
-            purchasePrice,
-            numToken,
-            currentPrice,
-            numOfLots,
-            tokenizedLot,
-            totalTokenQty,
-            RemainingToken
-        }= req.body;
-
-        console.log(req.body)
-        const bondHoldingData={
-            Id:generateId(),
-            CreatedOn:getNow(),
-            CreatedBy: "admin",
-            IsDelete:false,
-            IsHidden:false,
-            isin,
-            mbeId,
-            IssuerName,
-            CouponRate,
-            faceValue,
-            CreditRating,
-            MaturityDate,
-            purchasePrice,
-            numToken,
-            currentPrice,
-            numOfLots,
-            tokenizedLot,
-            totalTokenQty,
-            RemainingToken
-        }
-
-        console.log(bondHoldingData)
-        let message = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction:'create',
-            channelName:'common',
-            data:bondHoldingData,
-            chainCodeFunctionName:'create',
-            chainCodeName:'BondHolding'
-        })
-console.log("hi ")
-        console.log(message);
-        res.status(201).json({
-            status:201,
-            message:bondHoldingData
-        })
-    }catch(err){
-        res.send("err")
-    }
-}
-
-exports.getbondHoldings = async(req,res)=>{
-    try{
-        let {
-            isin
-        }= req.body;
-
-        let query = { selector: { isin } }
-        let queryString = JSON.stringify(query)
-
-        let dataStr = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction: CHAINCODE_ACTIONS.GET,
-            chainCodeFunctionName: 'querystring',
-            chainCodeName: CHAINCODE_NAMES.BONDHOLDING,
-            channelName: CHAINCODE_CHANNEL,
-            data: queryString
-        })
-        console.log(message)
-
-        let data = JSON.parse(dataStr)
-
-            console.log(data);
-            res.status(200).json({
-                status:200,
-                message:data
-            })
-    }catch(err){
-        res.send(err)
-    }
-}
-
-
-exports.TokenHolding= async(req,res)=>{
-    try{
-        let {
-            isin,
-            mbeId,
-            IssuerName,
-            CouponRate,
-            faceValue,
-            Ltp,
-            CreditRating,
-            MaturityDate,
-            latestBidPrice,
-            latestAskPrice,
-            purchasePrice,
-            NumToken,
-            currentPrice,
-            numOfLots
-        }= req.body;
-
-        const TokenHoldingData={
-            Id:generateId(),
-            CreatedOn:getNow(),
-            CreatedBy: "admin",
-            IsDelete:false,
-            IsHidden:false,
-            isin,
-            mbeId,
-            IssuerName,
-            CouponRate,
-            faceValue,
-            Ltp,
-            CreditRating,
-            MaturityDate,
-            latestBidPrice,
-            latestAskPrice,
-            purchasePrice,
-            NumToken,
-            currentPrice,
-            numOfLots
-        }
-
-        let message = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction:CHAINCODE_ACTIONS.CREATE,
-            channelName:CHAINCODE_CHANNEL,
-            data:TokenHoldingData,
-            chainCodeFunctionName:'create',
-            chainCodeName:CHAINCODE_NAMES.BONDHOLDING
-        })
-        console.log(message);
-        res.status(201).json({
-            status:201,
-            message:TokenHoldingData
-        })
-    }catch(err){
-        res.send(err)
-    }
-}
-
-exports.getTokenHolding = async(req,res)=>{
-    try{
-        let {
-            isin
-        }= req.body;
-
-        let query = { selector: { isin } }
-        let queryString = JSON.stringify(query)
-
-        let dataStr = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction: CHAINCODE_ACTIONS.GET,
-            chainCodeFunctionName: 'querystring',
-            chainCodeName: CHAINCODE_NAMES.TOKENHOLDING,
-            channelName: CHAINCODE_CHANNEL,
-            data: queryString
-        })
-        console.log(message)
-
-        let data = JSON.parse(dataStr)
-
-            console.log(data);
-            res.status(200).json({
-                status:200,
-                message:data
-            })
-    }catch(err){
-        res.send(err)
-    }
-}
-
-exports.Transactions = async(req,res)=>{
-   try{
+exports.bond = async (req, res) => {
+  try {
     let {
-        trnxID,
-        isin,
-        userID,
-        noOfTokens,
-        date,
-        type,
-        status,
-        authorization,
-        amount,
-        certificate
+      isin,
+      IssuerName,
+      CouponRate,
+      faceValue,
+      Ltp,
+      CreditRating,
+      MaturityDate,
+      securityDescription,
+      latestBidPrice,
+      latestAskPrice,
+      currency,
+      NumToken,
+      Detokenizedtoken,
+      detokenizedValue,
+      tradeValue,
+    } = req.body;
+    console.log(req.body);
+    const bondData = {
+      Id: generateId(),
+      CreatedOn: getNow(),
+      CreatedBy: "admin",
+      IsDelete: "false",
+      IsHidden: "false",
+      isin,
+      IssuerName,
+      CouponRate,
+      faceValue,
+      Ltp,
+      CreditRating,
+      MaturityDate,
+      securityDescription,
+      latestBidPrice,
+      latestAskPrice,
+      currency,
+      NumToken,
+      Detokenizedtoken,
+      detokenizedValue,
+      tradeValue,
+    };
+    console.log(bondData);
+    console.log(invokeTransaction);
+    let message = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: "create",
+      channelName: "common",
+      data: bondData,
+      chainCodeFunctionName: "create",
+      chainCodeName: "Bond",
+    });
+    console.log("hereee");
+    console.log(message);
+    res.status(201).json({
+      status: 201,
+      message: message,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
+
+exports.getbond = async (req, res) => {
+  try {
+    let { isin } = req.body;
+
+    let query = { selector: { isin, isDelete: false } };
+
+    let queryString = JSON.stringify(query);
+
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: email, org: msp },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: "Bond",
+    });
+
+    res.set("Content-Type", "application/json");
+    res.status(200).send(dataStr);
+    // let data = JSON.parse(dataStr)
+
+    //     console.log(data);
+    //     res.status(200).json({
+    //         status:200,
+    //         message:data
+    //     })
+  } catch (err) {
+    res.send(err);
+  }
+};
+
+exports.bondHoldings = async (req, res) => {
+  try {
+    let {
+      isin,
+      mbeId,
+      IssuerName,
+      CouponRate,
+      faceValue,
+      CreditRating,
+      MaturityDate,
+      purchasePrice,
+      numToken,
+      currentPrice,
+      numOfLots,
+      tokenizedLot,
+      totalTokenQty,
+      RemainingToken,
     } = req.body;
 
-    const transactionData={
-        Id:generateId(),
-        CreatedOn:getNow(),
-        CreatedBy: "admin",
-        IsDelete:false,
-        IsHidden:false,
-        trnxID,
-        isin,
-        userID,
-        noOfTokens,
-        date,
-        type,
-        status,
-        authorization,
-        amount,
-        certificate
-    }
+    console.log(req.body);
+    const bondHoldingData = {
+      Id: generateId(),
+      CreatedOn: getNow(),
+      CreatedBy: "admin",
+      IsDelete: "false",
+      IsHidden: "false",
+      isin,
+      mbeId,
+      IssuerName,
+      CouponRate,
+      faceValue,
+      CreditRating,
+      MaturityDate,
+      purchasePrice,
+      numToken,
+      currentPrice,
+      numOfLots,
+      tokenizedLot,
+      totalTokenQty,
+      RemainingToken,
+    };
+
+    console.log(bondHoldingData);
+    let message = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: "create",
+      channelName: "common",
+      data: bondHoldingData,
+      chainCodeFunctionName: "create",
+      chainCodeName: "BondHolding",
+    });
+    console.log("hi ");
+    console.log(message);
+    res.status(201).json({
+      status: 201,
+      message: message,
+    });
+  } catch (err) {
+    res.send("err");
+  }
+};
+
+exports.getbondHoldings = async (req, res) => {
+  try {
+    let { isin } = req.body;
+
+    let query = { selector: { isin, isDelete: false } };
+
+    let queryString = JSON.stringify(query);
+
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: "BondHolding",
+    });
+
+    res.set("Content-Type", "application/json");
+    // res.status(200).send(dataStr);
+    // console.log(message)
+
+    let data = JSON.parse(dataStr);
+
+    console.log(data);
+    res.status(200).json({
+      status: 200,
+      message: data,
+    });
+  } catch (err) {
+    res.send("err");
+  }
+};
+
+exports.TokenHolding = async (req, res) => {
+  try {
+    let {
+      isin,
+      mbeId,
+      IssuerName,
+      CouponRate,
+      faceValue,
+      Ltp,
+      CreditRating,
+      MaturityDate,
+      latestBidPrice,
+      latestAskPrice,
+      purchasePrice,
+      NumToken,
+      currentPrice,
+      numOfLots,
+    } = req.body;
+
+    const TokenHoldingData = {
+      Id: generateId(),
+      CreatedOn: getNow(),
+      CreatedBy: "admin",
+      IsDelete: false,
+      IsHidden: false,
+      isin,
+      mbeId,
+      IssuerName,
+      CouponRate,
+      faceValue,
+      Ltp,
+      CreditRating,
+      MaturityDate,
+      latestBidPrice,
+      latestAskPrice,
+      purchasePrice,
+      NumToken,
+      currentPrice,
+      numOfLots,
+    };
 
     let message = await invokeTransaction({
-        metaInfo:{userName:"pintu", org:"org1MSP"},
-        chainCodeAction:CHAINCODE_ACTIONS.CREATE,
-        channelName:CHAINCODE_CHANNEL,
-        data:transactionData,
-        chainCodeFunctionName:'create',
-        chainCodeName:CHAINCODE_NAMES.TRASANSATIONS 
-    })
-    console.log(message)
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.CREATE,
+      channelName: CHAINCODE_CHANNEL,
+      data: TokenHoldingData,
+      chainCodeFunctionName: "create",
+      chainCodeName: CHAINCODE_NAMES.BONDHOLDING,
+    });
+    console.log(message);
+    res.status(201).json({
+      status: 201,
+      message: message,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
+
+exports.getTokenHolding = async (req, res) => {
+  try {
+    let { isin } = req.body;
+
+    let query = { selector: { isin } };
+    let queryString = JSON.stringify(query);
+
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: CHAINCODE_NAMES.TOKENHOLDING,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+    });
+    // console.log(message)
+
+    let data = JSON.parse(dataStr);
+
+    console.log(data);
+    res.status(200).json({
+      status: 200,
+      message: data,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
+
+exports.Transactions = async (req, res) => {
+  try {
+    let {
+      trnxID,
+      isin,
+      userID,
+      noOfTokens,
+      date,
+      type,
+      status,
+      authorization,
+      amount,
+      certificate,
+    } = req.body;
+
+    const transactionData = {
+      Id: generateId(),
+      CreatedOn: getNow(),
+      CreatedBy: "admin",
+      IsDelete: false,
+      IsHidden: false,
+      trnxID,
+      isin,
+      userID,
+      noOfTokens,
+      date,
+      type,
+      status,
+      authorization,
+      amount,
+      certificate,
+    };
+
+    let message = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.CREATE,
+      channelName: CHAINCODE_CHANNEL,
+      data: transactionData,
+      chainCodeFunctionName: "create",
+      chainCodeName: CHAINCODE_NAMES.TRASANSATIONS,
+    });
+    console.log(message);
 
     req.send(201).json({
-        status:201,
-        message:transactionData
-    })
-   }catch(err){
-    res.send(err)
-   }
-}
+      status: 201,
+      message: message,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
 
-exports.getTransaction = async(req,res)=>{
-    try{
-        let {
-            isin
-        }= req.body;
+exports.getTransaction = async (req, res) => {
+  try {
+    let { isin } = req.body;
 
-        let query = { selector: { isin } }
-        let queryString = JSON.stringify(query)
+    let query = { selector: { isin } };
+    let queryString = JSON.stringify(query);
 
-        let dataStr = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction: CHAINCODE_ACTIONS.GET,
-            chainCodeFunctionName: 'querystring',
-            chainCodeName: CHAINCODE_NAMES.TRASANSATIONS,
-            channelName: CHAINCODE_CHANNEL,
-            data: queryString
-        })
-        let data = JSON.parse(dataStr)
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: CHAINCODE_NAMES.TRASANSATIONS,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+    });
+    let data = JSON.parse(dataStr);
 
-            console.log(data);
-            res.status(200).json({
-                status:200,
-                message:data
-            })
-    }catch(err){
-        res.send(err)
-    }
-}
+    console.log(data);
+    res.status(200).json({
+      status: 200,
+      message: data,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
 
+exports.buyOrder = async (req, res) => {
+  try {
+    let { mbeId, isin, price, noOfTokens } = req.body;
 
-exports.buyOrder= async(req, res)=>{
-    try{
+    const buyOrderData = {
+      Id: generateId(),
+      CreatedOn: getNow(),
+      CreatedBy: "admin",
+      IsDelete: false,
+      IsHidden: false,
+      IsProcessed: false,
+      mbeId,
+      isin,
+      price,
+      noOfTokens,
+    };
+    let message = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.CREATE,
+      channelName: CHAINCODE_CHANNEL,
+      data: buyOrderData,
+      chainCodeFunctionName: "create",
+      chainCodeName: CHAINCODE_NAMES.BUYORDER,
+    });
 
-        let {
-            mbeId,
-            isin,
-            price,
-            noOfTokens
-        } = req.body;
+    console.log(message);
+    req.send(201).json({
+      status: 201,
+      message: message,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
 
-        const buyOrderData={
-            Id:generateId(),
-            CreatedOn:getNow(),
-            CreatedBy: "admin",
-            IsDelete:false,
-            IsHidden:false,
-            IsProcessed:false,
-            mbeId,
-            isin,
-            price,
-            noOfTokens
-        }
-        let message = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction:CHAINCODE_ACTIONS.CREATE,
-            channelName:CHAINCODE_CHANNEL,
-            data:buyOrderData,
-            chainCodeFunctionName:'create',
-            chainCodeName:CHAINCODE_NAMES.BUYORDER 
-        })
+exports.getBuyOrder = async (req, res) => {
+  try {
+    let { isin } = req.body;
 
-        console.log(message)
-        req.send(201).json({
-            status:201,
-            message:buyOrderData
-        })
-    }catch(err){
-        res.send(err)
-    }
-}
+    let query = { selector: { isin } };
+    let queryString = JSON.stringify(query);
 
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: CHAINCODE_NAMES.BUYORDER,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+    });
+    let data = JSON.parse(dataStr);
 
+    console.log(data);
 
-exports.getBuyOrder = async(req,res)=>{
-    try{
-        let {
-            isin
-        }= req.body;
+    res.status(200).json({
+      status: 200,
+      message: data,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
 
-        let query = { selector: { isin } }
-        let queryString = JSON.stringify(query)
+exports.sellOrder = async (req, res) => {
+  try {
+    let { mbeId, isin, price, noOfTokens } = req.body;
 
-        let dataStr = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction: CHAINCODE_ACTIONS.GET,
-            chainCodeFunctionName: 'querystring',
-            chainCodeName: CHAINCODE_NAMES.BUYORDER,
-            channelName: CHAINCODE_CHANNEL,
-            data: queryString
-        })
-        let data = JSON.parse(dataStr)
+    const sellOrderData = {
+      Id: generateId(),
+      CreatedOn: getNow(),
+      CreatedBy: "admin",
+      IsDelete: false,
+      IsHidden: false,
+      IsProcessed: false,
+      mbeId,
+      isin,
+      price,
+      noOfTokens,
+    };
+    let message = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.CREATE,
+      channelName: CHAINCODE_CHANNEL,
+      data: sellOrderData,
+      chainCodeFunctionName: "create",
+      chainCodeName: CHAINCODE_NAMES.SELLORDER,
+    });
 
-            console.log(data);
+    console.log(message);
+    req.send(201).json({
+      status: 201,
+      message: message,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
 
-        res.status(200).json({
-            status:200,
-            message:data
-        })
-    }catch(err){
-        res.send(err)
-    }
-}
+exports.getSellOrder = async (req, res) => {
+  try {
+    let { isin } = req.body;
 
+    let query = { selector: { isin } };
+    let queryString = JSON.stringify(query);
 
-exports.sellOrder= async(req, res)=>{
-    try{
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: CHAINCODE_NAMES.SELLORDER,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+    });
+    let data = JSON.parse(dataStr);
 
-        let {
-            mbeId,
-            isin,
-            price,
-            noOfTokens
-        } = req.body;
+    console.log(data);
 
-        const sellOrderData={
-            Id:generateId(),
-            CreatedOn:getNow(),
-            CreatedBy: "admin",
-            IsDelete:false,
-            IsHidden:false,
-            IsProcessed:false,
-            mbeId,
-            isin,
-            price,
-            noOfTokens
-        }
-        let message = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction:CHAINCODE_ACTIONS.CREATE,
-            channelName:CHAINCODE_CHANNEL,
-            data:sellOrderData,
-            chainCodeFunctionName:'create',
-            chainCodeName:CHAINCODE_NAMES.SELLORDER 
-        })
+    res.status(200).json({
+      status: 200,
+      message: data,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
+exports.mbeMarket = async (req, res) => {
+  try {
+    let {
+      isin,
+      mbeId,
+      IssuerName,
+      CouponRate,
+      faceValue,
+      Ltp,
+      CreditRating,
+      MaturityDate,
+      securityDescription,
+      latestBidPrice,
+      latestAskPrice,
+      currency,
+      numOfLots,
+      tokenizedLot,
+      totalTokenQty,
+      RemainingToken,
+      Detokenizedtoken,
+      detokenizedValue,
+    } = req.body;
 
-        console.log(message)
-        req.send(201).json({
-            status:201,
-            message:sellOrderData
-        })
-    }catch(err){
-        res.send(err)
-    }
-}
+    const marketData = {
+      Id: generateId(),
+      CreatedOn: getNow(),
+      CreatedBy: "admin",
+      IsDelete: false,
+      IsHidden: false,
+      isin,
+      mbeId,
+      IssuerName,
+      CouponRate,
+      faceValue,
+      Ltp,
+      CreditRating,
+      MaturityDate,
+      securityDescription,
+      latestBidPrice,
+      latestAskPrice,
+      currency,
+      numOfLots,
+      tokenizedLot,
+      totalTokenQty,
+      RemainingToken,
+      Detokenizedtoken,
+      detokenizedValue,
+    };
 
-exports.getSellOrder= async(req,res)=>{
-    try{
-        let {
-            isin
-        }= req.body;
+    let message = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.CREATE,
+      channelName: CHAINCODE_CHANNEL,
+      data: marketData,
+      chainCodeFunctionName: "create",
+      chainCodeName: CHAINCODE_NAMES.MBEMARKET,
+    });
 
-        let query = { selector: { isin } }
-        let queryString = JSON.stringify(query)
+    console.log(message);
+    res.status(201).json({
+      status: 201,
+      message: message,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
 
-        let dataStr = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction: CHAINCODE_ACTIONS.GET,
-            chainCodeFunctionName: 'querystring',
-            chainCodeName: CHAINCODE_NAMES.SELLORDER,
-            channelName: CHAINCODE_CHANNEL,
-            data: queryString
-        })
-        let data = JSON.parse(dataStr)
+exports.getMbeMarket = async (req, res) => {
+  try {
+    let { isin } = req.body;
 
-            console.log(data);
+    let query = { selector: { isin } };
+    let queryString = JSON.stringify(query);
 
-        res.status(200).json({
-            status:200,
-            message:data
-        })
-    }catch(err){
-        res.send(err)
-    }
-}
-exports.mbeMarket= async(req,res)=>{
-    try{
-        let{
-            isin,
-            mbeId,
-            IssuerName,
-            CouponRate,
-            faceValue,
-            Ltp,
-            CreditRating,
-            MaturityDate,
-            securityDescription,
-            latestBidPrice,
-            latestAskPrice,
-            currency,
-            numOfLots,
-            tokenizedLot,
-            totalTokenQty,
-            RemainingToken,
-            Detokenizedtoken,
-            detokenizedValue,
-        } = req.body;
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: CHAINCODE_NAMES.SELLORDER,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+    });
+    let data = JSON.parse(dataStr);
 
-        const marketData= {
-            Id:generateId(),
-            CreatedOn:getNow(),
-            CreatedBy: "admin",
-            IsDelete:false,
-            IsHidden:false,
-            isin,
-            mbeId,
-            IssuerName,
-            CouponRate,
-            faceValue,
-            Ltp,
-            CreditRating,
-            MaturityDate,
-            securityDescription,
-            latestBidPrice,
-            latestAskPrice,
-            currency,
-            numOfLots,
-            tokenizedLot,
-            totalTokenQty,
-            RemainingToken,
-            Detokenizedtoken,
-            detokenizedValue,
-        }
+    console.log(data);
 
-        let message = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction:CHAINCODE_ACTIONS.CREATE,
-            channelName:CHAINCODE_CHANNEL,
-            data:marketData,
-            chainCodeFunctionName:'create',
-            chainCodeName:CHAINCODE_NAMES.MBEMARKET
-        })
+    res.status(200).json({
+      status: 200,
+      message: data,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
+exports.purchaseLog = async (req, res) => {
+  try {
+    let { mbeId, isin, price, noOfTokens, tradeValue } = req.body;
 
-        console.log(message);
-        res.status(201).json({
-            status:201,
-            message:marketData
-        })
+    const purchaseLogData = {
+      Id: generateId(),
+      CreatedOn: getNow(),
+      CreatedBy: "admin",
+      IsDelete: "false",
+      IsHidden: "false",
+      IsProcessed: "false",
+      IsAuthorize: "false",
+      IsPurchase: "false",
+      mbeId,
+      isin,
+      price,
+      noOfTokens,
+      tradeValue,
+    };
+    let message = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.CREATE,
+      channelName: CHAINCODE_CHANNEL,
+      data: purchaseLogData,
+      chainCodeFunctionName: "create",
+      chainCodeName: CHAINCODE_NAMES.PURCHASELOG,
+    });
 
-    }catch(err){
-        res.send(err)
-    }
-}
+    console.log(message);
+    req.send(201).json({
+      status: 201,
+      message: message,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
 
+exports.getPurchaseLog = async (req, res) => {
+  try {
+    let { isin } = req.body;
 
-exports.getMbeMarket= async(req,res)=>{
-    try{
-        let {
-            isin
-        }= req.body;
+    let query = { selector: { isin } };
+    let queryString = JSON.stringify(query);
 
-        let query = { selector: { isin } }
-        let queryString = JSON.stringify(query)
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: "pintu", org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: CHAINCODE_NAMES.PURCHASELOG,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+    });
+    let data = JSON.parse(dataStr);
 
-        let dataStr = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction: CHAINCODE_ACTIONS.GET,
-            chainCodeFunctionName: 'querystring',
-            chainCodeName: CHAINCODE_NAMES.SELLORDER,
-            channelName: CHAINCODE_CHANNEL,
-            data: queryString
-        })
-        let data = JSON.parse(dataStr)
+    console.log(data);
 
-            console.log(data);
-
-        res.status(200).json({
-            status:200,
-            message:data
-        })
-    }catch(err){
-        res.send(err)
-    }
-}
-exports.purchaseLog= async(req,res)=>{
-    try{
-
-
-
-        let {
-            mbeId,
-            isin,
-            price,
-            noOfTokens,
-            tradeValue  
-        } = req.body;
-
-        const purchaseLogData={
-            Id:generateId(),
-            CreatedOn:getNow(),
-            CreatedBy: "admin",
-            IsDelete:false,
-            IsHidden:false,
-            IsProcessed:false,
-            IsAuthorize:false,
-            IsPurchase: false,
-            mbeId,
-            isin,
-            price,
-            noOfTokens,
-            tradeValue
-        }
-        let message = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction:CHAINCODE_ACTIONS.CREATE,
-            channelName:CHAINCODE_CHANNEL,
-            data:purchaseLogData,
-            chainCodeFunctionName:'create',
-            chainCodeName:CHAINCODE_NAMES.PURCHASELOG 
-        })
-
-        console.log(message)
-        req.send(201).json({
-            status:201,
-            message:purchaseLogData
-        })
-    }catch(err){
-        res.send(err)
-    }
-}
-
-exports.getPurchaseLog= async(req,res)=>{
-    try{
-        let {
-            isin
-        }= req.body;
-
-        let query = { selector: { isin } }
-        let queryString = JSON.stringify(query)
-
-        let dataStr = await invokeTransaction({
-            metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction: CHAINCODE_ACTIONS.GET,
-            chainCodeFunctionName: 'querystring',
-            chainCodeName: CHAINCODE_NAMES.PURCHASELOG,
-            channelName: CHAINCODE_CHANNEL,
-            data: queryString
-        })
-        let data = JSON.parse(dataStr)
-
-            console.log(data);
-
-        res.status(200).json({
-            status:200,
-            message:data
-        })
-    }catch(err){
-        res.send(err)
-    }
-}
+    res.status(200).json({
+      status: 200,
+      message: data,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
