@@ -17,7 +17,8 @@ const chaincode = require("../controllers/chaincodes");
 router.post('/bond', chaincode.bond);
 router.post('/bondholding', chaincode.bondHoldings);
 router.post('/tokenholding', chaincode.TokenHolding);
-router.post('/transactions', chaincode.Transactions)
+router.post('/transactions', chaincode.Transactions);
+
 router.post('/ask', ask.askpost);
 router.get('/ask',ask.askGet);
 
