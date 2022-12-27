@@ -1,4 +1,5 @@
-const invokeTransaction = require("../app/invoke");
+const { invokeTransaction } = require("../app/invoke");
+
 const {CHAINCODE_ACTIONS, CHAIN_CHANNEL, CHAINCODE_NAMES, getNow, CHAINCODE_CHANNEL, generateId}=require('../utils/helper');
 
 exports.bond= async(req,res)=>{
@@ -44,6 +45,7 @@ console.log(req.body)
             tradeValue
         }
 console.log(bondData);
+console.log(invokeTransaction);
         let message = await invokeTransaction({
             metaInfo:{userName:"pintu", org:"org1MSP"},
             chainCodeAction:'create',
@@ -113,6 +115,7 @@ exports.bondHoldings= async(req,res)=>{
             RemainingToken
         }= req.body;
 
+        console.log(req.body)
         const bondHoldingData={
             Id:generateId(),
             CreatedOn:getNow(),
@@ -135,15 +138,16 @@ exports.bondHoldings= async(req,res)=>{
             RemainingToken
         }
 
+        console.log(bondHoldingData)
         let message = await invokeTransaction({
             metaInfo:{userName:"pintu", org:"org1MSP"},
-            chainCodeAction:CHAINCODE_ACTIONS.CREATE,
-            channelName:CHAINCODE_CHANNEL,
+            chainCodeAction:'create',
+            channelName:'common',
             data:bondHoldingData,
             chainCodeFunctionName:'create',
-            chainCodeName:CHAINCODE_NAMES.BONDHOLDING
+            chainCodeName:'BondHolding'
         })
-
+console.log("hi ")
         console.log(message);
         res.status(201).json({
             status:201,

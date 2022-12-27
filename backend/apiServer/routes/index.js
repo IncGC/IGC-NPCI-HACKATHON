@@ -43,7 +43,9 @@ router.route('/Bond').post(Bond.BondAPI).get(Bond.BondAPIGet)
 
 router.route('/org').post(data.orgPost).get(data.orgGet)
 
-router.route('/nse_data').post(data.NseMockData).get(data.getNseData)  
+router.route('/nse_data').post(data.getNseData)
+router.route('/nse_data1').post(data.NseMockData)
+
   
 router.route("/pancard_data").post(data.PanCardMockData).get(data.getPancarddata)
 

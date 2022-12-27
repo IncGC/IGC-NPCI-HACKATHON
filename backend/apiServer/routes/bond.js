@@ -38,6 +38,7 @@ console.log(req.body)
           CreatedBy: "admin",
           IsDelete:false,
           IsHidden:false,
+          IsHidden:false,
           isin,
           IssuerName,
           CouponRate,
@@ -55,6 +56,8 @@ console.log(req.body)
           tradeValue
         }
 console.log(bondData);
+console.log('hereee')
+
         let message = await invokeTransaction({
             metaInfo:{userName:"pintu", org:"org1MSP"},
             chainCodeAction:'create',
@@ -63,7 +66,7 @@ console.log(bondData);
             chainCodeFunctionName:'create',
             chainCodeName:'Bond'
         })
-console.log('hereee')
+// console.log('hereee')
         console.log(message);
         res.status(201).json({
             status:201,

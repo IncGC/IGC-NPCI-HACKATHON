@@ -21,7 +21,7 @@ exports.invokeTransaction = async ({
     console.log("hiihihihihih")
     // getting schema
     let schema = getSchema(chainCodeName)
-    console.log("chainCodeName");
+    console.log(chainCodeName);
 
     let num = Number(metaInfo.org.match(/\d/g).join(""));
 
@@ -29,7 +29,7 @@ exports.invokeTransaction = async ({
 
     const walletPath = await getWallets(num);
 
-    // console.log("wallet path is",walletPath);
+    console.log("wallet path is",walletPath);
 
     const wallet = await buildWallet(Wallets, walletPath);
 
