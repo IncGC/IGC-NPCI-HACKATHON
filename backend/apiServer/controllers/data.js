@@ -110,13 +110,18 @@ exports.getNseData = async (req, res)=>{
 exports.PanCardMockData= async(req, res)=>{
   try{
     const {firstName,lastName,fatherName,Nationality,phoneNumber,email,panCard,aadharCard,gender,address,DOB}= req.body;
-    let exists = await PanCardModel.find({ phoneNumber: phoneNumber });
-    if (exists.length > 0) {
-      throw new ObjectExistsError({
-        message: "User with this phoneNumber already exists",
-      });
+    
+    console.log(req.body);
+    let exists = await PanCardModel.findOne({ panCard: panCard });
+    console.log("hihihihihih")
+    if (exists) {
+      res.json({
+        status:403,
+        message:"Data already exist"
+      })
+      return
     }
-
+console.log("exists");
     const userData = {firstName,lastName,fatherName, Nationality,phoneNumber,email,panCard,aadharCard,gender,address,DOB};
 
     let panCardDataResult = await PanCardModel.create(userData);

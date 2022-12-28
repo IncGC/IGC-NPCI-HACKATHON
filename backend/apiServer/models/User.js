@@ -16,8 +16,6 @@ const userSchema = new schema({
     role: String,
     OrgMSP:String,
     status: String,
-    panCard:String,
-    aadharCard: String,    
     phoneOtp:String,
     role: String,
     nse_registerd:Boolean,
