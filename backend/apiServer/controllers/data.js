@@ -34,7 +34,7 @@ exports.orgGet = async(req,res)=>{
   try{
     let {
       orgID
-    }=req.body;
+    }=req.params;
 
   
 
@@ -85,9 +85,10 @@ exports.NseMockData =  async(req, res)=>{
 
 exports.getNseData = async (req, res)=>{
   try{
-    const {panCard, aadharCard} = req.body;
+    const {panCard, aadharCard} = req.query;
     const Nsedata= await NseModel.findOne({panCard,aadharCard})
     
+    console.log(panCard);
     if (!Nsedata){
       res.status(200).json({
         status:400,
@@ -135,7 +136,7 @@ exports.PanCardMockData= async(req, res)=>{
 
 exports.getPancarddata = async (req, res)=>{
   try{
-    const {panCard} = req.params;
+    const {panCard} = req.query;
     const panCarddata= await PanCardModel.findOne({panCard})
     
     if (!panCarddata){

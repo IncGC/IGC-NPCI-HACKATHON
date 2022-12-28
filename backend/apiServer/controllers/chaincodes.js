@@ -342,7 +342,7 @@ exports.Transactions = async (req, res) => {
 
 exports.getTransaction = async (req, res) => {
   try {
-    let { isin } = req.body;
+    let { isin } = req.query;
 
     let query = { selector: { isin } };
     let queryString = JSON.stringify(query);
@@ -404,7 +404,7 @@ exports.buyOrder = async (req, res) => {
 
 exports.getBuyOrder = async (req, res) => {
   try {
-    let { isin } = req.body;
+    let { isin } = req.query;
 
     let query = { selector: { isin } };
     let queryString = JSON.stringify(query);
@@ -467,7 +467,7 @@ exports.sellOrder = async (req, res) => {
 
 exports.getSellOrder = async (req, res) => {
   try {
-    let { isin } = req.body;
+    let { isin } = req.query;
 
     let query = { selector: { isin } };
     let queryString = JSON.stringify(query);
@@ -562,7 +562,7 @@ exports.mbeMarket = async (req, res) => {
 
 exports.getMbeMarket = async (req, res) => {
   try {
-    let { isin } = req.body;
+    let { isin } = req.query;
 
     let query = { selector: { isin } };
     let queryString = JSON.stringify(query);
@@ -627,7 +627,7 @@ exports.purchaseLog = async (req, res) => {
 
 exports.getPurchaseLog = async (req, res) => {
   try {
-    let { isin } = req.body;
+    let { isin } = req.query;
 
     let query = { selector: { isin } };
     let queryString = JSON.stringify(query);
