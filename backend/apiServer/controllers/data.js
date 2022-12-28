@@ -135,7 +135,7 @@ exports.PanCardMockData= async(req, res)=>{
 
 exports.getPancarddata = async (req, res)=>{
   try{
-    const {panCard} = req.body;
+    const {panCard} = req.params;
     const panCarddata= await PanCardModel.findOne({panCard})
     
     if (!panCarddata){

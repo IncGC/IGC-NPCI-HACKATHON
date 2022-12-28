@@ -10,66 +10,68 @@ const {
 } = require("../utils/helper");
 
 exports.bond = async (req, res) => {
-  try {
-    let {
-      isin,
-      IssuerName,
-      CouponRate,
-      faceValue,
-      Ltp,
-      CreditRating,
-      MaturityDate,
-      securityDescription,
-      latestBidPrice,
-      latestAskPrice,
-      currency,
-      NumToken,
-      Detokenizedtoken,
-      detokenizedValue,
-      tradeValue,
+  try{
+    let{
+        isin,
+        IssuerName,
+        CouponRate,
+        faceValue,
+        Ltp,
+        CreditRating,
+        MaturityDate,
+        securityDescription,
+        latestBidPrice,
+        latestAskPrice,
+        currency,
+        NumToken,
+        Detokenizedtoken,
+        detokenizedValue,
+        tradeValue
     } = req.body;
-    console.log(req.body);
-    const bondData = {
-      Id: generateId(),
-      CreatedOn: getNow(),
-      CreatedBy: "admin",
-      IsDelete: "false",
-      IsHidden: "false",
+console.log(req.body)
+    const bondData= {
+      id:generateId(),
+      createdOn:getNow(),
+      createdBy: "admin",
+      isDelete:"false",
+      isHidden:"false",
       isin,
-      IssuerName,
-      CouponRate,
+      issuerName:IssuerName,
+      couponRate:CouponRate,
       faceValue,
-      Ltp,
-      CreditRating,
-      MaturityDate,
+      ltp:Ltp,
+      creditRating:CreditRating,
+      maturityDate:MaturityDate,
       securityDescription,
       latestBidPrice,
       latestAskPrice,
       currency,
-      NumToken,
-      Detokenizedtoken,
+      numToken:NumToken,
+      detokenizedtoken:Detokenizedtoken,
       detokenizedValue,
-      tradeValue,
-    };
-    console.log(bondData);
-    console.log(invokeTransaction);
+      tradeValue
+    }
+console.log(bondData);
+console.log('hereee')
+
     let message = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
-      chainCodeAction: "create",
-      channelName: "common",
-      data: bondData,
-      chainCodeFunctionName: "create",
-      chainCodeName: "Bond",
-    });
-    console.log("hereee");
+        metaInfo:{userName:"pintu", org:"org1MSP"},
+        chainCodeAction:'create',
+        channelName:'common',
+        data:bondData,
+        chainCodeFunctionName:'create',
+        chainCodeName:'Bond'
+    })
+// console.log('hereee')
     console.log(message);
     res.status(201).json({
-      status: 201,
-      message: message,
-    });
-  } catch (err) {
-    res.send(err);
-  }
+        status:201,
+        message:message
+    })
+
+}catch(err){
+    res.send(err)
+}
 };
 
 exports.getbond = async (req, res) => {
@@ -81,7 +83,7 @@ exports.getbond = async (req, res) => {
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: email, org: msp },
+      metaInfo: { userName: 'pintu', org: 'org1MSP' },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       channelName: CHAINCODE_CHANNEL,
       data: queryString,
