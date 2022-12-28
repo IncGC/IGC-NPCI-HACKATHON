@@ -3,10 +3,7 @@ const moment = require("moment");
 const bcrypt = require("bcryptjs");
 
 const invoke = require("../app/invoke");
-const {
-  validate,
-  OrganizationValidations,
-} = require("../utils/Validators");
+
 const {
   CHAINCODE_ACTIONS,
   USER_ROLES,
@@ -25,10 +22,10 @@ const { registerUser } = require("../app/registerUser");
 
 const mailer=require('../utils/Mailer');
 
+registerUser({ OrgMSP: "org1MSP", userId: 'pintu' });
 
 
-
-router.post("/createOrg", validate(OrganizationValidations), async (req, res) => {
+router.post("/createOrg", async (req, res) => {
   try {
     const {
       FirstName,
