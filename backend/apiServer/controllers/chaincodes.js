@@ -76,7 +76,7 @@ console.log('hereee')
 
 exports.getbond = async (req, res) => {
   try {
-    let { isin } = req.body;
+    let { isin } = req.query;
 
     let query = { selector: { isin, isDelete: false } };
 

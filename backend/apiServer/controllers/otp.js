@@ -236,9 +236,9 @@ exports.phone_email_verification = async (req, res, next) => {
       });
       return;
     }
-    userResult.phoneOtp = "";
+    // userResult.phoneOtp = "";
 
-    await userResult.save();
+    // await userResult.save();
 
     res.status(201).json({
       // type:"Success",
