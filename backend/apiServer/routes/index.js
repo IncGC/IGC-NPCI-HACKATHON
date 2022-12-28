@@ -14,7 +14,7 @@ const buy = require('../controllers/buy');
 const trasactions = require('../controllers/transactions');
 const chaincode = require("../controllers/chaincodes");
 
-router.route('/bond').post( chaincode.bond).get(chaincode.getbond);
+router.route('/cbdcwallet').post( chaincode.cbdcwallet).get(chaincode.cbdcwallet);
 router.route('/bondholding').post( chaincode.bondHoldings).get(chaincode.getbondHoldings);
 router.route('/tokenholding').post( chaincode.TokenHolding).get(chaincode.getTokenHolding);
 router.route('/transactions').post( chaincode.Transactions).get(chaincode.getTransaction);

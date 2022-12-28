@@ -9,47 +9,22 @@ const {
   generateId,
 } = require("../utils/helper");
 
-exports.bond = async (req, res) => {
+exports.cbdcwallet = async (req, res) => {
   try{
     let{
-        isin,
-        IssuerName,
-        CouponRate,
-        faceValue,
-        Ltp,
-        CreditRating,
-        MaturityDate,
-        securityDescription,
-        latestBidPrice,
-        latestAskPrice,
-        currency,
-        NumToken,
-        Detokenizedtoken,
-        detokenizedValue,
-        tradeValue
+      mbeId,
+      CBDCbalance,
     } = req.body;
 console.log(req.body)
-    const bondData= {
+    const cbdcwalletData= {
       id:generateId(),
       createdOn:getNow(),
       createdBy: "admin",
       isDelete:"false",
       isHidden:"false",
-      isin,
-      issuerName:IssuerName,
-      couponRate:CouponRate,
-      faceValue,
-      ltp:Ltp,
-      creditRating:CreditRating,
-      maturityDate:MaturityDate,
-      securityDescription,
-      latestBidPrice,
-      latestAskPrice,
-      currency,
-      numToken:NumToken,
-      detokenizedtoken:Detokenizedtoken,
-      detokenizedValue,
-      tradeValue
+      IsUpdated:'false',
+      mbeId,
+      CBDCbalance
     }
 console.log(bondData);
 console.log('hereee')
@@ -60,7 +35,7 @@ console.log('hereee')
         channelName:'common',
         data:bondData,
         chainCodeFunctionName:'create',
-        chainCodeName:'Bond'
+        chainCodeName:'CBDCwallet'
     })
 // console.log('hereee')
     console.log(message);
@@ -74,11 +49,11 @@ console.log('hereee')
 }
 };
 
-exports.getbond = async (req, res) => {
+exports.getcbdcwallet = async (req, res) => {
   try {
-    let { isin } = req.query;
+    let { mbeId } = req.query;
 
-    let query = { selector: { isin, isDelete: false } };
+    let query = { selector: { mbeId, isDelete: false } };
 
     let queryString = JSON.stringify(query);
 
@@ -88,18 +63,18 @@ exports.getbond = async (req, res) => {
       channelName: CHAINCODE_CHANNEL,
       data: queryString,
       chainCodeFunctionName: "querystring",
-      chainCodeName: "Bond",
+      chainCodeName: "CBDCwallet",
     });
 
     res.set("Content-Type", "application/json");
-    res.status(200).send(dataStr);
-    // let data = JSON.parse(dataStr)
+    // res.status(200).send(dataStr);
+    let data = JSON.parse(dataStr)
 
-    //     console.log(data);
-    //     res.status(200).json({
-    //         status:200,
-    //         message:data
-    //     })
+        console.log(data);
+        res.status(200).json({
+            status:200,
+            message:data
+        })
   } catch (err) {
     res.send(err);
   }
@@ -131,6 +106,8 @@ exports.bondHoldings = async (req, res) => {
       CreatedBy: "admin",
       IsDelete: "false",
       IsHidden: "false",
+      IsTokenized:'false',
+      IsProcessed:'false',
       isin,
       mbeId,
       IssuerName,
@@ -217,6 +194,8 @@ exports.TokenHolding = async (req, res) => {
       NumToken,
       currentPrice,
       numOfLots,
+      DetokenizedTokens,
+      DetokenizedValue
     } = req.body;
 
     const TokenHoldingData = {
@@ -239,6 +218,8 @@ exports.TokenHolding = async (req, res) => {
       NumToken,
       currentPrice,
       numOfLots,
+      DetokenizedTokens,
+      DetokenizedValue
     };
 
     let message = await invokeTransaction({
@@ -291,9 +272,9 @@ exports.getTokenHolding = async (req, res) => {
 exports.Transactions = async (req, res) => {
   try {
     let {
-      trnxID,
       isin,
-      userID,
+      mbeId,
+      IssuerName,
       noOfTokens,
       date,
       type,
@@ -309,16 +290,17 @@ exports.Transactions = async (req, res) => {
       CreatedBy: "admin",
       IsDelete: "false",
       IsHidden: "false",
-      trnxID,
       isin,
-      userID,
+      mbeId,
+      IssuerName,
       noOfTokens,
       date,
-      type,
+      TransactionsType,
       status,
-      authorization,
       amount,
-      certificate,
+      sellOrderId,
+      buyOrderId,
+      purchaselogId
     };
 
     let message = await invokeTransaction({

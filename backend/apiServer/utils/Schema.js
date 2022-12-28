@@ -1,27 +1,15 @@
 const { CustomError } = require("./HandleResponseError");
 const { CHAINCODE_NAMES } = require("./helper");
 
-const BOND_SCHEMA = [
+const CBDCWALLET_SCHEMA = [
   { name: "id" },
   { name: "createdOn" },
   { name: "createdBy" },
   { name: "isDelete" },
   { name: "isHidden" },
-  { name: "isin" },
-  { name: "issuerName" },
-  { name: "couponRate" },
-  { name: "faceValue" },
-  { name: "ltp" },
-  { name: "creditRating" },
-  { name: "maturityDate" },
-  { name: "securityDescription" },
-  { name: "latestBidPrice" },
-  { name: "latestAskPrice" },
-  { name: "currency" },
-  { name: "numToken" },
-  { name: "detokenizedtoken" },
-  { name: "detokenizedValue" },
-  { name: "tradeValue" },
+  {name:"IsUpdated"},
+  { name: "mbeId" },
+  { name: "CBDCbalance" },
 ];
 
 const BONDHOLDING_SCHEMA = [
@@ -30,6 +18,8 @@ const BONDHOLDING_SCHEMA = [
   { name: "CreatedBy" },
   { name: "IsDelete" },
   { name: "IsHidden" },
+  {name:"IsTokenized"},
+  {name:"IsProcessed"},
   { name: "isin" },
   { name: "mbeId" },
   { name: "IssuerName" },
@@ -57,7 +47,7 @@ const TOKENHOLDING_SCHEMA = [
   { name: "IssuerName" },
   { name: "CouponRate" },
   { name: "faceValue" },
-  { name: "faceValue" },
+  { name: "Ltp" },
   { name: "CreditRating" },
   { name: "MaturityDate" },
   { name: "latestBidPrice" },
@@ -66,6 +56,8 @@ const TOKENHOLDING_SCHEMA = [
   { name: "NumToken" },
   { name: "currentPrice" },
   { name: "numOfLots" },
+  {name:"DetokenizedTokens"},
+  {name:"DetokenizedValue"}
 ];
 const TRASANSATIONS_SCHEMA = [
   { name: "Id" },
@@ -73,16 +65,17 @@ const TRASANSATIONS_SCHEMA = [
   { name: "CreatedBy" },
   { name: "IsDelete" },
   { name: "IsHidden" },
-  { name: "trnxID" },
   { name: "isin" },
-  { name: "userID" },
+  { name: "mbeId" },
+  {name:"IssuerName"},
   { name: "noOfTokens" },
   { name: "date" },
-  { name: "nature" },
+  { name: "TransactionsType" },
   { name: "status" },
-  { name: "authorization" },
-  { name: "amout" },
-  { name: "certificate" },
+  { name: "amount" },
+  { name: "sellOrderId" },
+  { name: "buyOrderId" },
+  {name:"purchaselogId"}
 ];
 
 const BUYORDER_SCHEMA = [
@@ -155,8 +148,8 @@ const PURCHASELOG_SCHEMA = [
 ];
 exports.getSchema = (chaincodeName) => {
   switch (chaincodeName) {
-    case CHAINCODE_NAMES.BOND:
-      return BOND_SCHEMA;
+    case CHAINCODE_NAMES.CBDCWALLET:
+      return CBDCWALLET_SCHEMA;
     case CHAINCODE_NAMES.TRASANSATIONS:
       return TRASANSATIONS_SCHEMA;
     case CHAINCODE_NAMES.BONDHOLDING:

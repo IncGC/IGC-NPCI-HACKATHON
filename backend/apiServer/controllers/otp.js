@@ -229,7 +229,14 @@ exports.phone_email_verification = async (req, res, next) => {
       });
       return;
     }
-    if (userResult.phoneOtp !== enterOtp || userResultemail.phoneOtp !== enterOtp) {
+    if (userResult.phoneOtp !== enterOtp)  {
+      res.send({
+        status: 400,
+        message: "Wrong OTP entered",
+      });
+      return;
+    }
+    if ( userResultemail.phoneOtp !== enterOtp){
       res.send({
         status: 400,
         message: "Wrong OTP entered",

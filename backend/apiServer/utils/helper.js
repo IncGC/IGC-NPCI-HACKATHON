@@ -36,7 +36,7 @@ exports.USER_STATUS = {
 
 
 exports.CHAINCODE_NAMES = {
-	BOND:'Bond',
+	CBDCWALLET:'CBDCwallet',
 	TRASANSATIONS:'Transactions',
 	BONDHOLDING: 'BondHolding',
 	TOKENHOLDING: 'TokenHolding',
