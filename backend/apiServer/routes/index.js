@@ -14,6 +14,26 @@ const buy = require('../controllers/buy');
 const trasactions = require('../controllers/transactions');
 const chaincode = require("../controllers/chaincodes");
 
+// const reconcilation= require("../controllers/recollinations");
+
+// router.route('/pushBondOrderDetails').post(reconcilation.pushBondOrderDetails)
+// router.route('/pushWallets').post(reconcilation.pushWallets)
+// router.route('/pushSellOrders').post(reconcilation.pushSellOrders)
+// router.route('/pushBuyOrders').post(reconcilation.pushBuyOrders)
+// router.route('/tokenize').post(reconcilation.tokenize)
+// router.route('/placeSellOrder').post(reconcilation.placeSellOrder)
+// router.route('/placeBuyOrder').post(reconcilation.placeBuyOrder)
+// router.route('/compareOrderBook').post(reconcilation.compareOrderBook)
+// router.route('/deTokenize').post(reconcilation.deTokenize)
+
+
+const trade = require('../Trading/index');
+
+router.use('/trade', trade);
+
+
+
+
 router.route('/cbdcwallet').post( chaincode.cbdcwallet).get(chaincode.cbdcwallet);
 router.route('/bondholding').post( chaincode.bondHoldings).get(chaincode.getbondHoldings);
 router.route('/tokenholding').post( chaincode.TokenHolding).get(chaincode.getTokenHolding);

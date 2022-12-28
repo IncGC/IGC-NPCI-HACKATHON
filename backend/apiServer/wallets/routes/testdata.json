@@ -1,0 +1,74 @@
+{
+    "key1":
+    {
+        "orderId":"1",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"bid",
+        "price":"1020",
+        "size":"8"
+    },
+    "key2" :{
+        "orderId":"2",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"bid",
+        "price":"1007",
+        "size":"7"
+    },
+    "key3" :{
+        "orderId":"3",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"bid",
+        "price":"998",
+        "size":"12"
+    },
+    "key4" :{
+        "orderId":"4",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"bid",
+        "price":"1012",
+        "size":"10"
+    },
+    "key5" :{
+        "orderId":"5",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"bid",
+        "price":"999",
+        "size":"11"
+    },
+    "key6" :{
+        "orderId":"6",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"ask",
+        "price":"1012",
+        "size":"10"
+    },
+    "key7" :{
+        "orderId":"7",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"ask",
+        "price":"1007",
+        "size":"9"
+    },
+    "key8" :{
+        "orderId":"8",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"ask",
+        "price":"998",
+        "size":"10"
+    },
+    "key9" :{
+        "orderId":"9",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"ask",
+        "price":"1012",
+        "size":"12"
+    },
+    "key10" :{
+        "orderId":"10",
+        "name":"RELIANCE HOME FINANCE LIMITED",
+        "side":"ask",
+        "price":"1020",
+        "size":"8"
+    }
+
+}

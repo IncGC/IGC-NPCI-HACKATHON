@@ -26,18 +26,18 @@ console.log(req.body)
       mbeId,
       CBDCbalance
     }
-console.log(bondData);
+console.log(cbdcwalletData);
 console.log('hereee')
 
     let message = await invokeTransaction({
         metaInfo:{userName:"pintu", org:"org1MSP"},
         chainCodeAction:'create',
         channelName:'common',
-        data:bondData,
+        data:cbdcwalletData,
         chainCodeFunctionName:'create',
         chainCodeName:'CBDCwallet'
     })
-// console.log('hereee')
+console.log('hereewe')
     console.log(message);
     res.status(201).json({
         status:201,
@@ -148,7 +148,7 @@ exports.getbondHoldings = async (req, res) => {
   try {
     let { isin } = req.body;
 
-    let query = { selector: { isin, isDelete: false } };
+    let query = { selector: {  isDelete: false } };
 
     let queryString = JSON.stringify(query);
 
@@ -202,8 +202,8 @@ exports.TokenHolding = async (req, res) => {
       Id: generateId(),
       CreatedOn: getNow(),
       CreatedBy: "admin",
-      IsDelete: false,
-      IsHidden: false,
+      IsDelete: 'false',
+      IsHidden: 'false',
       isin,
       mbeId,
       IssuerName,
@@ -221,6 +221,8 @@ exports.TokenHolding = async (req, res) => {
       DetokenizedTokens,
       DetokenizedValue
     };
+
+    console.log(TokenHoldingData);
 
     let message = await invokeTransaction({
       metaInfo: { userName: "pintu", org: "org1MSP" },
@@ -277,11 +279,12 @@ exports.Transactions = async (req, res) => {
       IssuerName,
       noOfTokens,
       date,
-      type,
+      TransactionsType,
       status,
-      authorization,
       amount,
-      certificate,
+      sellOrderId,
+      buyOrderId,
+      purchaselogId
     } = req.body;
 
     const transactionData = {
@@ -357,9 +360,9 @@ exports.buyOrder = async (req, res) => {
       Id: generateId(),
       CreatedOn: getNow(),
       CreatedBy: "admin",
-      IsDelete: false,
-      IsHidden: false,
-      IsProcessed: false,
+      IsDelete: 'false',
+      IsHidden: 'false',
+      IsProcessed: 'false',
       mbeId,
       isin,
       price,
@@ -375,9 +378,9 @@ exports.buyOrder = async (req, res) => {
     });
 
     console.log(message);
-    req.send(201).json({
+    req.status(201).json({
       status: 201,
-      message: message,
+      message: message
     });
   } catch (err) {
     res.send(err);
@@ -420,9 +423,9 @@ exports.sellOrder = async (req, res) => {
       Id: generateId(),
       CreatedOn: getNow(),
       CreatedBy: "admin",
-      IsDelete: false,
-      IsHidden: false,
-      IsProcessed: false,
+      IsDelete: 'false',
+      IsHidden: 'false',
+      IsProcessed: 'false',
       mbeId,
       isin,
       price,
@@ -501,8 +504,8 @@ exports.mbeMarket = async (req, res) => {
       Id: generateId(),
       CreatedOn: getNow(),
       CreatedBy: "admin",
-      IsDelete: false,
-      IsHidden: false,
+      IsDelete: 'false',
+      IsHidden: 'false',
       isin,
       mbeId,
       IssuerName,
