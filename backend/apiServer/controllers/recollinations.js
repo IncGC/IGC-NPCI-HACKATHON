@@ -1,40 +1,34 @@
-const fs = require("fs");
+const {fs} = require("fs");
 const { parse } = require("csv-parse");
 // const { SellOrder, Bonds } = require("../Trading/model/Trade");
 const { Bonds, SellOrder, BuyOrder, Wallet, PurchaseLog } = require('../models/Trade');
+const bodyParser = require('body-parser');
 
-const bond = require('../data/bond.csv')
+const {bond} = require('../data/bond.csv')
 
-exports.pushBondOrderDetails= async(req,res)=>{
-    try{
-        async function readFile (){
-            fs.createReadStream(bond).pipe(parse({
-                delimiter:",",from_line:2
-            })).on("data", async function (row){
-                let obj = {
-                    "BondId":row[0],
-                    "UserId":row[1],
-                    "Name":row[2],
-                    "LotQty":row[3],
-                    "TokenizedLot":row[4],
-                    "TotalTokenQty":row[5],
-                    "TokenQtyRemaining":row[6] 
-                }
-                var record = new Bonds(obj);
-                record.save()
-            }).on("end", function (){
-                console.log("end")
-            })
+exports.pushBondOrderDetails= async (req, res) => {
+    try {
+        let arr = [];
+        async function readFile() {
+            fs.createReadStream(bond)
+                .pipe(parse({ delimiter: ",", from_line: 2 }))
+                .on("data", async function (row) {
+                    let obj = { "BondId": row[0], "UserId": row[1], "Name": row[2], "LotQty": row[3], "TokenizedLot": row[4], "TotalTokenQty": row[5], "TokenQtyRemaining": row[6] }
+                    var record = new Bonds(obj);
+                    record.save()
+                }).on("end", function () {
+                    console.log("arr", arr);
+                })
         }
-
         readFile();
+        // res.send("Succesfully Pushed");
+        var recordData= await Bonds.find();
         res.status(201).json({
             status:201,
-            message:record
-        })
-
-    }catch(err){
-        res.send(err)
+            message:recordData
+        });
+    } catch (e) {
+        res.send(e);
     }
 }
 

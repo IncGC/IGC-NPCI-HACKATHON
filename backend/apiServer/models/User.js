@@ -17,7 +17,6 @@ const userSchema = new schema({
     OrgMSP:String,
     status: String,
     phoneOtp:String,
-    role: String,
     nse_registerd:Boolean,
     bondholdingID: { type: ObjectId, ref: 'Bond' },
     tokenholdingID:{type: ObjectId, ref :"Token"},

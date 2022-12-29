@@ -81,6 +81,7 @@ exports.createInvestor = async (req, res) => {
             status_code:200,
             message:"MBE account created successfully"
         });
+        return
     }else if (nseData){
         var userResult = await UserModel.updateOne(
             { phoneNumber },
@@ -133,9 +134,7 @@ exports.createInvestor = async (req, res) => {
       Gender: panCarddata.gender,
       Address: panCarddata.address,
       DOB: panCarddata.DOB,
-      Role: "investor",
-      PanCard: panCarddata.panCard,
-      AadharCard: panCarddata.aadharCard,
+      role: "investor",
     };
     console.log(userData);
 
@@ -169,10 +168,10 @@ exports.createInvestor = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { phoneNumber, password } = req.body;
 
   let exiRes = await UserModel.findOne({
-    email,
+    phoneNumber
   });
 
   console.log({ exiRes });

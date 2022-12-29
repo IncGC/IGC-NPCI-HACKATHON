@@ -9,7 +9,7 @@ router.post('/', async (req, res)=>{
         let{ PanCardNum, FirstName, LastName, SurName, Gender, FatherName, DOB, Address, Nationality,AadharNum}=req.body;
            
         
-        const tokenValue= parseInt(volume)/parseInt(noOfTokens);
+        // const tokenValue= parseInt(volume)/parseInt(noOfTokens);
         let data = {
             Id:generateId(),
             CreatedOn: getNow(),
