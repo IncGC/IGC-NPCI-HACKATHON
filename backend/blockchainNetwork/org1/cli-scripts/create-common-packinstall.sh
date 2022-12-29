@@ -12,17 +12,17 @@ echo "***************** Install Transactions chaincode ***************"
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.mbe.com/users/Admin@org1.mbe.com/msp CORE_PEER_ADDRESS=peer0.org1.mbe.com:7051 CORE_PEER_LOCALMSPID="org1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.mbe.com/peers/peer0.org1.mbe.com/tls/ca.crt 
 peer lifecycle chaincode install Transactions.tar.gz
 
-echo "************ Package Bond chaincode **********" 
-pushd /opt/gopath/src/github.com/chaincode/Bond/
+echo "************ Package CBDCwallet chaincode **********" 
+pushd /opt/gopath/src/github.com/chaincode/CBDCwallet/
 GO111MODULE=on go mod vendor
 popd
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.mbe.com/users/Admin@org1.mbe.com/msp CORE_PEER_ADDRESS=peer0.org1.mbe.com:7051 CORE_PEER_LOCALMSPID="org1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.mbe.com/peers/peer0.org1.mbe.com/tls/ca.crt 
-peer lifecycle chaincode package Bond.tar.gz --path /opt/gopath/src/github.com/chaincode/Bond/ --lang golang --label Bond_1.0
+peer lifecycle chaincode package CBDCwallet.tar.gz --path /opt/gopath/src/github.com/chaincode/CBDCwallet/ --lang golang --label CBDCwallet_1.0
 
-echo "***************** Install Bond chaincode ***************"
+echo "***************** Install CBDCwallet chaincode ***************"
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.mbe.com/users/Admin@org1.mbe.com/msp CORE_PEER_ADDRESS=peer0.org1.mbe.com:7051 CORE_PEER_LOCALMSPID="org1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.mbe.com/peers/peer0.org1.mbe.com/tls/ca.crt 
-peer lifecycle chaincode install Bond.tar.gz
+peer lifecycle chaincode install CBDCwallet.tar.gz
 
 
 echo "************ Package BondHolding chaincode **********" 

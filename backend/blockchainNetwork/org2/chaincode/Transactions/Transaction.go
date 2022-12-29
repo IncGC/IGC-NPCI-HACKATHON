@@ -16,29 +16,30 @@ type TransactionsChaincode struct {
 }
 
 type Transactions struct {
-	Id            string    `json:"Id"`
-	CreatedOn     time.Time `json:"CreatedOn"`
-	CreatedBy     string    `json:"CreatedBy"`
-	IsDelete      bool      `json:"IsDelete"`
-	IsHidden      bool      `json:"IsHidden"`
-	trnxID        string    `json:"trnxID"`
-	isin          string    `json:"isin"`
-	userID        string    `json:"userID"`
-	noOfTokens    string    `json:"noOfTokens"`
-	date          string    `json:"date"`
-	nature        string    `json:"nature"`
-	status        string    `json: "status"`
-	authorization string    `json:"authorization"`
-	amount        string    `json:"amount"`
-	certificate   string    `json:"certificate"`
+	Id               string    `json:"Id"`
+	CreatedOn        time.Time `json:"CreatedOn"`
+	CreatedBy        string    `json:"CreatedBy"`
+	IsDelete         bool      `json:"IsDelete"`
+	IsHidden         bool      `json:"IsHidden"`
+	isin             string    `json:"isin"`
+	mbeId            string    `json:"mbeId"`
+	IssuerName       string    `json:"IssuerName"`
+	noOfTokens       string    `json:"noOfTokens"`
+	date             string    `json:"date"`
+	TransactionsType string    `json:"TransactionsType"`
+	status           string    `json: "status"`
+	amount           string    `json:"amount"`
+	sellOrderId      string    `json:"sellOrderId"`
+	buyOrderId       string    `json:"buyOrderId"`
+	purchaselogId    string    `json:"purchaselogId"`
 }
 
 func (cc *TransactionsChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 15 {
-		return shim.Error("Incorrect number arguments. Expecting 15")
+	if len(args) != 17 {
+		return shim.Error("Incorrect number arguments. Expecting 17")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
@@ -58,21 +59,22 @@ func (cc *TransactionsChaincode) create(stub shim.ChaincodeStubInterface, arg []
 	}
 
 	data := Transactions{
-		Id:            args[0],
-		CreatedOn:     dateValue1,
-		CreatedBy:     args[2],
-		IsDelete:      boolValue3,
-		IsHidden:      boolValue4,
-		trnxID:        args[5],
-		isin:          args[6],
-		userID:        args[7],
-		noOfTokens:    args[8],
-		date:          args[9],
-		nature:        args[10],
-		status:        args[11],
-		authorization: args[12],
-		amount:        args[13],
-		certificate:   args[14],
+		Id:               args[0],
+		CreatedOn:        dateValue1,
+		CreatedBy:        args[2],
+		IsDelete:         boolValue3,
+		IsHidden:         boolValue4,
+		isin:             args[6],
+		mbeId:            args[7],
+		IssuerName:       args[8],
+		noOfTokens:       args[9],
+		date:             args[10],
+		TransactionsType: args[11],
+		status:           args[12],
+		amount:           args[13],
+		sellOrderId:      args[14],
+		buyOrderId:       args[15],
+		purchaselogId:    args[16],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -108,8 +110,8 @@ func (cc *TransactionsChaincode) update(stub shim.ChaincodeStubInterface, arg []
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 15 {
-		return shim.Error("Incorrect number arguments. Expecting 15")
+	if len(args) != 17 {
+		return shim.Error("Incorrect number arguments. Expecting 17")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
@@ -127,23 +129,23 @@ func (cc *TransactionsChaincode) update(stub shim.ChaincodeStubInterface, arg []
 	if err4 != nil {
 		return shim.Error("Error converting string to bool : " + err4.Error())
 	}
-
 	data := Transactions{
-		Id:            args[0],
-		CreatedOn:     dateValue1,
-		CreatedBy:     args[2],
-		IsDelete:      boolValue3,
-		IsHidden:      boolValue4,
-		trnxID:        args[5],
-		isin:          args[6],
-		userID:        args[7],
-		noOfTokens:    args[8],
-		date:          args[9],
-		nature:        args[10],
-		status:        args[11],
-		authorization: args[12],
-		amount:        args[13],
-		certificate:   args[14],
+		Id:               args[0],
+		CreatedOn:        dateValue1,
+		CreatedBy:        args[2],
+		IsDelete:         boolValue3,
+		IsHidden:         boolValue4,
+		isin:             args[6],
+		mbeId:            args[7],
+		IssuerName:       args[8],
+		noOfTokens:       args[9],
+		date:             args[10],
+		TransactionsType: args[11],
+		status:           args[12],
+		amount:           args[13],
+		sellOrderId:      args[14],
+		buyOrderId:       args[15],
+		purchaselogId:    args[16],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)

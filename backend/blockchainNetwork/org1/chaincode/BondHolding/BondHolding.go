@@ -12,15 +12,17 @@ import (
 	"github.com/hyperledger/fabric-protos-go/peer"
 )
 
-type TokenHoldingChaincode struct {
+type BondHoldingChaincode struct {
 }
 
-type TokenHolding struct {
+type BondHolding struct {
 	Id             string    `json:"Id"`
 	CreatedOn      time.Time `json:"CreatedOn"`
 	CreatedBy      string    `json:"CreatedBy"`
 	IsDelete       bool      `json:"IsDelete"`
 	IsHidden       bool      `json:"IsHidden"`
+	IsTokenized       bool      `json:"IsTokenized"`
+	IsProcessed       bool      `json:"IsProcessed"`
 	isin           string    `json:"isin"`
 	mbeId          string    `json:"mbeId"`
 	IssuerName     string    `json:"IssuerName"`
@@ -37,12 +39,12 @@ type TokenHolding struct {
 	RemainingToken string    `json :"RemainingToken"`
 }
 
-func (cc *TokenHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
+func (cc *BondHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 19 {
-		return shim.Error("Incorrect number arguments. Expecting 19")
+	if len(args) != 21 {
+		return shim.Error("Incorrect number arguments. Expecting 21")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
@@ -61,27 +63,39 @@ func (cc *TokenHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []
 	if err4 != nil {
 		return shim.Error("Error converting string to bool: " + err4.Error())
 	}
+	boolValue5, err5 := strconv.ParseBool(args[5])
 
-	data := TokenHolding{
+	if err5 != nil {
+		return shim.Error("Error converting string to bool: " + err5.Error())
+	}
+	boolValue6, err6 := strconv.ParseBool(args[6])
+
+	if err6 != nil {
+		return shim.Error("Error converting string to bool: " + err6.Error())
+	}
+
+	data := BondHolding{
 		Id:             args[0],
 		CreatedOn:      dateValue1,
 		CreatedBy:      args[2],
 		IsDelete:       boolValue3,
 		IsHidden:       boolValue4,
-		isin:           args[5],
-		mbeId:          args[6],
-		IssuerName:     args[7],
-		CouponRate:     args[8],
-		faceValue:      args[9],
-		CreditRating:   args[10],
-		MaturityDate:   args[11],
-		purchasePrice:  args[12],
-		NumToken:       args[13],
-		currentPrice:   args[14],
-		numOfLots:      args[15],
-		tokenizedLot:   args[16],
-		totalTokenQty:  args[17],
-		RemainingToken: args[18],
+		IsTokenized: boolValue5,
+		IsProcessed: boolValue6,
+		isin:           args[7],
+		mbeId:          args[8],
+		IssuerName:     args[9],
+		CouponRate:     args[10],
+		faceValue:      args[11],
+		CreditRating:   args[12],
+		MaturityDate:   args[13],
+		purchasePrice:  args[14],
+		NumToken:       args[15],
+		currentPrice:   args[16],
+		numOfLots:      args[17],
+		tokenizedLot:   args[18],
+		totalTokenQty:  args[19],
+		RemainingToken: args[20],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -99,7 +113,7 @@ func (cc *TokenHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []
 	return shim.Success(nil)
 }
 
-func (cc *TokenHoldingChaincode) get(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+func (cc *BondHoldingChaincode) get(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number arguments. Expecting 1")
@@ -113,7 +127,7 @@ func (cc *TokenHoldingChaincode) get(stub shim.ChaincodeStubInterface, args []st
 
 	return shim.Success(stateBytes)
 }
-func (cc *TokenHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
+func (cc *BondHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
 	args := strings.Split(arg[0], "^^")
 
@@ -137,28 +151,41 @@ func (cc *TokenHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []
 	if err4 != nil {
 		return shim.Error("Error converting string to bool: " + err4.Error())
 	}
+	boolValue5, err5 := strconv.ParseBool(args[5])
 
-	data := TokenHolding{
+	if err5 != nil {
+		return shim.Error("Error converting string to bool: " + err5.Error())
+	}
+	boolValue6, err6 := strconv.ParseBool(args[6])
+
+	if err6 != nil {
+		return shim.Error("Error converting string to bool: " + err6.Error())
+	}
+
+	data := BondHolding{
 		Id:             args[0],
 		CreatedOn:      dateValue1,
 		CreatedBy:      args[2],
 		IsDelete:       boolValue3,
 		IsHidden:       boolValue4,
-		isin:           args[5],
-		mbeId:          args[6],
-		IssuerName:     args[7],
-		CouponRate:     args[8],
-		faceValue:      args[9],
-		CreditRating:   args[10],
-		MaturityDate:   args[11],
-		purchasePrice:  args[12],
-		NumToken:       args[13],
-		currentPrice:   args[14],
-		numOfLots:      args[15],
-		tokenizedLot:   args[16],
-		totalTokenQty:  args[17],
-		RemainingToken: args[18],
+		IsTokenized: boolValue5,
+		IsProcessed: boolValue6,
+		isin:           args[7],
+		mbeId:          args[8],
+		IssuerName:     args[9],
+		CouponRate:     args[10],
+		faceValue:      args[11],
+		CreditRating:   args[12],
+		MaturityDate:   args[13],
+		purchasePrice:  args[14],
+		NumToken:       args[15],
+		currentPrice:   args[16],
+		numOfLots:      args[17],
+		tokenizedLot:   args[18],
+		totalTokenQty:  args[19],
+		RemainingToken: args[20],
 	}
+
 
 	dataBytes, errMarshal := json.Marshal(data)
 
@@ -174,7 +201,7 @@ func (cc *TokenHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []
 
 	return shim.Success(nil)
 }
-func (cc *TokenHoldingChaincode) delete(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+func (cc *BondHoldingChaincode) delete(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number arguments. Expecting 1")
@@ -186,7 +213,7 @@ func (cc *TokenHoldingChaincode) delete(stub shim.ChaincodeStubInterface, args [
 		return shim.Error("Error getting the state: " + err.Error())
 	}
 
-	data := TokenHolding{}
+	data := BondHolding{}
 
 	json.Unmarshal(dataBytes, &data)
 
@@ -207,7 +234,7 @@ func (cc *TokenHoldingChaincode) delete(stub shim.ChaincodeStubInterface, args [
 	return shim.Success(nil)
 }
 
-func (cc *TokenHoldingChaincode) history(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+func (cc *BondHoldingChaincode) history(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
@@ -242,7 +269,7 @@ func (cc *TokenHoldingChaincode) history(stub shim.ChaincodeStubInterface, args 
 	return shim.Success(buffer.Bytes())
 }
 
-func (cc *TokenHoldingChaincode) querystring(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+func (cc *BondHoldingChaincode) querystring(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
@@ -276,11 +303,11 @@ func (cc *TokenHoldingChaincode) querystring(stub shim.ChaincodeStubInterface, a
 
 	return shim.Success(buffer.Bytes())
 }
-func (cc *TokenHoldingChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
+func (cc *BondHoldingChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
 	return shim.Success(nil)
 }
 
-func (cc *TokenHoldingChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
+func (cc *BondHoldingChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 
 	function, args := stub.GetFunctionAndParameters()
 
@@ -307,7 +334,7 @@ func main() {
 	var _ = strings.ToUpper("test")
 	var _ = bytes.ToUpper([]byte("test"))
 
-	err := shim.Start(new(TokenHoldingChaincode))
+	err := shim.Start(new(BondHoldingChaincode))
 	if err != nil {
 		fmt.Printf("Error starting BioMetric chaincode: %s", err)
 	}

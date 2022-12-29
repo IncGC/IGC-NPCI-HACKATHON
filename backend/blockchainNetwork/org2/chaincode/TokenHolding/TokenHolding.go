@@ -35,14 +35,16 @@ type TokenHolding struct {
 	NumToken       string    `json :"NumToken"`
 	currentPrice   string    `json :"currentPrice"`
 	numOfLots      string    `json :"numOfLots"`
+	DetokenizedTokens	string `json:"DetokenizedTokens"`
+	DetokenizedValue	string `json:"DetokenizedValue"`
 }
 
 func (cc *TokenHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 19 {
-		return shim.Error("Incorrect number arguments. Expecting 19")
+	if len(args) != 21 {
+		return shim.Error("Incorrect number arguments. Expecting 21")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
@@ -82,6 +84,9 @@ func (cc *TokenHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []
 		NumToken:            args[16],
 		currentPrice:        args[17],
 		numOfLots:           args[18],
+		DetokenizedTokens: args[19],
+		DetokenizedValue: args[20],
+
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -117,8 +122,8 @@ func (cc *TokenHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 19 {
-		return shim.Error("Incorrect number arguments. Expecting 19")
+	if len(args) != 21 {
+		return shim.Error("Incorrect number arguments. Expecting 21")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
@@ -158,6 +163,8 @@ func (cc *TokenHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []
 		NumToken:            args[16],
 		currentPrice:        args[17],
 		numOfLots:           args[18],
+		DetokenizedTokens: args[19],
+		DetokenizedValue: args[20],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)

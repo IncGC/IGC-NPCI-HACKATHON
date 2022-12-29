@@ -27,7 +27,7 @@ const chaincode = require("../controllers/chaincodes");
 // router.route('/deTokenize').post(reconcilation.deTokenize)
 
 
-const trade = require('../Trading/index');
+const trade = require('../reconcile/index');
 
 router.use('/trade', trade);
 

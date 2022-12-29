@@ -12,38 +12,27 @@ import (
 	"github.com/hyperledger/fabric-protos-go/peer"
 )
 
-type BondChaincode struct {
+type CBDCwalletChaincode struct {
 }
 
-type Bond struct {
+type CBDCwallet struct {
 	Id                  string    `json:"id"`
 	CreatedOn           time.Time `json:"createdOn"`
 	CreatedBy           string    `json:"createdBy"`
 	IsDelete            bool      `json:"isDelete"`
 	IsHidden            bool      `json:"isHidden"`
-	Isin                string    `json:"isin"`
-	IssuerName          string    `json:"issuerName"`
-	CouponRate          string    `json:"couponRate"`
-	FaceValue           string    `json:"faceValue"`
-	Ltp                 string    `json:"ltp"`
-	CreditRating        string    `json:"creditRating"`
-	MaturityDate        string    `json: "maturityDate"`
-	SecurityDescription string    `json:"securityDescription"`
-	LatestBidPrice      string    `json:"latestBidPrice"`
-	LatestAskPrice      string    `json :"latestAskPrice"`
-	Currency            string    `json :"currency"`
-	NumToken            string    `json :"numToken"`
-	Detokenizedtoken    string    `json :"detokenizedtoken"`
-	DetokenizedValue    string    `json :"detokenizedValue"`
-	TradeValue          string    `json :"tradeValue"`
+	IsUpdated            bool      `json:"IsUpdated"`
+	mbeId                string    `json:"mbeId"`
+	CBDCbalance          string    `json:"CBDCbalance"`
+	
 }
 
-func (cc *BondChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
+func (cc *CBDCwalletChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 20 {
-		return shim.Error("Incorrect number arguments. Expecting 20")
+	if len(args) != 8 {
+		return shim.Error("Incorrect number arguments. Expecting 8")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
@@ -62,28 +51,22 @@ func (cc *BondChaincode) create(stub shim.ChaincodeStubInterface, arg []string) 
 	if err4 != nil {
 		return shim.Error("Error converting string to bool: " + err4.Error())
 	}
+	boolValue5, err5 := strconv.ParseBool(args[5])
 
-	data := Bond{
+	if err5 != nil {
+		return shim.Error("Error converting string to bool: " + err5.Error())
+	}
+
+	data := CBDCwallet{
 		Id:                  args[0],
 		CreatedOn:           dateValue1,
 		CreatedBy:           args[2],
 		IsDelete:            boolValue3,
 		IsHidden:            boolValue4,
-		Isin:                args[5],
-		IssuerName:          args[6],
-		CouponRate:          args[7],
-		FaceValue:           args[8],
-		Ltp:                 args[9],
-		CreditRating:        args[10],
-		MaturityDate:        args[11],
-		SecurityDescription: args[12],
-		LatestBidPrice:      args[13],
-		LatestAskPrice:      args[14],
-		Currency:            args[15],
-		NumToken:            args[16],
-		Detokenizedtoken:    args[17],
-		DetokenizedValue:    args[18],
-		TradeValue:          args[19],
+		IsUpdated:	boolValue5,
+		mbeId:                args[6],
+		CBDCbalance:          args[7],
+		
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -101,7 +84,7 @@ func (cc *BondChaincode) create(stub shim.ChaincodeStubInterface, arg []string) 
 	return shim.Success(nil)
 }
 
-func (cc *BondChaincode) get(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+func (cc *CBDCwalletChaincode) get(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number arguments. Expecting 1")
@@ -115,12 +98,12 @@ func (cc *BondChaincode) get(stub shim.ChaincodeStubInterface, args []string) pe
 
 	return shim.Success(stateBytes)
 }
-func (cc *BondChaincode) update(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
+func (cc *CBDCwalletChaincode) update(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 20 {
-		return shim.Error("Incorrect number arguments. Expecting 20")
+	if len(args) != 8 {
+		return shim.Error("Incorrect number arguments. Expecting 8")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
@@ -140,27 +123,22 @@ func (cc *BondChaincode) update(stub shim.ChaincodeStubInterface, arg []string) 
 		return shim.Error("Error converting string to bool: " + err4.Error())
 	}
 
-	data := Bond{
+	boolValue5, err5 := strconv.ParseBool(args[5])
+
+	if err5 != nil {
+		return shim.Error("Error converting string to bool: " + err5.Error())
+	}
+
+	data := CBDCwallet{
 		Id:                  args[0],
 		CreatedOn:           dateValue1,
 		CreatedBy:           args[2],
 		IsDelete:            boolValue3,
 		IsHidden:            boolValue4,
-		Isin:                args[5],
-		IssuerName:          args[6],
-		CouponRate:          args[7],
-		FaceValue:           args[8],
-		Ltp:                 args[9],
-		CreditRating:        args[10],
-		MaturityDate:        args[11],
-		SecurityDescription: args[12],
-		LatestBidPrice:      args[13],
-		LatestAskPrice:      args[14],
-		Currency:            args[15],
-		NumToken:            args[16],
-		Detokenizedtoken:    args[17],
-		DetokenizedValue:    args[18],
-		TradeValue:          args[19],
+		IsUpdated:	boolValue5,
+		mbeId:                args[6],
+		CBDCbalance:          args[7],
+		
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -177,7 +155,7 @@ func (cc *BondChaincode) update(stub shim.ChaincodeStubInterface, arg []string) 
 
 	return shim.Success(nil)
 }
-func (cc *BondChaincode) delete(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+func (cc *CBDCwalletChaincode) delete(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number arguments. Expecting 1")
@@ -189,7 +167,7 @@ func (cc *BondChaincode) delete(stub shim.ChaincodeStubInterface, args []string)
 		return shim.Error("Error getting the state: " + err.Error())
 	}
 
-	data := Bond{}
+	data := CBDCwallet{}
 
 	json.Unmarshal(dataBytes, &data)
 
@@ -210,7 +188,7 @@ func (cc *BondChaincode) delete(stub shim.ChaincodeStubInterface, args []string)
 	return shim.Success(nil)
 }
 
-func (cc *BondChaincode) history(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+func (cc *CBDCwalletChaincode) history(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
@@ -245,7 +223,7 @@ func (cc *BondChaincode) history(stub shim.ChaincodeStubInterface, args []string
 	return shim.Success(buffer.Bytes())
 }
 
-func (cc *BondChaincode) querystring(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+func (cc *CBDCwalletChaincode) querystring(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
@@ -279,11 +257,11 @@ func (cc *BondChaincode) querystring(stub shim.ChaincodeStubInterface, args []st
 
 	return shim.Success(buffer.Bytes())
 }
-func (cc *BondChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
+func (cc *CBDCwalletChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
 	return shim.Success(nil)
 }
 
-func (cc *BondChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
+func (cc *CBDCwalletChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 
 	function, args := stub.GetFunctionAndParameters()
 
@@ -310,7 +288,7 @@ func main() {
 	var _ = strings.ToUpper("test")
 	var _ = bytes.ToUpper([]byte("test"))
 
-	err := shim.Start(new(BondChaincode))
+	err := shim.Start(new(CBDCwalletChaincode))
 	if err != nil {
 		fmt.Printf("Error starting BioMetric chaincode: %s", err)
 	}
