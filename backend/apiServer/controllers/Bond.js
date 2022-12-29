@@ -1,6 +1,7 @@
 const BondModel = require("../models/Bond");
 const{ invokeTransaction }= require("../app/invoke");
 
+const {Bonds}= require('../models/Trade');
 const moment = require('moment');
 
 const generateId = require('../utils/helper');
@@ -79,6 +80,23 @@ exports.BondAPIGet= async(req,res)=>{
             message:BondResult
         })
     } catch(err){
+        res.send(err)
+    }
+}
+
+
+exports.getBondDetails= async(req,res)=>{
+    try{
+
+        let {mbeId} = req.query;
+
+        let bondDetailsData = await Bonds.find({mbeId})
+
+        res.status(200).json({
+            status:200,
+            message:bondDetailsData
+        })
+    }catch (err){
         res.send(err)
     }
 }

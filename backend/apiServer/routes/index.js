@@ -64,6 +64,8 @@ router.route('/order').post(order.orderbook).get(order.orderbookget);
 
 router.route('/Bond').post(Bond.BondAPI).get(Bond.BondAPIGet)
 
+router.get('/getBonddetailsofUser', Bond.getBondDetails);
+
 router.route('/org').post(data.orgPost).get(data.orgGet)
 
 router.route('/nse_data').post(data.NseMockData).get(data.getNseData)

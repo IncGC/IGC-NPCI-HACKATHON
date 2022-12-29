@@ -31,9 +31,9 @@ var BondSchema = new mongoose.Schema(
 var SellOrderSchema = new mongoose.Schema(
   {
     OrderId: String,
-    UserId: String,
-    BondId: String,
-    Quantity: String,
+    mbeId: String,
+    isin: String,
+    NumOfToken: String,
     Price: String,
     isProcessed: {
       type: Boolean,
@@ -46,9 +46,9 @@ var SellOrderSchema = new mongoose.Schema(
 var BuyOrderSchema = new mongoose.Schema(
   {
     OrderId: String,
-    UserId: String,
-    BondId: String,
-    Quantity: String,
+    mbeId: String,
+    isin: String,
+    NumOfToken: String,
     Price: String,
     isProcessed: {
       type: Boolean,
@@ -62,10 +62,10 @@ var PurchaseLogSchema = new mongoose.Schema(
   {
     BuyOrderId: String,
     SellOrderId: String,
-    UserId: String,
+    mbeId: String,
     SellerUserId: String,
-    BondId: String,
-    Quantity: String,
+    isin: String,
+    NumOfToken: String,
     Price: String,
     TradeValue: String,
     Purchased: {
