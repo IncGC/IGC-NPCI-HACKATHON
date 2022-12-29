@@ -152,10 +152,10 @@ exports.createInvestor = async (req, res) => {
 
     console.log(userData);
    
-    console.log(emailaddress);
+    // console.log(emailaddress);
 
     // registering in wallet
-    await registerUser({ OrgMSP: "org1MSP", userId: emailaddress });
+    await registerUser({ OrgMSP: "org1MSP", userId: email });
 
     // userResult = { ...userResult._doc };
     const userResult1 = await UserModel.findOne({ panCard }).select(

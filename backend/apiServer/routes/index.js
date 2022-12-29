@@ -14,6 +14,9 @@ const buy = require('../controllers/buy');
 const trasactions = require('../controllers/transactions');
 const chaincode = require("../controllers/chaincodes");
 
+const dashBoard = require('../controllers/marketDashboard');
+
+router.get('/dashbord', dashBoard.bonddetails);
 // const reconcilation= require("../controllers/recollinations");
 
 // router.route('/pushBondOrderDetails').post(reconcilation.pushBondOrderDetails)
