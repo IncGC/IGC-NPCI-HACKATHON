@@ -23,11 +23,28 @@ app.use(bodyParser.json())
 app.post('/pushBondDetails', async (req, res) => {
     try {
         async function readFile() {
-            fs.createReadStream("./data/bond.csv")
+            fs.createReadStream("./data/bondData.csv")
                 .pipe(parse({ delimiter: ",", from_line: 2 }))
                 .on("data", async function (row) {
-                    let obj = { "BondId": row[0], "UserId": row[1], "Name": row[2], "LotQty": row[3], "TokenizedLot": row[4], "TotalTokenQty": row[5], "TokenQtyRemaining": row[6] }
-                    var record = new Bonds(obj);
+                    let obj = { 
+                    // "isin": row[0],
+                     "isin": row[0],
+                      "mbeId": row[1], 
+                      "issuerName": row[2], 
+                      "couponrate": row[3],
+                      "faceValue": row[4], 
+                      "ltp": row[5] ,
+                       "creditrating": row[6],
+                       "maturitydate": row[7],
+                       "securitydescription":row[8],
+                       "Currency": row[9], 
+                       "LotQty": row[10] ,
+                        "TokenizedLot": row[11],
+                        "TotalTokenQty": row[12],
+                        "TokenQtyRemaining":row[13],
+
+                    }
+                    let record = new Bonds(obj);
                     record.save()
                 }).on("end", function () {
                     console.log("end");
@@ -35,7 +52,7 @@ app.post('/pushBondDetails', async (req, res) => {
         }
         readFile();
         // res.send("Succesfully Pushed");
-        var recordData= await Bonds.find();
+        let recordData= await Bonds.find();
         res.status(201).json({
             status:201,
             message:recordData
@@ -52,8 +69,8 @@ app.post('/pushSellorders', async (req, res) => {
             fs.createReadStream("./data/sellOrder.csv")
                 .pipe(parse({ delimiter: ",", from_line: 2 }))
                 .on("data", async function (row) {
-                    let obj = { "OrderId": row[0], "UserId": row[1], "BondId": row[2], "Quantity": row[3], "Price": row[4] }
-                    var record = new SellOrder(obj);
+                    let obj = { "OrderId": row[0], "mbeId": row[1], "isin": row[2], "Quantity": row[3], "Price": row[4] }
+                    let record = new SellOrder(obj);
                     record.save()
                 }).on("end", function () {
                     console.log("end");
@@ -72,8 +89,8 @@ app.post('/pushBuyorders', async (req, res) => {
             fs.createReadStream("./data/buyOrder.csv")
                 .pipe(parse({ delimiter: ",", from_line: 2 }))
                 .on("data", async function (row) {
-                    let obj = { "OrderId": row[0], "UserId": row[1], "BondId": row[2], "Quantity": row[3], "Price": row[4] }
-                    var record = new BuyOrder(obj);
+                    let obj = { "OrderId": row[0], "mbeId": row[1], "isin": row[2], "Quantity": row[3], "Price": row[4] }
+                    let record = new BuyOrder(obj);
                     record.save()
                 }).on("end", function () {
                     console.log("end");
@@ -92,15 +109,23 @@ app.post('/pushWallets', async (req, res) => {
             fs.createReadStream("./data/wallet.csv")
                 .pipe(parse({ delimiter: ",", from_line: 2 }))
                 .on("data", async function (row) {
-                    let obj = { "UserId": row[0], "UserType": row[1], "TotalFunds": row[2], "Spent": row[3], "Earnings": row[4] }
-                    var record = new Wallet(obj);
+                    let obj = { 
+                    "mbeId": row[0], 
+                    "CBDCbalance": row[1]
+                     }
+                    let record = new Wallet(obj);
                     record.save()
                 }).on("end", function () {
                     console.log("end");
                 })
         }
         readFile();
-        res.send("Succesfully Pushed");
+        // res.send("Succesfully Pushed");
+        let walletData= await Wallet.find();
+        res.status(201).json({
+            status:201,
+            message:walletData
+        });
     } catch (e) {
         res.send(e);
     }
@@ -108,14 +133,14 @@ app.post('/pushWallets', async (req, res) => {
 
 app.post('/tokenize', async (req, res) => {
     try {
-        var bondDetails = await Bonds.find({ "BondId": req.body.BondId, "UserId": req.body.UserId });
+        let bondDetails = await Bonds.find({ "isin": req.body.isin, "mbeId": req.body.mbeId });
         console.log("bondDetails", bondDetails)
         if ((parseFloat(bondDetails[0].LotQty) > 0 && parseFloat(bondDetails[0].LotQty) >= parseFloat(req.body.LotNumber))) {
             let _tokenizedLot = parseFloat(bondDetails[0].TokenizedLot) + parseFloat(req.body.LotNumber);
             let _newLotQty = parseFloat(bondDetails[0].LotQty) - parseFloat(req.body.LotNumber);
             let _totalTokenQty = parseFloat(bondDetails[0].TotalTokenQty) + parseFloat(req.body.TotalTokenQty);
             let _TokenQtyRemaining = parseFloat(bondDetails[0].TokenQtyRemaining) + parseFloat(req.body.TotalTokenQty);
-            let obj = await Bonds.findOneAndUpdate({ UserId: req.body.UserId, BondId: req.body.BondId }, { $set: { TokenizedLot: _tokenizedLot, LotQty: _newLotQty, isTokenized: true, TotalTokenQty: _totalTokenQty,TokenQtyRemaining:_TokenQtyRemaining } }, { upsert: true });
+            let obj = await Bonds.findOneAndUpdate({ mbeId: req.body.mbeId, isin: req.body.isin }, { $set: { TokenizedLot: _tokenizedLot, LotQty: _newLotQty, isTokenized: true, TotalTokenQty: _totalTokenQty,TokenQtyRemaining:_TokenQtyRemaining } }, { upsert: true });
             // console.log("Iam here");
             if (obj) {
                 res.json("Successfully Tokenized");
@@ -130,7 +155,7 @@ app.post('/tokenize', async (req, res) => {
 
 app.post('/deTokenize', async (req, res) => {
     try {
-        var bondDetails = await Bonds.find({ "BondId": req.body.BondId, "UserId": req.body.UserId });
+        let bondDetails = await Bonds.find({ "isin": req.body.isin, "mbeId": req.body.mbeId });
         console.log("bondDetails", bondDetails)
         if ((parseFloat(bondDetails[0].TotalTokenQty) >= 200000) && (parseFloat(req.body.tokenQty) >= 200000)) {
             let _lotQty = parseFloat(req.body.tokenQty) / 200000;
@@ -144,7 +169,7 @@ app.post('/deTokenize', async (req, res) => {
             let _newTokenizedLot = parseFloat(bondDetails[0].TokenizedLot) - _lotQty;
             let _newTotalTokenQty = parseFloat(bondDetails[0].TotalTokenQty) - parseFloat(req.body.tokenQty);
             console.log("_lotQty", _lotQty, _newLotQty, _newTokenizedLot, _newTotalTokenQty)
-            let obj = await Bonds.findOneAndUpdate({ UserId: req.body.UserId, BondId: req.body.BondId }, { $set: { TokenizedLot: _newTokenizedLot, LotQty: _newLotQty, TotalTokenQty: _newTotalTokenQty } }, { upsert: true });
+            let obj = await Bonds.findOneAndUpdate({ mbeId: req.body.mbeId, isin: req.body.isin }, { $set: { TokenizedLot: _newTokenizedLot, LotQty: _newLotQty, TotalTokenQty: _newTotalTokenQty } }, { upsert: true });
             if (obj) {
                 res.json("Successfully DeTokenized");
             }
@@ -169,12 +194,12 @@ app.post('/convertToBond', async (req, res) => {
 
 app.post('/placeSellOrder', async (req, res) => {
     try {
-        var bondDetails = await Bonds.find({ "BondId": req.body.BondId, "UserId": req.body.UserId });
+        let bondDetails = await Bonds.find({ "isin": req.body.isin, "mbeId": req.body.mbeId });
         console.log("bondDetails",bondDetails)
         if (parseFloat(bondDetails[0].TokenQtyRemaining) >= parseFloat(req.body.Quantity)) {
-            let sellorder = [{ "OrderId": req.body.OrderId, "UserId": req.body.UserId, "BondId": req.body.BondId, "Quantity": req.body.Quantity, "Price": req.body.Price }];
+            let sellorder = [{ "OrderId": req.body.OrderId, "mbeId": req.body.mbeId, "isin": req.body.isin, "Quantity": req.body.Quantity, "Price": req.body.Price }];
             let bArray =[];
-            let buyOrderBook = await BuyOrder.findOne({ "BondId": req.body.BondId, "Quantity": req.body.Quantity, "Price": req.body.Price, "isProcessed": false });
+            let buyOrderBook = await BuyOrder.findOne({ "isin": req.body.isin, "Quantity": req.body.Quantity, "Price": req.body.Price, "isProcessed": false });
             bArray.push(buyOrderBook);
             console.log("sellorder",sellorder,buyOrderBook);
           
@@ -182,7 +207,7 @@ app.post('/placeSellOrder', async (req, res) => {
                 await VerifyBuyOrderList(sellorder, bArray);
                 res.json("Successfully Placed Sell Order. Match found and processed your order");
             }else{
-                let obj = { "OrderId": req.body.OrderId, "UserId": req.body.UserId, "BondId": req.body.BondId, "Quantity": req.body.Quantity, "Price": req.body.Price };
+                let obj = { "OrderId": req.body.OrderId, "mbeId": req.body.mbeId, "isin": req.body.isin, "Quantity": req.body.Quantity, "Price": req.body.Price };
                 await storeRecord("Sell", obj);
                 // res.json("Successfully Placed Sell Order");
 
@@ -204,16 +229,16 @@ app.post('/placeSellOrder', async (req, res) => {
 
 app.post('/placeBuyOrder', async (req, res) => {
     try {
-        let walletBalance = await Wallet.find({ "UserId": req.body.UserId });
+        let walletBalance = await Wallet.find({ "mbeId": req.body.mbeId });
         console.log(walletBalance)
         // Updated by MPK
         // if (parseFloat(walletBalance[0].TotalFunds) >= parseFloat(req.body.Price)) {
         if (parseFloat(walletBalance[0].TotalFunds) >= parseFloat(req.body.Price) *  parseFloat(req.body.Quantity)) {
-            let buyorder = [{ "OrderId": req.body.OrderId, "UserId": req.body.UserId, "BondId": req.body.BondId, "Quantity": req.body.Quantity, "Price": req.body.Price }]
+            let buyorder = [{ "OrderId": req.body.OrderId, "mbeId": req.body.mbeId, "isin": req.body.isin, "Quantity": req.body.Quantity, "Price": req.body.Price }]
             console.log("buyorder",buyorder)
 
             let sArray =[];
-            let sellorderBook = await SellOrder.findOne({ "BondId": req.body.BondId, "Quantity": req.body.Quantity, "Price": req.body.Price, "isProcessed": false });
+            let sellorderBook = await SellOrder.findOne({ "isin": req.body.isin, "Quantity": req.body.Quantity, "Price": req.body.Price, "isProcessed": false });
             console.log(sellorderBook)
             sArray.push(sellorderBook);
             console.log("buyorder", buyorder, sellorderBook,sArray);
@@ -222,7 +247,7 @@ app.post('/placeBuyOrder', async (req, res) => {
                await VerifySellOrderList(buyorder, sArray);
                 res.json("Successfully Placed Buy Order. Match found and processed your order");
             }else{
-                let obj = { "OrderId": req.body.OrderId, "UserId": req.body.UserId, "BondId": req.body.BondId, "Quantity": req.body.Quantity, "Price": req.body.Price };
+                let obj = { "OrderId": req.body.OrderId, "mbeId": req.body.mbeId, "isin": req.body.isin, "Quantity": req.body.Quantity, "Price": req.body.Price };
                 await storeRecord("Buy", obj);
                 res.json("Successfully Placed Buy Order");
             }

@@ -51,11 +51,14 @@ router.get('/transactions/:_id', trasactions.getTrasactions)
 router.post("/create_investor", investor.createInvestor);
 router.post("/login", investor.login);
 
-router.get("/",passport.authenticate("jwt", { session: false }),investor.getInvestor);
+
+//,passport.authenticate("jwt", { session: false })
+router.get("/",investor.getInvestor);
 router.post("/forgot", investor.forgotPassword);
 
 router.get("/getUserDetails", investor.InvestorDetails);
 
+router.get('/singleUser', investor.getInvestor)
 
 router.route('/order').post(order.orderbook).get(order.orderbookget);
 

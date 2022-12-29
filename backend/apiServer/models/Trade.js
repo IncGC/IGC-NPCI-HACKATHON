@@ -2,10 +2,17 @@ const mongoose = require("mongoose");
 
 var BondSchema = new mongoose.Schema(
   {
-    BondId: String,
-    UserId: String,
-    Name: String,
-    LotQty: String,
+    isin: String,
+    mbeId: String,
+    issuerName: String,
+    couponrate: String,
+    faceValue:String,
+    ltp: String,
+    creditrating:String,
+    maturitydate:String,
+    securitydescription:String,
+    Currency:String,
+    LotQty:String,
     isTokenized: {
       type: Boolean,
       default: false
@@ -79,9 +86,8 @@ var PurchaseLogSchema = new mongoose.Schema(
 
 var WalletSchema = new mongoose.Schema(
   {
-    UserId: String,
-    UserType: String, //Seller or Buyer
-    TotalFunds: String,
+    mbeId: String,
+    CBDCbalance: String, //Seller or Buyer
     isUpdated: {
       type: Boolean,
       default: false

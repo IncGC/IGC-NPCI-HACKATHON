@@ -64,7 +64,7 @@ exports.createInvestor = async (req, res) => {
                 DOB: panCarddata.DOB,
                 password: hashedpassword,
                 role: "investor",
-                mbe_id:panCarddata.emailaddress,
+                mbe_id:panCarddata.email,
                 nse_registered: false,
               },
             }
@@ -99,7 +99,7 @@ exports.createInvestor = async (req, res) => {
                 DOB: nseData.DOB,
                 password: hashedpassword,
                 role: "investor",
-                mbe_id:nseData.emailaddress,
+                mbe_id:nseData.email,
                 nse_registered: true,
               },
             }
@@ -272,38 +272,14 @@ exports.forgotPassword = async (req, res) => {
 
 exports.InvestorDetails = async (req, res) => {
   try {
-    var mongodb = global.db;
 
-    mongodb
-      .collection("users")
-      .find(
-        { email: req.body.email },
-        {
-          projection: {
-            _id: 1,
-            profileImg: 1,
-            firstName: 1,
-            lastName: 1,
-            email: 1,
-            phoneNumber: 1,
-            role: 1,
-            status: 1,
-          },
-        }
-      )
-      .toArray(async function (err, exiRes) {
-        if (exiRes.length > 0) {
-          response = { success: true, message: exiRes };
-          return res.status(200).json({
-            status: "Success",
-            results: exiRes.length,
-            data: { response },
-          });
-        } else {
-          response = { success: false, message: "No Active user exists" };
-          res.status(200).json(response);
-        }
-      });
+    let {email}= req.body;
+
+    let user = await UserModel.findOne({email});
+    res.status(200).json({
+      status:200,
+      message:user
+    })
   } catch (err) {
     HandleResponseError(res, err);
     res.send(err);
