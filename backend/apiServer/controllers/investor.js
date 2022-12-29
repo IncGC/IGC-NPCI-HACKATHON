@@ -170,10 +170,10 @@ exports.createInvestor = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { phoneNumber, password } = req.body;
+  const { email, password } = req.body;
 
   let exiRes = await UserModel.findOne({
-    phoneNumber
+    email
   });
 
   console.log({ exiRes });
