@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 //READ Trade Schema
-const { Bonds, SellOrder, BuyOrder, Wallet, PurchaseLog } = require('./model/Trade');
+const { Bonds, SellOrder, BuyOrder, Wallet, PurchaseLog } = require('./models/Trade');
 
 //MatchOrder function
 const { CompareLimitOrder, VerifyBuyOrderList, VerifySellOrderList, storeRecord } = require('./config/helper');

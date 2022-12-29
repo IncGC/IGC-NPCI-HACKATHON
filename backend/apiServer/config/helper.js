@@ -4,7 +4,7 @@ const {
   SellOrder,
   BuyOrder,
   PurchaseLog
-} = require("../model/Trade");
+} = require("../models/Trade");
 
 module.exports.storeRecord = async (type, obj) => {
   console.log("testing");
