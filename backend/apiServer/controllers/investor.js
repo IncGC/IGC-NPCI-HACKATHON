@@ -64,6 +64,7 @@ exports.createInvestor = async (req, res) => {
                 DOB: panCarddata.DOB,
                 password: hashedpassword,
                 role: "investor",
+                mbe_id:panCarddata.emailaddress,
                 nse_registered: false,
               },
             }
@@ -98,6 +99,7 @@ exports.createInvestor = async (req, res) => {
                 DOB: nseData.DOB,
                 password: hashedpassword,
                 role: "investor",
+                mbe_id:nseData.emailaddress,
                 nse_registered: true,
               },
             }

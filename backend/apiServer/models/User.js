@@ -18,6 +18,7 @@ const userSchema = new schema({
     status: String,
     phoneOtp:String,
     nse_registerd:Boolean,
+    mbe_id:String,
     bondholdingID: { type: ObjectId, ref: 'Bond' },
     tokenholdingID:{type: ObjectId, ref :"Token"},
     transactionId: {type: ObjectId, ref : "Transaction"},
