@@ -357,9 +357,12 @@ app.post("/placeSellOrder", async (req, res) => {
 
         const SellOrderData = await SellOrder.find();
 
+
+        console.log(SellOrderData);
+
         res.status(200).json({
           status: 200,
-          message: SellOrderData,
+          message: "Successfully Placed Sell Order",
         });
       }
     } else {
@@ -465,6 +468,22 @@ app.get("/compareOrderBook", async (req, res) => {
   }
 });
 
+app.get("/purchaselog", async(req,res)=>{
+  try{
+      let purchaseLogData= await PurchaseLog.find();
+
+      res.status(200).json({
+        status:200,
+        message:purchaseLogData
+      })
+
+  }catch (e) {
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
+  }
+})
 // app.listen(port, () => console.log(`Listening on port ${port}!`))
 
 module.exports = app;

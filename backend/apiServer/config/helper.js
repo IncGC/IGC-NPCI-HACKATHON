@@ -30,8 +30,8 @@ module.exports.CompareLimitOrder = async (
       sellOrderArray.map(async (seller, index) => {
         var _match = buyOrderArray.find(
           (buyer) =>
-            buyer.Quantity === seller.Quantity &&
-            buyer.BondId == seller.BondId &&
+            buyer.NumOfToken === seller.NumOfToken &&
+            buyer.isin == seller.isin &&
             buyer.Price == seller.Price
         );
         console.log("Match found", _match, seller);
@@ -39,28 +39,28 @@ module.exports.CompareLimitOrder = async (
         if (_match && canUpdate) {
           //Seller Wallet
 
-          var SellerWallet = await Wallet.findOne({ UserId: seller.UserId });
+          var SellerWallet = await Wallet.findOne({ mbeId: seller.mbeId });
           //Buyer Wallet
-          var BuyerWallet = await Wallet.findOne({ UserId: _match.UserId });
+          var BuyerWallet = await Wallet.findOne({ mbeId: _match.mbeId });
           //Bond Details
-          var bondDetails = await Bonds.findOne({ BondId: _match.BondId });
+          var bondDetails = await Bonds.findOne({ isin: _match.isin });
 
           //Update Seller Wallets by adding up the funds
           if (SellerWallet) {
-            var totalFunds = parseFloat(SellerWallet.TotalFunds);
-            var updatedFunds = totalFunds + parseFloat(_match.Price);
+            var CBDCbalance = parseFloat(SellerWallet.CBDCbalance);
+            var updatedFunds = CBDCbalance + parseFloat(_match.Price);
             var _updSellOrder = await SellOrder.findOneAndUpdate(
               {
-                UserId: seller.UserId,
-                BondId: seller.BondId,
+                mbeId: seller.mbeId,
+                isin: seller.isin,
                 OrderId: seller.OrderId
               },
               { $set: { isProcessed: true } },
               { upsert: true }
             );
             var _updWallet = await Wallet.findOneAndUpdate(
-              { UserId: seller.UserId },
-              { $set: { TotalFunds: updatedFunds } },
+              { mbeId: seller.mbeId },
+              { $set: { CBDCbalance: updatedFunds } },
               { upsert: true }
             );
             console.log(
@@ -72,20 +72,20 @@ module.exports.CompareLimitOrder = async (
           }
           //Update Buyer Wallets by deducting the funds
           if (BuyerWallet) {
-            var totalFunds = parseFloat(BuyerWallet.TotalFunds);
-            var updatedFunds = totalFunds - parseFloat(_match.Price);
+            var CBDCbalance = parseFloat(BuyerWallet.CBDCbalance);
+            var updatedFunds = CBDCbalance - parseFloat(_match.Price);
             var _updBuyOrder = await BuyOrder.findOneAndUpdate(
               {
-                UserId: _match.UserId,
-                BondId: _match.BondId,
+                mbeId: _match.mbeId,
+                isin: _match.isin,
                 OrderId: _match.OrderId
               },
               { $set: { isProcessed: true } },
               { upsert: true }
             );
             var _updWallet = await Wallet.findOneAndUpdate(
-              { UserId: _match.UserId },
-              { $set: { TotalFunds: updatedFunds } },
+              { mbeId: _match.mbeId },
+              { $set: { CBDCbalance: updatedFunds } },
               { upsert: true }
             );
             console.log(
@@ -101,7 +101,7 @@ module.exports.CompareLimitOrder = async (
               parseFloat(bondDetails.TokenQtyRemaining) -
               parseFloat(seller.TotalTokenQty);
             var _updBonds = await Bonds.findOneAndUpdate(
-              { BondId: _match.BondId },
+              { isin: _match.isin },
               { $set: { TokenQtyRemaining: updatedQty } },
               { upsert: true }
             );
@@ -126,79 +126,82 @@ module.exports.VerifyBuyOrderList = async (sellorder, buyOrderArray) => {
         console.log("item valueis", buyer);
         var _match = sellorder.find(
           (seller) =>
-            seller.Quantity == buyer.Quantity &&
-            buyer.BondId == seller.BondId &&
+            seller.NumOfToken == buyer.NumOfToken &&
+            buyer.isin == seller.isin &&
             buyer.Price == seller.Price
         );
         //Order Match Found
         console.log("match value is", _match);
         if (Object.keys(_match).length > 0) {
           //Seller Wallet
-          var SellerWallet = await Wallet.findOne({ UserId: _match.UserId });
+          var SellerWallet = await Wallet.findOne({ mbeId: _match.mbeId });
           //Buyer Wallet
-          var BuyerWallet = await Wallet.findOne({ UserId: buyer.UserId });
+          var BuyerWallet = await Wallet.findOne({ mbeId: buyer.mbeId });
           //Bond Details
           var bondDetails = await Bonds.findOne({
-            BondId: _match.BondId,
-            UserId: _match.UserId
+            isin: _match.isin,
+            mbeId: _match.mbeId
           });
 
           //Update Seller Wallets by adding up the funds
           if (SellerWallet) {
-            var totalFunds = parseFloat(SellerWallet.TotalFunds);
+            var CBDCbalance = parseFloat(SellerWallet.CBDCbalance);
             //updated by MPK
-            // var updatedFunds = totalFunds + parseFloat(_match.Price);
+            // var updatedFunds = CBDCbalance + parseFloat(_match.Price);
             var updatedFunds =
-              totalFunds +
-              parseFloat(_match.Price) * parseFloat(_match.Quantity);
+              CBDCbalance +
+              parseFloat(_match.Price) * parseFloat(_match.NumOfToken);
             let obj = {
               OrderId: _match.OrderId,
-              UserId: _match.UserId,
-              BondId: _match.BondId,
-              Quantity: _match.Quantity,
+              mbeId: _match.mbeId,
+              isin: _match.isin,
+              NumOfToken: _match.NumOfToken,
               Price: _match.Price,
               isProcessed: true
             };
             var record = new SellOrder(obj);
             record.save();
             var _updWallet = await Wallet.findOneAndUpdate(
-              { UserId: _match.UserId },
-              { $set: { TotalFunds: updatedFunds } },
+              { mbeId: _match.mbeId },
+              { $set: { CBDCbalance: updatedFunds } },
               { upsert: true }
             );
             console.log("Sellers", updatedFunds, _updWallet);
           }
           //Update Buyer Wallets by deducting the funds
           if (BuyerWallet) {
-            var totalFunds = parseFloat(BuyerWallet.TotalFunds);
+            var CBDCbalance = parseFloat(BuyerWallet.CBDCbalance);
             //updated by MPK
-            var updatedFunds = totalFunds - parseFloat(buyer.Price);
+            var updatedFunds = CBDCbalance - parseFloat(buyer.Price);
             var updatedFunds =
-              totalFunds -
-              parseFloat(buyer.Price) * parseFloat(_match.Quantity);
+              CBDCbalance -
+              parseFloat(buyer.Price) * parseFloat(_match.NumOfToken);
             var _updBuyOrder = await BuyOrder.findOneAndUpdate(
               {
-                UserId: buyer.UserId,
-                BondId: buyer.BondId,
+                mbeId: buyer.mbeId,
+                isin: buyer.isin,
                 OrderId: buyer.OrderId
               },
               { $set: { isProcessed: true } },
               { upsert: true }
             );
             var _updWallet = await Wallet.findOneAndUpdate(
-              { UserId: buyer.UserId },
-              { $set: { TotalFunds: updatedFunds } },
+              { mbeId: buyer.mbeId },
+              { $set: { CBDCbalance: updatedFunds } },
               { upsert: true }
             );
             let obj = {
-              UserId: buyer.UserId,
-              SellerUserId: _match.UserId,
+              mbeId: buyer.mbeId,
+              SellermbeId: _match.mbeId,
               BuyOrderId: buyer.OrderId,
               SellOrderId: _match.OrderId,
-              BondId: _match.BondId,
-              Quantity: buyer.Quantity,
+              isin: _match.isin,
+              NumOfToken: buyer.NumOfToken,
+              issuerName:bondDetails.issuerName,
+              couponrate:bondDetails.couponrate,
+              maturitydate:bondDetails.maturitydate,
               Price: buyer.Price,
-              TradeValue: parseFloat(buyer.Price) * parseFloat(buyer.Quantity),
+              TradeValue: parseFloat(buyer.Price) * parseFloat(buyer.NumOfToken),
               Purchased: true,
               isAuthorized: true
             };
@@ -210,9 +213,9 @@ module.exports.VerifyBuyOrderList = async (sellorder, buyOrderArray) => {
           if (bondDetails) {
             var updatedQty =
               parseFloat(bondDetails.TokenQtyRemaining) -
-              parseFloat(buyer.Quantity);
+              parseFloat(buyer.NumOfToken);
             var _updBonds = await Bonds.findOneAndUpdate(
-              { BondId: _match.BondId, UserId: _match.UserId },
+              { isin: _match.isin, mbeId: _match.mbeId },
               { $set: { TokenQtyRemaining: updatedQty } },
               { upsert: true }
             );
@@ -220,13 +223,13 @@ module.exports.VerifyBuyOrderList = async (sellorder, buyOrderArray) => {
 
             //updated by MPK
             var existBond = await Bonds.findOne({
-              BondId: _match.BondId,
-              UserId: buyer.UserId
+              isin: _match.isin,
+              mbeId: buyer.mbeId
             });
             if (!existBond) {
               existBond = new Bonds({
-                BondId: _match.BondId,
-                UserId: buyer.UserId,
+                isin: _match.isin,
+                mbeId: buyer.mbeId,
                 Name: bondDetails.Name,
                 LotQty: bondDetails.LotQty,
                 TokenizedLot: "0",
@@ -236,12 +239,12 @@ module.exports.VerifyBuyOrderList = async (sellorder, buyOrderArray) => {
               existBond.save();
             }
             await Bonds.findOneAndUpdate(
-              { BondId: _match.BondId, UserId: buyer.UserId },
+              { isin: _match.isin, mbeId: buyer.mbeId },
               {
                 $set: {
                   TokenQtyRemaining:
                     parseInt(existBond.TokenQtyRemaining) +
-                    parseInt(buyer.Quantity)
+                    parseInt(buyer.NumOfToken)
                 }
               },
               { upsert: true }
@@ -264,19 +267,19 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
       sellOrderArray.map(async (seller, index) => {
         var _match = buyorder.find(
           (buyer) =>
-            seller.Quantity === buyer.Quantity &&
-            buyer.BondId == seller.BondId &&
+            seller.NumOfToken === buyer.NumOfToken &&
+            buyer.isin == seller.isin &&
             buyer.Price == seller.Price
         );
         if (Object.keys(_match).length > 0) {
           //Seller Wallet
-          var SellerWallet = await Wallet.findOne({ UserId: seller.UserId });
+          var SellerWallet = await Wallet.findOne({ mbeId: seller.mbeId });
           //Buyer Wallet
-          var BuyerWallet = await Wallet.findOne({ UserId: _match.UserId });
+          var BuyerWallet = await Wallet.findOne({ mbeId: _match.mbeId });
           //Bond Details
           var bondDetails = await Bonds.findOne({
-            BondId: seller.BondId,
-            UserId: seller.UserId
+            isin: seller.isin,
+            mbeId: seller.mbeId
           });
 
           console.log("SellerWallet", SellerWallet);
@@ -285,43 +288,43 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
 
           //Update Selle r Wallets by adding up the funds
           if (SellerWallet) {
-            var totalFunds = parseFloat(SellerWallet.TotalFunds);
-            var BuyerWallet = await Wallet.findOne({ UserId: _match.UserId });
+            var CBDCbalance = parseFloat(SellerWallet.CBDCbalance);
+            var BuyerWallet = await Wallet.findOne({ mbeId: _match.mbeId });
             //updated by MPK
-            // var updatedFunds = totalFunds + parseFloat(seller.Price);
+            // var updatedFunds = CBDCbalance + parseFloat(seller.Price);
             var updatedFunds =
-              totalFunds +
-              parseFloat(seller.Price) * parseFloat(seller.Quantity);
+              CBDCbalance +
+              parseFloat(seller.Price) * parseFloat(seller.NumOfToken);
             var _updSellOrder = await SellOrder.findOneAndUpdate(
               {
-                UserId: seller.UserId,
-                BondId: seller.BondId,
+                mbeId: seller.mbeId,
+                isin: seller.isin,
                 OrderId: seller.OrderId
               },
               { $set: { isProcessed: true } },
               { upsert: true }
             );
             var _updWallet = await Wallet.findOneAndUpdate(
-              { UserId: seller.UserId },
-              { $set: { TotalFunds: updatedFunds } },
+              { mbeId: seller.mbeId },
+              { $set: { CBDCbalance: updatedFunds } },
               { upsert: true }
             );
             console.log("Sellers", updatedFunds, _updSellOrder, _updWallet);
           }
           //Update Buyer Wallets by deducting the funds
           if (BuyerWallet) {
-            var totalFunds = parseFloat(BuyerWallet.TotalFunds);
+            var CBDCbalance = parseFloat(BuyerWallet.CBDCbalance);
             //updated by MPK
-            // var updatedFunds = totalFunds - parseFloat(_match.Price);
+            // var updatedFunds = CBDCbalance - parseFloat(_match.Price);
             var updatedFunds =
-              totalFunds -
-              parseFloat(_match.Price) * parseFloat(_match.Quantity);
-            // var _updBuyOrder = await BuyOrder.findOneAndUpdate({ UserId: _match.UserId, BondId: _match.BondId, OrderId: _match.OrderId }, { $set: { isProcessed: true } }, { upsert: true })
+              CBDCbalance -
+              parseFloat(_match.Price) * parseFloat(_match.NumOfToken);
+            // var _updBuyOrder = await BuyOrder.findOneAndUpdate({ mbeId: _match.mbeId, isin: _match.isin, OrderId: _match.OrderId }, { $set: { isProcessed: true } }, { upsert: true })
             let obj = {
               OrderId: _match.OrderId,
-              UserId: _match.UserId,
-              BondId: _match.BondId,
-              Quantity: _match.Quantity,
+              mbeId: _match.mbeId,
+              isin: _match.isin,
+              NumOfToken: _match.NumOfToken,
               Price: _match.Price,
               isProcessed: true
             };
@@ -329,20 +332,23 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
             record.save();
 
             var _updWallet = await Wallet.findOneAndUpdate(
-              { UserId: _match.UserId },
-              { $set: { TotalFunds: updatedFunds } },
+              { mbeId: _match.mbeId },
+              { $set: { CBDCbalance: updatedFunds } },
               { upsert: true }
             );
             let obj2 = {
-              UserId: _match.UserId,
-              SellerUserId: seller.UserId,
+              mbeId: _match.mbeId,
+              SellermbeId: seller.mbeId,
               BuyOrderId: _match.OrderId,
               SellOrderId: seller.OrderId,
-              BondId: _match.BondId,
-              Quantity: _match.Quantity,
+              isin: _match.isin,
+              issuerName:bondDetails.issuerName,
+              couponrate:bondDetails.couponrate,
+              maturitydate:bondDetails.maturitydate,
+              NumOfToken: _match.NumOfToken,
               Price: _match.Price,
               TradeValue:
-                parseFloat(_match.Price) * parseFloat(_match.Quantity),
+                parseFloat(_match.Price) * parseFloat(_match.NumOfToken),
               Purchased: true,
               isProcessed: true,
               isAuthorized: true
@@ -355,9 +361,9 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
           if (bondDetails) {
             var updatedQty =
               parseFloat(bondDetails.TokenQtyRemaining) -
-              parseFloat(_match.Quantity);
+              parseFloat(_match.NumOfToken);
             var _updBonds = await Bonds.findOneAndUpdate(
-              { BondId: seller.BondId, UserId: seller.UserId },
+              { isin: seller.isin, mbeId: seller.mbeId },
               { $set: { TokenQtyRemaining: updatedQty } },
               { upsert: true }
             );
@@ -366,14 +372,14 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
             //updated by MPK
             console.log("existBond");
             var existBond = await Bonds.findOne({
-              BondId: seller.BondId,
-              UserId: _match.UserId
+              isin: seller.isin,
+              mbeId: _match.mbeId
             });
             console.log(existBond);
             if (!existBond) {
               existBond = new Bonds({
-                BondId: seller.BondId,
-                UserId: _match.UserId,
+                isin: seller.isin,
+                mbeId: _match.mbeId,
                 Name: bondDetails.Name,
                 LotQty: bondDetails.LotQty,
                 TokenizedLot: "0",
@@ -384,12 +390,12 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
             }
             console.log("existBond");
             await Bonds.findOneAndUpdate(
-              { BondId: seller.BondId, UserId: _match.UserId },
+              { isin: seller.isin, mbeId: _match.mbeId },
               {
                 $set: {
                   TokenQtyRemaining:
                     parseInt(existBond.TokenQtyRemaining) +
-                    parseInt(_match.Quantity)
+                    parseInt(_match.NumOfToken)
                 }
               },
               { upsert: true }
