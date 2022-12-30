@@ -63,12 +63,12 @@ app.set('port', port);
 // var http = express();
 
 // set up a route to redirect http to https
-app.get('*', function(req, res) {  
-    res.redirect('https://' + req.headers.host + req.url);
+// app.get('*', function(req, res) {  
+//     res.redirect('https://' + req.headers.host + req.url);
 
-    // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
-    // res.redirect('https://example.com' + req.url);
-})
+//     // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
+//     // res.redirect('https://example.com' + req.url);
+// })
 
 // http.listen(9090);
 
@@ -154,23 +154,23 @@ function onError(error){
   }
 }
 
-app.use((req, res, next) => { //to handle CORS Errors.
+// app.use((req, res, next) => { //to handle CORS Errors.
 
-  res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Origin", "*");
 
-  res.header("Access-Control-Allow-Headers", "Origin, X-Reqquested-With, Content-Type, Accept, Authorization");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Reqquested-With, Content-Type, Accept, Authorization");
 
 
 
-  if(req.method === 'OPTIONS') {
+//   if(req.method === 'OPTIONS') {
 
-      res.header('Access-Control-Allow-Methods', 'PUT POST, PATCH, DELETE GET');
+//       res.header('Access-Control-Allow-Methods', 'PUT POST, PATCH, DELETE GET');
 
-      return res.status(200).json({});
+//       return res.status(200).json({});
 
-  }
+//   }
 
-  next();
+//   next();
 
-});
+// });
 
