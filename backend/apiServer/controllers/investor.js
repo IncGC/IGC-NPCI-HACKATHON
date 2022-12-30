@@ -221,14 +221,14 @@ exports.login = async (req, res) => {
 
 exports.getInvestor = async (req, res) => {
   try {
-    let { orgId } = req.user || "org1MSP";
-    let { id } = req.query || "";
+    // let { orgId } = req.user || "org1MSP";
+    // let { id } = req.query || "";
 
-    let filter = { role: "investor" };
+    // let filter = { role: "investor" };
 
-    if (id && id != "") filter["_id"] = id;
+    // if (id && id != "") filter["_id"] = id;
 
-    let users = await UserModel.find(filter).select("-password ");
+    let users = await UserModel.find().select("-password ");
     res.status(200).json(users);
   } catch (err) {
     HandleResponseError(err, res);
@@ -273,7 +273,7 @@ exports.forgotPassword = async (req, res) => {
 exports.InvestorDetails = async (req, res) => {
   try {
 
-    let {email}= req.body;
+    let {email}= req.query;
 
     let user = await UserModel.findOne({email});
     res.status(200).json({

@@ -37,7 +37,7 @@ router.use('/trade', trade);
 
 
 
-router.route('/cbdcwallet').post( chaincode.cbdcwallet).get(chaincode.cbdcwallet);
+router.route('/cbdcwallet').post( chaincode.cbdcwallet).get(chaincode.getcbdcwallet);
 router.route('/bondholding').post( chaincode.bondHoldings).get(chaincode.getbondHoldings);
 router.route('/tokenholding').post( chaincode.TokenHolding).get(chaincode.getTokenHolding);
 router.route('/transactions').post( chaincode.Transactions).get(chaincode.getTransaction);

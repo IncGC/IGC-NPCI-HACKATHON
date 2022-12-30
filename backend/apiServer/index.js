@@ -484,6 +484,24 @@ app.get("/purchaselog", async(req,res)=>{
     }); 
   }
 })
-// app.listen(port, () => console.log(`Listening on port ${port}!`))
+
+
+app.get("/balance", async(req,res)=>{
+  try{
+      let balanceData= await Wallet.findOne({mbeId:req.query.mbeId});
+
+
+      res.status(200).json({
+        status:200,
+        message:balanceData
+      })
+
+  }catch (e) {
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
+  }
+})
 
 module.exports = app;

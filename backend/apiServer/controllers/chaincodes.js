@@ -51,9 +51,9 @@ console.log('hereewe')
 
 exports.getcbdcwallet = async (req, res) => {
   try {
-    let { mbeId } = req.query;
+    let { CBDCbalance } = req.query;
 
-    let query = { selector: { mbeId, isDelete: false } };
+    let query = { selector: { CBDCbalance, isDelete: false } };
 
     let queryString = JSON.stringify(query);
 
