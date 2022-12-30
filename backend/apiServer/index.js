@@ -224,10 +224,16 @@ app.post("/tokenize", async (req, res) => {
         TokenQtyRemaining:_TokenQtyRemaining,
       })
       if (obj) {
-        res.json("Successfully Tokenized");
+        res.json({
+          status:200,
+          message:"Successfully Tokenized"
+        });
       }
     } else {
-      res.json("No Sufficient Lot to Tokenized");
+      res.json({
+        status:200,
+        message:"No Sufficient Lot to Tokenized"
+      });
     }
   } catch (e) {
      res.json({
