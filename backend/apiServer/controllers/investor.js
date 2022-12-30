@@ -229,7 +229,10 @@ exports.getInvestor = async (req, res) => {
     // if (id && id != "") filter["_id"] = id;
 
     let users = await UserModel.find().select("-password ");
-    res.status(200).json(users);
+    res.status(200).json({
+      status:200,
+      message:users
+    });
   } catch (err) {
     HandleResponseError(err, res);
   }

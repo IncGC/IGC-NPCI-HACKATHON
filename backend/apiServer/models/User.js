@@ -19,10 +19,11 @@ const userSchema = new schema({
     phoneOtp:String,
     nse_registerd:Boolean,
     mbe_id:String,
-    bondholdingID: { type: ObjectId, ref: 'Bond' },
-    tokenholdingID:{type: ObjectId, ref :"Token"},
-    transactionId: {type: ObjectId, ref : "Transaction"},
-    createdBy: { type: ObjectId, ref: 'User' }
+    bondholdingID: { type: mongoose.Schema.ObjectId, ref: 'Bonds' },
+    tokenholdingID:{type: mongoose.Schema.ObjectId, ref :"Token"},
+    transactionId: {type: mongoose.Schema.ObjectId, ref : "Transaction"},
+    cbdcBalance:{type:mongoose.Schema.ObjectId, ref:"Wallet"},
+    createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

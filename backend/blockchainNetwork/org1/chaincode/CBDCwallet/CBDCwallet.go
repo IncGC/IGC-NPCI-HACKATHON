@@ -22,7 +22,7 @@ type CBDCwallet struct {
 	IsDelete            bool      `json:"isDelete"`
 	IsHidden            bool      `json:"isHidden"`
 	IsUpdated            bool      `json:"IsUpdated"`
-	mbeId                string    `json:"mbeId"`
+	MbeId          string    `json:"mbeId"`
 	CBDCbalance          string    `json:"CBDCbalance"`
 	
 }

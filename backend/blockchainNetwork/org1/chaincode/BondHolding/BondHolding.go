@@ -23,14 +23,14 @@ type BondHolding struct {
 	IsHidden       bool      `json:"IsHidden"`
 	IsTokenized       bool      `json:"IsTokenized"`
 	IsProcessed       bool      `json:"IsProcessed"`
-	isin           string    `json:"isin"`
-	mbeId          string    `json:"mbeId"`
+	Isin           string    `json:"Isin"`
+	MbeId          string    `json:"MbeId"`
 	IssuerName     string    `json:"IssuerName"`
 	CouponRate     string    `json:"CouponRate"`
-	faceValue      string    `json:"faceValue"`
+	FaceValue      string    `json:"FaceValue"`
 	CreditRating   string    `json:"CreditRating"`
-	MaturityDate   string    `json: "MaturityDate"`
-	purchasePrice  string    `json :"purchasePrice"`
+	Maturitydate   string    `json: "Maturitydate"`
+	PurchasePrice  string    `json :"PurchasePrice"`
 	NumToken       string    `json :"NumToken"`
 	currentPrice   string    `json :"currentPrice"`
 	numOfLots      string    `json :"numOfLots"`
@@ -82,14 +82,14 @@ func (cc *BondHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []s
 		IsHidden:       boolValue4,
 		IsTokenized: boolValue5,
 		IsProcessed: boolValue6,
-		isin:           args[7],
-		mbeId:          args[8],
+		Isin:           args[7],
+		MbeId:          args[8],
 		IssuerName:     args[9],
 		CouponRate:     args[10],
-		faceValue:      args[11],
+		FaceValue:      args[11],
 		CreditRating:   args[12],
-		MaturityDate:   args[13],
-		purchasePrice:  args[14],
+		Maturitydate:   args[13],
+		PurchasePrice:  args[14],
 		NumToken:       args[15],
 		currentPrice:   args[16],
 		numOfLots:      args[17],
@@ -170,14 +170,14 @@ func (cc *BondHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []s
 		IsHidden:       boolValue4,
 		IsTokenized: boolValue5,
 		IsProcessed: boolValue6,
-		isin:           args[7],
-		mbeId:          args[8],
+		Isin:           args[7],
+		MbeId:          args[8],
 		IssuerName:     args[9],
 		CouponRate:     args[10],
-		faceValue:      args[11],
+		FaceValue:      args[11],
 		CreditRating:   args[12],
-		MaturityDate:   args[13],
-		purchasePrice:  args[14],
+		Maturitydate:   args[13],
+		PurchasePrice:  args[14],
 		NumToken:       args[15],
 		currentPrice:   args[16],
 		numOfLots:      args[17],

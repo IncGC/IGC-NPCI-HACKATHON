@@ -7,7 +7,7 @@ const CBDCWALLET_SCHEMA = [
   { name: "createdBy" },
   { name: "isDelete" },
   { name: "isHidden" },
-  {name:"IsUpdated"},
+  { name: "IsUpdated" },
   { name: "mbeId" },
   { name: "CBDCbalance" },
 ];
@@ -18,8 +18,8 @@ const BONDHOLDING_SCHEMA = [
   { name: "CreatedBy" },
   { name: "IsDelete" },
   { name: "IsHidden" },
-  {name:"IsTokenized"},
-  {name:"IsProcessed"},
+  { name: "IsTokenized" },
+  { name: "IsProcessed" },
   { name: "isin" },
   { name: "mbeId" },
   { name: "IssuerName" },
@@ -56,8 +56,8 @@ const TOKENHOLDING_SCHEMA = [
   { name: "NumToken" },
   { name: "currentPrice" },
   { name: "numOfLots" },
-  {name:"DetokenizedTokens"},
-  {name:"DetokenizedValue"}
+  { name: "DetokenizedTokens" },
+  { name: "DetokenizedValue" },
 ];
 const TRASANSATIONS_SCHEMA = [
   { name: "Id" },
@@ -67,7 +67,7 @@ const TRASANSATIONS_SCHEMA = [
   { name: "IsHidden" },
   { name: "isin" },
   { name: "mbeId" },
-  {name:"IssuerName"},
+  { name: "IssuerName" },
   { name: "noOfTokens" },
   { name: "date" },
   { name: "TransactionsType" },
@@ -75,7 +75,7 @@ const TRASANSATIONS_SCHEMA = [
   { name: "amount" },
   { name: "sellOrderId" },
   { name: "buyOrderId" },
-  {name:"purchaselogId"}
+  { name: "purchaselogId" },
 ];
 
 const BUYORDER_SCHEMA = [
