@@ -128,7 +128,13 @@ app.post("/pushBuyorders", async (req, res) => {
         });
     }
     readFile();
-    res.send("Succesfully Pushed");
+    // res.send("Succesfully Pushed");
+   let buyOrderData = await BuyOrder.find();
+
+   res.status(200).json({
+    status:200,
+    message:buyOrderData
+   })
   } catch (e) {
     res.send(e);
   }
@@ -347,9 +353,9 @@ app.post("/placeBuyOrder", async (req, res) => {
     let walletBalance = await Wallet.find({ mbeId: req.body.mbeId });
     console.log(walletBalance);
     // Updated by MPK
-    // if (parseFloat(walletBalance[0].TotalFunds) >= parseFloat(req.body.Price)) {
+    // if (parseFloat(walletBalance[0].CBDCbalance) >= parseFloat(req.body.Price)) {
     if (
-      parseFloat(walletBalance[0].TotalFunds) >=
+      parseFloat(walletBalance[0].CBDCbalance) >=
       parseFloat(req.body.Price) * parseFloat(req.body.NumOfToken)
     ) {
       let buyorder = [
@@ -388,10 +394,23 @@ app.post("/placeBuyOrder", async (req, res) => {
           Price: req.body.Price,
         };
         await storeRecord("Buy", obj);
-        res.json("Successfully Placed Buy Order");
+
+        let buyData = await BuyOrder.find()
+        let sellData = await SellOrder.find()
+
+        res.status(200).json({
+          status:200,
+          message:"Succesfully placed Buy Order"
+        })
+        // res.json("Successfully Placed Buy Order");
+
+
       }
     } else {
-      res.json("No Sufficient Balance");
+      res.json({
+        status:200,
+        message:"No Sufficient Balance"
+      });
     }
   } catch (e) {
     console.log("e", e);
