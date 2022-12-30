@@ -21,15 +21,10 @@ const {
 } = require("./config/helper");
 const { setEngine } = require("crypto");
 
-//Read ConnectDB function
-// const { connectDb } = require('./config/db');
-
 require("dotenv").config();
-// connectDb();
 
 const app = express();
 app.use(bodyParser.json());
-// let port = process.env.PORT;
 
 //API Endpoint to read file and push data
 app.post("/pushBondDetails", async (req, res) => {
@@ -70,7 +65,10 @@ app.post("/pushBondDetails", async (req, res) => {
       message: recordData,
     });
   } catch (e) {
-    res.send(e);
+    res.status(404).json({
+      status:404,
+      message:"Not Found"
+    });
   }
 });
 
@@ -103,7 +101,10 @@ app.post("/pushSellorders", async (req, res) => {
         message:pushSellData
     })
   } catch (e) {
-    res.send(e);
+    res.json({
+      status:404,
+      message:"Not found"
+    });
   }
 });
 
@@ -136,7 +137,10 @@ app.post("/pushBuyorders", async (req, res) => {
     message:buyOrderData
    })
   } catch (e) {
-    res.send(e);
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
   }
 });
 
@@ -165,7 +169,10 @@ app.post("/pushWallets", async (req, res) => {
       message: walletData,
     });
   } catch (e) {
-    res.send(e);
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
   }
 });
 
@@ -223,7 +230,10 @@ app.post("/tokenize", async (req, res) => {
       res.json("No Sufficient Lot to Tokenized");
     }
   } catch (e) {
-    res.send(e);
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
   }
 });
 
@@ -275,7 +285,10 @@ app.post("/deTokenize", async (req, res) => {
       res.json("No Sufficient Token to DeTokenized");
     }
   } catch (e) {
-    res.send(e);
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
   }
 });
 
@@ -283,7 +296,10 @@ app.post("/deTokenize", async (req, res) => {
 app.post("/convertToBond", async (req, res) => {
   try {
   } catch (e) {
-    res.send(e);
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
   }
 });
 
@@ -341,10 +357,16 @@ app.post("/placeSellOrder", async (req, res) => {
         });
       }
     } else {
-      res.json("No Sufficient Token to place sell order");
+      res.json({
+        status:200,
+        message:"No Sufficient Token to place sell order"
+      });
     }
   } catch (e) {
-    res.send(e);
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
   }
 });
 
@@ -383,7 +405,10 @@ app.post("/placeBuyOrder", async (req, res) => {
       if (Object.keys(sellorderBook || {}).length > 0) {
         await VerifySellOrderList(buyorder, sArray);
         res.json(
-          "Successfully Placed Buy Order. Match found and processed your order"
+          {
+            status:200,
+            message:"Successfully Placed Buy Order. Match found and processed your order"
+          }
         );
       } else {
         let obj = {
@@ -414,7 +439,10 @@ app.post("/placeBuyOrder", async (req, res) => {
     }
   } catch (e) {
     console.log("e", e);
-    res.send(e);
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
   }
 });
 
@@ -424,7 +452,10 @@ app.get("/compareOrderBook", async (req, res) => {
     let sellOrderBook = await SellOrder.find({ isProcessed: false });
     await CompareLimitOrder(sellOrderBook, buyorderBook, false);
   } catch (e) {
-    res.send(e);
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
   }
 });
 

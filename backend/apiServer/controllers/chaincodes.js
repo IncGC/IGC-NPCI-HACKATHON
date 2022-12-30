@@ -76,7 +76,10 @@ exports.getcbdcwallet = async (req, res) => {
             message:data
         })
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -238,7 +241,10 @@ exports.TokenHolding = async (req, res) => {
       message: message,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -267,7 +273,10 @@ exports.getTokenHolding = async (req, res) => {
       message: data,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -321,7 +330,10 @@ exports.Transactions = async (req, res) => {
       message: message,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -348,7 +360,10 @@ exports.getTransaction = async (req, res) => {
       message: data,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -383,7 +398,10 @@ exports.buyOrder = async (req, res) => {
       message: message
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -411,7 +429,10 @@ exports.getBuyOrder = async (req, res) => {
       message: data,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -446,7 +467,10 @@ exports.sellOrder = async (req, res) => {
       message: message,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -474,7 +498,10 @@ exports.getSellOrder = async (req, res) => {
       message: data,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 exports.mbeMarket = async (req, res) => {
@@ -541,7 +568,10 @@ exports.mbeMarket = async (req, res) => {
       message: message,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -569,7 +599,10 @@ exports.getMbeMarket = async (req, res) => {
       message: data,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 exports.purchaseLog = async (req, res) => {
@@ -606,7 +639,10 @@ exports.purchaseLog = async (req, res) => {
       message: message,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
 
@@ -634,6 +670,9 @@ exports.getPurchaseLog = async (req, res) => {
       message: data,
     });
   } catch (err) {
-    res.send(err);
+    res.json({
+      status:404,
+      message:"Unexpected Error"
+    })
   }
 };
