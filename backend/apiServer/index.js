@@ -529,15 +529,15 @@ app.get('/buyOrder', async(req, res)=>{
   }
 });
 
-app.post('/buyOrder', async(req, res)=>{
+app.get('/buyOrdersingle', async(req, res)=>{
   try{
-      let buyOrder = await BuyOrder.findOne({mbeId:req.query});
+      let buyOrder = await BuyOrder.findOne({mbeId:req.query.mbeId});
 
-      let data = req.body;
-      data.isProcessed = false;
-      data.createdBy = req.user;
+      // let data = req.body;
+      // data.isProcessed = false;
+      // data.createdBy = req.user;
 
-      buyOrder = await BuyOrder.create(data);
+      // buyOrder = await BuyOrder.create(data);
 
       await buyOrder.save();
 
@@ -571,17 +571,17 @@ app.get('/sellOrder', async(req, res)=>{
   }
 });
 
-app.post('/sellOrder', async(req, res)=>{
+app.get('/sellOrderSingle', async(req, res)=>{
   try{
-      let sellOrder = await SellOrder.findOne({OrderId:req.query});
+      let sellOrder = await SellOrder.findOne({OrderId:req.query.OrderId});
 
-      let data = req.body;
-      data.isProcessed = false;
-      data.createdBy = req.user;
+      // let data = req.body;
+      // data.isProcessed = false;
+      // data.createdBy = req.user;
 
-      sellOrder = await SellOrder.create(data);
+      // sellOrder = await SellOrder.create(data);
 
-      await sellOrder.save();
+      // await sellOrder.save();
 
       res.status(200).json({
         status:200,
