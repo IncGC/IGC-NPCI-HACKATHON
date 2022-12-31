@@ -513,7 +513,7 @@ app.get("/balance", async(req,res)=>{
 })
 
 
-app.get('balanceAll',async(req,res)=>{
+app.get('/balanceAll',async(req,res)=>{
   try{
     let balanceAll= await Wallet.find();
 
