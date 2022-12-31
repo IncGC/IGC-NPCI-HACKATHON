@@ -512,6 +512,22 @@ app.get("/balance", async(req,res)=>{
   }
 })
 
+
+app.get('balanceAll',async(req,res)=>{
+  try{
+    let balanceAll= await Wallet.find();
+
+    res.status(200).json({
+      status:200,
+      message:balanceAll
+    })
+  }catch (e) {
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
+  }
+})
 app.get('/buyOrder', async(req, res)=>{
   try{
       let buyOrder = await BuyOrder.find();
