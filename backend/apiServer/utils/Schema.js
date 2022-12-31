@@ -104,7 +104,7 @@ const SELLORDER_SCHEMA = [
   { name: "NumOfToken" },
 ];
 
-const MBEMARTKET_SCHEMA = [
+const MBEMARKET_SCHEMA = [
   { name: "Id" },
   { name: "CreatedOn" },
   { name: "CreatedBy" },
@@ -160,7 +160,7 @@ exports.getSchema = (chaincodeName) => {
     case CHAINCODE_NAMES.SELLORDER:
       return SELLORDER_SCHEMA;
     case CHAINCODE_NAMES.MBEMARKET:
-      return MBEMARTKET_SCHEMA;
+      return MBEMARKET_SCHEMA;
     case CHAINCODE_NAMES.PURCHASELOG:
       return PURCHASELOG_SCHEMA;
 

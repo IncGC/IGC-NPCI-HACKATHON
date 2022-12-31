@@ -33,6 +33,8 @@ var SellOrderSchema = new mongoose.Schema(
     OrderId: String,
     mbeId: String,
     isin: String,
+    issuerName:String,
+    transactionType:String,
     NumOfToken: String,
     Price: String,
     isProcessed: {
@@ -48,6 +50,8 @@ var BuyOrderSchema = new mongoose.Schema(
     OrderId: String,
     mbeId: String,
     isin: String,
+    issuerName:String,
+    transactionType:String,
     NumOfToken: String,
     Price: String,
     isProcessed: {

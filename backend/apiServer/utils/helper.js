@@ -43,7 +43,7 @@ exports.CHAINCODE_NAMES = {
 	BUYORDER:'BuyOrder',
 	SELLORDER:'SellOrder',
 	PURCHASELOG:'PurchaseLog',
-	MBEMARKET:'MBEmartket'
+	MBEMARKET:'MBEmarket'
 }
 
 
