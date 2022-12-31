@@ -12,18 +12,18 @@ const {
 exports.cbdcwallet = async (req, res) => {
   try{
     let{
-      mbeId,
+      MbeId,
       CBDCbalance,
     } = req.body;
 console.log(req.body)
     const cbdcwalletData= {
-      id:generateId(),
-      createdOn:getNow(),
-      createdBy: "admin",
-      isDelete:"false",
-      isHidden:"false",
-      IsUpdated:'false',
-      mbeId,
+      Id:generateId(),
+      CreatedOn:getNow(),
+      CreatedBy: "admin",
+      IsDelete:"false",
+      IsHidden:"false",
+      IsUpDated:'false',
+      MbeId,
       CBDCbalance
     }
 console.log(cbdcwalletData);
@@ -51,9 +51,9 @@ console.log('hereewe')
 
 exports.getcbdcwallet = async (req, res) => {
   try {
-    let { CBDCbalance } = req.query;
+    let { MbeId } = req.query;
 
-    let query = { selector: { CBDCbalance, isDelete: false } };
+    let query = { selector: { MbeId } };
 
     let queryString = JSON.stringify(query);
 
@@ -69,6 +69,7 @@ exports.getcbdcwallet = async (req, res) => {
     res.set("Content-Type", "application/json");
     // res.status(200).send(dataStr);
     let data = JSON.parse(dataStr)
+    console.log(dataStr)
 
         console.log(data);
         res.status(200).json({
@@ -86,19 +87,19 @@ exports.getcbdcwallet = async (req, res) => {
 exports.bondHoldings = async (req, res) => {
   try {
     let {
-      isin,
-      mbeId,
+      Isin,
+      MbeId,
       IssuerName,
       CouponRate,
-      faceValue,
+      FaceValue,
       CreditRating,
       MaturityDate,
-      purchasePrice,
-      numToken,
-      currentPrice,
-      numOfLots,
-      tokenizedLot,
-      totalTokenQty,
+      PurchasePrice,
+      NumOfToken,
+      CurrentPrice,
+      NumOfLots,
+      TokenizedLot,
+      TotalTokenQty,
       RemainingToken,
     } = req.body;
 
@@ -107,23 +108,23 @@ exports.bondHoldings = async (req, res) => {
       Id: generateId(),
       CreatedOn: getNow(),
       CreatedBy: "admin",
-      IsDelete: "false",
-      IsHidden: "false",
-      IsTokenized:'false',
-      IsProcessed:'false',
-      isin,
-      mbeId,
+      IsDelete: 'false',
+      IsHidden: 'false',
+      IsTokenized: 'false',
+      IsProcessed: 'false',
+      Isin,
+      MbeId,
       IssuerName,
       CouponRate,
-      faceValue,
+      FaceValue,
       CreditRating,
       MaturityDate,
-      purchasePrice,
-      numToken,
-      currentPrice,
-      numOfLots,
-      tokenizedLot,
-      totalTokenQty,
+      PurchasePrice,
+      NumOfToken,
+      CurrentPrice,
+      NumOfLots,
+      TokenizedLot,
+      TotalTokenQty,
       RemainingToken,
     };
 
@@ -149,9 +150,9 @@ exports.bondHoldings = async (req, res) => {
 
 exports.getbondHoldings = async (req, res) => {
   try {
-    let { isin } = req.body;
+    let { Isin } = req.body;
 
-    let query = { selector: {  isDelete: false } };
+    let query = { selector: { Isin } };
 
     let queryString = JSON.stringify(query);
 
@@ -183,20 +184,20 @@ exports.getbondHoldings = async (req, res) => {
 exports.TokenHolding = async (req, res) => {
   try {
     let {
-      isin,
-      mbeId,
+      Isin,
+      MbeId,
       IssuerName,
       CouponRate,
-      faceValue,
+      FaceValue,
       Ltp,
       CreditRating,
       MaturityDate,
-      latestBidPrice,
-      latestAskPrice,
-      purchasePrice,
-      NumToken,
-      currentPrice,
-      numOfLots,
+      LatestBidPrice,
+      LatestAskPrice,
+      PurchasePrice,
+      NumOfToken,
+      CurrentPrice,
+      NumOfLots,
       DetokenizedTokens,
       DetokenizedValue
     } = req.body;
@@ -207,20 +208,20 @@ exports.TokenHolding = async (req, res) => {
       CreatedBy: "admin",
       IsDelete: 'false',
       IsHidden: 'false',
-      isin,
-      mbeId,
+      Isin,
+      MbeId,
       IssuerName,
       CouponRate,
-      faceValue,
+      FaceValue,
       Ltp,
       CreditRating,
       MaturityDate,
-      latestBidPrice,
-      latestAskPrice,
-      purchasePrice,
-      NumToken,
-      currentPrice,
-      numOfLots,
+      LatestBidPrice,
+      LatestAskPrice,
+      PurchasePrice,
+      NumOfToken,
+      CurrentPrice,
+      NumOfLots,
       DetokenizedTokens,
       DetokenizedValue
     };
@@ -250,9 +251,9 @@ exports.TokenHolding = async (req, res) => {
 
 exports.getTokenHolding = async (req, res) => {
   try {
-    let { isin } = req.body;
+    let { Isin } = req.body;
 
-    let query = { selector: { isin } };
+    let query = { selector: { Isin } };
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
@@ -283,17 +284,17 @@ exports.getTokenHolding = async (req, res) => {
 exports.Transactions = async (req, res) => {
   try {
     let {
-      isin,
-      mbeId,
+      Isin,
+      MbeId,
       IssuerName,
-      noOfTokens,
-      date,
+      NumOfToken,
+      Date,
       TransactionsType,
-      status,
-      amount,
-      sellOrderId,
-      buyOrderId,
-      purchaselogId
+      Status,
+      Amount,
+      SellOrderId,
+      BuyOrderId,
+      PurchaselogId
     } = req.body;
 
     const transactionData = {
@@ -302,17 +303,17 @@ exports.Transactions = async (req, res) => {
       CreatedBy: "admin",
       IsDelete: "false",
       IsHidden: "false",
-      isin,
-      mbeId,
+      Isin,
+      MbeId,
       IssuerName,
-      noOfTokens,
-      date,
+      NumOfToken,
+      Date,
       TransactionsType,
-      status,
-      amount,
-      sellOrderId,
-      buyOrderId,
-      purchaselogId
+      Status,
+      Amount,
+      SellOrderId,
+      BuyOrderId,
+      PurchaselogId
     };
 
     let message = await invokeTransaction({
@@ -339,9 +340,9 @@ exports.Transactions = async (req, res) => {
 
 exports.getTransaction = async (req, res) => {
   try {
-    let { isin } = req.query;
+    let { Isin } = req.query;
 
-    let query = { selector: { isin } };
+    let query = { selector: { Isin } };
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
@@ -369,7 +370,7 @@ exports.getTransaction = async (req, res) => {
 
 exports.buyOrder = async (req, res) => {
   try {
-    let { mbeId, isin, price, noOfTokens } = req.body;
+    let { MbeId, Isin, Price, NumOfToken } = req.body;
 
     const buyOrderData = {
       Id: generateId(),
@@ -378,11 +379,14 @@ exports.buyOrder = async (req, res) => {
       IsDelete: 'false',
       IsHidden: 'false',
       IsProcessed: 'false',
-      mbeId,
-      isin,
-      price,
-      noOfTokens,
+      MbeId,
+      Isin,
+      Price,
+      NumOfToken,
     };
+
+    console.log(buyOrderData);
+
     let message = await invokeTransaction({
       metaInfo: { userName: "pintu", org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
@@ -393,7 +397,7 @@ exports.buyOrder = async (req, res) => {
     });
 
     console.log(message);
-    req.status(201).json({
+    res.status(201).json({
       status: 201,
       message: message
     });
@@ -407,9 +411,9 @@ exports.buyOrder = async (req, res) => {
 
 exports.getBuyOrder = async (req, res) => {
   try {
-    let { isin } = req.query;
+    let { Isin } = req.query;
 
-    let query = { selector: { isin } };
+    let query = { selector: { Isin } };
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
@@ -438,7 +442,7 @@ exports.getBuyOrder = async (req, res) => {
 
 exports.sellOrder = async (req, res) => {
   try {
-    let { mbeId, isin, price, noOfTokens } = req.body;
+    let { MbeId, Isin, Price, NumOfToken } = req.body;
 
     const sellOrderData = {
       Id: generateId(),
@@ -447,11 +451,13 @@ exports.sellOrder = async (req, res) => {
       IsDelete: 'false',
       IsHidden: 'false',
       IsProcessed: 'false',
-      mbeId,
-      isin,
-      price,
-      noOfTokens,
+      MbeId,
+      Isin,
+      Price,
+      NumOfToken,
     };
+
+    console.log(sellOrderData);
     let message = await invokeTransaction({
       metaInfo: { userName: "pintu", org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
@@ -462,7 +468,7 @@ exports.sellOrder = async (req, res) => {
     });
 
     console.log(message);
-    req.send(201).json({
+    res.status(201).json({
       status: 201,
       message: message,
     });
@@ -476,9 +482,9 @@ exports.sellOrder = async (req, res) => {
 
 exports.getSellOrder = async (req, res) => {
   try {
-    let { isin } = req.query;
+    let { Isin } = req.query;
 
-    let query = { selector: { isin } };
+    let query = { selector: { Isin } };
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
@@ -507,24 +513,24 @@ exports.getSellOrder = async (req, res) => {
 exports.mbeMarket = async (req, res) => {
   try {
     let {
-      isin,
-      mbeId,
+      Isin,
+      MbeId,
       IssuerName,
       CouponRate,
-      faceValue,
+      FaceValue,
       Ltp,
       CreditRating,
       MaturityDate,
-      securityDescription,
-      latestBidPrice,
-      latestAskPrice,
-      currency,
-      numOfLots,
-      tokenizedLot,
-      totalTokenQty,
+      SecurityDescription,
+      LatestBidPrice,
+      LatestAskPrice,
+      Currency,
+      NumOfLots,
+      TokenizedLot,
+      TotalTokenQty,
       RemainingToken,
       Detokenizedtoken,
-      detokenizedValue,
+      DetokenizedValue,
     } = req.body;
 
     const marketData = {
@@ -533,24 +539,24 @@ exports.mbeMarket = async (req, res) => {
       CreatedBy: "admin",
       IsDelete: 'false',
       IsHidden: 'false',
-      isin,
-      mbeId,
+      Isin,
+      MbeId,
       IssuerName,
       CouponRate,
-      faceValue,
+      FaceValue,
       Ltp,
       CreditRating,
       MaturityDate,
-      securityDescription,
-      latestBidPrice,
-      latestAskPrice,
-      currency,
-      numOfLots,
-      tokenizedLot,
-      totalTokenQty,
+      SecurityDescription,
+      LatestBidPrice,
+      LatestAskPrice,
+      Currency,
+      NumOfLots,
+      TokenizedLot,
+      TotalTokenQty,
       RemainingToken,
       Detokenizedtoken,
-      detokenizedValue,
+      DetokenizedValue,
     };
 
     let message = await invokeTransaction({
@@ -577,9 +583,9 @@ exports.mbeMarket = async (req, res) => {
 
 exports.getMbeMarket = async (req, res) => {
   try {
-    let { isin } = req.query;
+    let { Isin } = req.query;
 
-    let query = { selector: { isin } };
+    let query = { selector: { Isin } };
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
@@ -607,7 +613,7 @@ exports.getMbeMarket = async (req, res) => {
 };
 exports.purchaseLog = async (req, res) => {
   try {
-    let { mbeId, isin, price, noOfTokens, tradeValue } = req.body;
+    let { MbeId, Isin, Price, NumOfToken, TradeValue } = req.body;
 
     const purchaseLogData = {
       Id: generateId(),
@@ -618,11 +624,11 @@ exports.purchaseLog = async (req, res) => {
       IsProcessed: "false",
       IsAuthorize: "false",
       IsPurchase: "false",
-      mbeId,
-      isin,
-      price,
-      noOfTokens,
-      tradeValue,
+      MbeId,
+      Isin,
+      Price,
+      NumOfToken,
+      TradeValue,
     };
     let message = await invokeTransaction({
       metaInfo: { userName: "pintu", org: "org1MSP" },
@@ -634,7 +640,7 @@ exports.purchaseLog = async (req, res) => {
     });
 
     console.log(message);
-    req.send(201).json({
+    res.status(201).json({
       status: 201,
       message: message,
     });
@@ -648,9 +654,9 @@ exports.purchaseLog = async (req, res) => {
 
 exports.getPurchaseLog = async (req, res) => {
   try {
-    let { isin } = req.query;
+    let { Isin } = req.query;
 
-    let query = { selector: { isin } };
+    let query = { selector: { Isin } };
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({

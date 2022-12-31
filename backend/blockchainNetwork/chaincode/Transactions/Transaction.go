@@ -21,30 +21,30 @@ type Transactions struct {
 	CreatedBy        string    `json:"CreatedBy"`
 	IsDelete         bool      `json:"IsDelete"`
 	IsHidden         bool      `json:"IsHidden"`
-	isin             string    `json:"isin"`
-	mbeId            string    `json:"mbeId"`
+	Isin             string    `json:"Isin"`
+	MbeId            string    `json:"MbeId"`
 	IssuerName       string    `json:"IssuerName"`
-	noOfTokens       string    `json:"noOfTokens"`
-	date             string    `json:"date"`
+	NumOfToken       string    `json:"NumOfToken"`
+	Date             string    `json:"Date"`
 	TransactionsType string    `json:"TransactionsType"`
-	status           string    `json: "status"`
-	amount           string    `json:"amount"`
-	sellOrderId      string    `json:"sellOrderId"`
-	buyOrderId       string    `json:"buyOrderId"`
-	purchaselogId    string    `json:"purchaselogId"`
+	Status           string    `json:"Status"`
+	Amount           string    `json:"Amount"`
+	SellOrderId      string    `json:"SellOrderId"`
+	BuyOrderId       string    `json:"BuyOrderId"`
+	PurchaselogId    string    `json:"PurchaselogId"`
 }
 
 func (cc *TransactionsChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 17 {
-		return shim.Error("Incorrect number arguments. Expecting 17")
+	if len(args) != 16 {
+		return shim.Error("Incorrect number arguments. Expecting 16")
 	}
-	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
+	DateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
 	if err1 != nil {
-		return shim.Error("Error converting string to date: " + err1.Error())
+		return shim.Error("Error converting string to Date: " + err1.Error())
 	}
 	boolValue3, err3 := strconv.ParseBool(args[3])
 
@@ -60,21 +60,21 @@ func (cc *TransactionsChaincode) create(stub shim.ChaincodeStubInterface, arg []
 
 	data := Transactions{
 		Id:               args[0],
-		CreatedOn:        dateValue1,
+		CreatedOn:        DateValue1,
 		CreatedBy:        args[2],
 		IsDelete:         boolValue3,
 		IsHidden:         boolValue4,
-		isin:             args[6],
-		mbeId:            args[7],
-		IssuerName:       args[8],
-		noOfTokens:       args[9],
-		date:             args[10],
-		TransactionsType: args[11],
-		status:           args[12],
-		amount:           args[13],
-		sellOrderId:      args[14],
-		buyOrderId:       args[15],
-		purchaselogId:    args[16],
+		Isin:             args[5],
+		MbeId:            args[6],
+		IssuerName:       args[7],
+		NumOfToken:       args[8],
+		Date:             args[9],
+		TransactionsType: args[10],
+		Status:           args[11],
+		Amount:           args[12],
+		SellOrderId:      args[13],
+		BuyOrderId:       args[14],
+		PurchaselogId:    args[15],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -106,17 +106,17 @@ func (cc *TransactionsChaincode) get(stub shim.ChaincodeStubInterface, args []st
 
 	return shim.Success(stateBytes)
 }
-func (cc *TransactionsChaincode) update(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
+func (cc *TransactionsChaincode) upDate(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 17 {
-		return shim.Error("Incorrect number arguments. Expecting 17")
+	if len(args) != 16 {
+		return shim.Error("Incorrect number arguments. Expecting 16")
 	}
-	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
+	DateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
 	if err1 != nil {
-		return shim.Error("Error converting string to date: " + err1.Error())
+		return shim.Error("Error converting string to Date: " + err1.Error())
 	}
 	boolValue3, err3 := strconv.ParseBool(args[3])
 
@@ -129,23 +129,24 @@ func (cc *TransactionsChaincode) update(stub shim.ChaincodeStubInterface, arg []
 	if err4 != nil {
 		return shim.Error("Error converting string to bool : " + err4.Error())
 	}
+
 	data := Transactions{
 		Id:               args[0],
-		CreatedOn:        dateValue1,
+		CreatedOn:        DateValue1,
 		CreatedBy:        args[2],
 		IsDelete:         boolValue3,
 		IsHidden:         boolValue4,
-		isin:             args[6],
-		mbeId:            args[7],
-		IssuerName:       args[8],
-		noOfTokens:       args[9],
-		date:             args[10],
-		TransactionsType: args[11],
-		status:           args[12],
-		amount:           args[13],
-		sellOrderId:      args[14],
-		buyOrderId:       args[15],
-		purchaselogId:    args[16],
+		Isin:             args[5],
+		MbeId:            args[6],
+		IssuerName:       args[7],
+		NumOfToken:       args[8],
+		Date:             args[9],
+		TransactionsType: args[10],
+		Status:           args[11],
+		Amount:           args[12],
+		SellOrderId:      args[13],
+		BuyOrderId:       args[14],
+		PurchaselogId:    args[15],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -180,13 +181,13 @@ func (cc *TransactionsChaincode) delete(stub shim.ChaincodeStubInterface, args [
 
 	data.IsDelete = true
 
-	updateDataBytes, err1 := json.Marshal(data)
+	upDateDataBytes, err1 := json.Marshal(data)
 
 	if err1 != nil {
 		return shim.Error("Error converting data as bytes: " + err1.Error())
 	}
 
-	err2 := stub.PutState(args[0], updateDataBytes)
+	err2 := stub.PutState(args[0], upDateDataBytes)
 
 	if err2 != nil {
 		return shim.Error("Error putting the data state: " + err2.Error())
@@ -276,8 +277,8 @@ func (cc *TransactionsChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.R
 		return cc.create(stub, args)
 	} else if function == "get" {
 		return cc.get(stub, args)
-	} else if function == "update" {
-		return cc.update(stub, args)
+	} else if function == "upDate" {
+		return cc.upDate(stub, args)
 	} else if function == "delete" {
 		return cc.delete(stub, args)
 	} else if function == "history" {

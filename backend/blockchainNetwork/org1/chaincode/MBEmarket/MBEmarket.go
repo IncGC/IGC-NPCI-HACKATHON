@@ -21,24 +21,24 @@ type MBEmarket struct {
 	CreatedBy      string    `json:"CreatedBy"`
 	IsDelete       bool      `json:"IsDelete"`
 	IsHidden       bool      `json:"IsHidden"`
-	isin           string    `json:"isin"`
-	mbeId          string    `json:"mbeId"`
+	Isin           string    `json:"Isin"`
+	MbeId          string    `json:"MbeId"`
 	IssuerName     string    `json:"IssuerName"`
 	CouponRate     string    `json:"CouponRate"`
-	faceValue      string    `json:"faceValue"`
+	FaceValue      string    `json:"FaceValue"`
 	Ltp            string    `json:"Ltp"`
 	CreditRating   string    `json:"CreditRating"`
-	MaturityDate   string    `json: "MaturityDate"`
-	securityDescription   string    `json:"securityDescription"`
-	latestBidPrice string    `json:"latestBidPrice"`
-	latestAskPrice string    `json :"latestAskPrice"`
-	currency string    `json :"currency"`
-	numOfLots      string    `json :"numOfLots"`
-	tokenizedLot      string    `json :"tokenizedLot"`
-	totalTokenQty      string    `json :"totalTokenQty"`
-	RemainingToken  string    `json :"RemainingToken"`
-	Detokenizedtoken       string    `json :"Detokenizedtoken"`
-	detokenizedValue   string    `json :"detokenizedValue"`
+	MaturityDate   string    `json:"MaturityDate"`
+	SecurityDescription   string    `json:"SecurityDescription"`
+	LatestBidPrice string    `json:"LatestBidPrice"`
+	LatestAskPrice string    `json:"LatestAskPrice"`
+	Currency string    `json:"Currency"`
+	NumOfLots      string    `json:"NumOfLots"`
+	TokenizedLot      string    `json:"TokenizedLot"`
+	TotalTokenQty      string    `json:"TotalTokenQty"`
+	RemainingToken  string    `json:"RemainingToken"`
+	Detokenizedtoken       string    `json:"Detokenizedtoken"`
+	DetokenizedValue   string    `json:"DetokenizedValue"`
 }
 
 func (cc *MBEmarketChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
@@ -72,24 +72,24 @@ func (cc *MBEmarketChaincode) create(stub shim.ChaincodeStubInterface, arg []str
 		CreatedBy:           args[2],
 		IsDelete:            boolValue3,
 		IsHidden:            boolValue4,
-		isin:                args[5],
-		mbeId: args[6],
+		Isin:                args[5],
+		MbeId: args[6],
 		IssuerName:          args[7],
 		CouponRate:          args[8],
-		faceValue:           args[9],
+		FaceValue:           args[9],
 		Ltp:                 args[10],
 		CreditRating:        args[11],
 		MaturityDate:        args[12],
-		securityDescription: args[13],
-		latestBidPrice:      args[14],
-		latestAskPrice:      args[15],
-		currency: args[16],
-		numOfLots:           args[17],
-		tokenizedLot: args[18],
-		totalTokenQty: args[19],
+		SecurityDescription: args[13],
+		LatestBidPrice:      args[14],
+		LatestAskPrice:      args[15],
+		Currency: args[16],
+		NumOfLots:           args[17],
+		TokenizedLot: args[18],
+		TotalTokenQty: args[19],
 		RemainingToken:       args[20],
 		Detokenizedtoken:            args[21],
-		detokenizedValue:        args[22],
+		DetokenizedValue:        args[22],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -153,24 +153,24 @@ func (cc *MBEmarketChaincode) update(stub shim.ChaincodeStubInterface, arg []str
 		CreatedBy:           args[2],
 		IsDelete:            boolValue3,
 		IsHidden:            boolValue4,
-		isin:                args[5],
-		mbeId: args[6],
+		Isin:                args[5],
+		MbeId: args[6],
 		IssuerName:          args[7],
 		CouponRate:          args[8],
-		faceValue:           args[9],
+		FaceValue:           args[9],
 		Ltp:                 args[10],
 		CreditRating:        args[11],
 		MaturityDate:        args[12],
-		securityDescription: args[13],
-		latestBidPrice:      args[14],
-		latestAskPrice:      args[15],
-		currency: args[16],
-		numOfLots:           args[17],
-		tokenizedLot: args[18],
-		totalTokenQty: args[19],
+		SecurityDescription: args[13],
+		LatestBidPrice:      args[14],
+		LatestAskPrice:      args[15],
+		Currency: args[16],
+		NumOfLots:           args[17],
+		TokenizedLot: args[18],
+		TotalTokenQty: args[19],
 		RemainingToken:       args[20],
 		Detokenizedtoken:            args[21],
-		detokenizedValue:        args[22],
+		DetokenizedValue:        args[22],
 	}
 
 

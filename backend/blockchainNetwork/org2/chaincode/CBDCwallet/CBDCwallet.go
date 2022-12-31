@@ -16,15 +16,14 @@ type CBDCwalletChaincode struct {
 }
 
 type CBDCwallet struct {
-	Id                  string    `json:"id"`
-	CreatedOn           time.Time `json:"createdOn"`
-	CreatedBy           string    `json:"createdBy"`
-	IsDelete            bool      `json:"isDelete"`
-	IsHidden            bool      `json:"isHidden"`
-	IsUpdated            bool      `json:"IsUpdated"`
-	mbeId                string    `json:"mbeId"`
-	CBDCbalance          string    `json:"CBDCbalance"`
-	
+	Id          string    `json:"id"`
+	CreatedOn   time.Time `json:"CreatedOn"`
+	CreatedBy   string    `json:"CreatedBy"`
+	IsDelete    bool      `json:"IsDelete"`
+	IsHidden    bool      `json:"IsHidden"`
+	IsUpdated   bool      `json:"IsUpdated"`
+	MbeId       string    `json:"MbeId"`
+	CBDCbalance string    `json:"CBDCbalance"`
 }
 
 func (cc *CBDCwalletChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
@@ -58,15 +57,14 @@ func (cc *CBDCwalletChaincode) create(stub shim.ChaincodeStubInterface, arg []st
 	}
 
 	data := CBDCwallet{
-		Id:                  args[0],
-		CreatedOn:           dateValue1,
-		CreatedBy:           args[2],
-		IsDelete:            boolValue3,
-		IsHidden:            boolValue4,
-		IsUpdated:	boolValue5,
-		mbeId:                args[6],
-		CBDCbalance:          args[7],
-		
+		Id:          args[0],
+		CreatedOn:   dateValue1,
+		CreatedBy:   args[2],
+		IsDelete:    boolValue3,
+		IsHidden:    boolValue4,
+		IsUpdated:   boolValue5,
+		MbeId:       args[6],
+		CBDCbalance: args[7],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -130,15 +128,14 @@ func (cc *CBDCwalletChaincode) update(stub shim.ChaincodeStubInterface, arg []st
 	}
 
 	data := CBDCwallet{
-		Id:                  args[0],
-		CreatedOn:           dateValue1,
-		CreatedBy:           args[2],
-		IsDelete:            boolValue3,
-		IsHidden:            boolValue4,
-		IsUpdated:	boolValue5,
-		mbeId:                args[6],
-		CBDCbalance:          args[7],
-		
+		Id:          args[0],
+		CreatedOn:   dateValue1,
+		CreatedBy:   args[2],
+		IsDelete:    boolValue3,
+		IsHidden:    boolValue4,
+		IsUpdated:   boolValue5,
+		MbeId:       args[6],
+		CBDCbalance: args[7],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)

@@ -16,17 +16,17 @@ type SellOrderChaincode struct {
 }
 
 type SellOrder struct {
-	Id            string    `json:"Id"`
-	CreatedOn     time.Time `json:"CreatedOn"`
-	CreatedBy     string    `json:"CreatedBy"`
-	IsDelete      bool      `json:"IsDelete"`
-	IsHidden      bool      `json:"IsHidden"`
-	IsProcessed	bool `json:"IsProcessed"`
-	mbeId        string    `json:"mbeId"`
-	isin          string    `json:"isin"`
-	price        string    `json:"price"`
-	noOfTokens    string    `json:"noOfTokens"`
-	}
+	Id          string    `json:"Id"`
+	CreatedOn   time.Time `json:"CreatedOn"`
+	CreatedBy   string    `json:"CreatedBy"`
+	IsDelete    bool      `json:"IsDelete"`
+	IsHidden    bool      `json:"IsHidden"`
+	IsProcessed bool      `json:"IsProcessed"`
+	MbeId       string    `json:"MbeId"`
+	Isin        string    `json:"Isin"`
+	Price       string    `json:"Price"`
+	NumOfToken  string    `json:"NumOfToken"`
+}
 
 func (cc *SellOrderChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
@@ -58,16 +58,16 @@ func (cc *SellOrderChaincode) create(stub shim.ChaincodeStubInterface, arg []str
 	}
 
 	data := SellOrder{
-		Id:            args[0],
-		CreatedOn:     dateValue1,
-		CreatedBy:     args[2],
-		IsDelete:      boolValue3,
-		IsHidden:      boolValue4,
+		Id:          args[0],
+		CreatedOn:   dateValue1,
+		CreatedBy:   args[2],
+		IsDelete:    boolValue3,
+		IsHidden:    boolValue4,
 		IsProcessed: boolValue5,
-		mbeId:        args[6],
-		isin:          args[7],
-		price:        args[8],
-		noOfTokens:    args[9],
+		MbeId:       args[6],
+		Isin:        args[7],
+		Price:       args[8],
+		NumOfToken:  args[9],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -130,18 +130,17 @@ func (cc *SellOrderChaincode) update(stub shim.ChaincodeStubInterface, arg []str
 	}
 
 	data := SellOrder{
-		Id:            args[0],
-		CreatedOn:     dateValue1,
-		CreatedBy:     args[2],
-		IsDelete:      boolValue3,
-		IsHidden:      boolValue4,
+		Id:          args[0],
+		CreatedOn:   dateValue1,
+		CreatedBy:   args[2],
+		IsDelete:    boolValue3,
+		IsHidden:    boolValue4,
 		IsProcessed: boolValue5,
-		mbeId:        args[6],
-		isin:          args[7],
-		price:        args[8],
-		noOfTokens:    args[9],
+		MbeId:       args[6],
+		Isin:        args[7],
+		Price:       args[8],
+		NumOfToken:  args[9],
 	}
-
 
 	dataBytes, errMarshal := json.Marshal(data)
 

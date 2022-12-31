@@ -231,13 +231,13 @@ app.post("/tokenize", async (req, res) => {
       }
     } else {
       res.json({
-        status:200,
+        status:400,
         message:"No Sufficient Lot to Tokenized"
       });
     }
   } catch (e) {
      res.json({
-      status:404,
+      status:400,
       message:"Not found"
     }); 
   }
@@ -285,14 +285,20 @@ app.post("/deTokenize", async (req, res) => {
         { upsert: true }
       );
       if (obj) {
-        res.json("Successfully DeTokenized");
+        res.status(200).json({
+          status:200,
+          message:"Successfully DeTokenized"
+        });
       }
     } else {
-      res.json("No Sufficient Token to DeTokenized");
+      res.status(200).json({
+        status:400,
+        message:"No Sufficient Token to DeTokenized"
+      });
     }
   } catch (e) {
      res.json({
-      status:404,
+      status:400,
       message:"Not found"
     }); 
   }
@@ -373,7 +379,7 @@ app.post("/placeSellOrder", async (req, res) => {
     }
   } catch (e) {
      res.json({
-      status:404,
+      status:400,
       message:"Not found"
     }); 
   }
@@ -442,7 +448,7 @@ app.post("/placeBuyOrder", async (req, res) => {
       }
     } else {
       res.json({
-        status:200,
+        status:400,
         message:"No Sufficient Balance"
       });
     }

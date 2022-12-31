@@ -1,5 +1,4 @@
 package main
-
 import (
 	"bytes"
 	"encoding/json"
@@ -21,22 +20,22 @@ type BondHolding struct {
 	CreatedBy      string    `json:"CreatedBy"`
 	IsDelete       bool      `json:"IsDelete"`
 	IsHidden       bool      `json:"IsHidden"`
-	IsTokenized       bool      `json:"IsTokenized"`
-	IsProcessed       bool      `json:"IsProcessed"`
-	isin           string    `json:"isin"`
-	mbeId          string    `json:"mbeId"`
+	IsTokenized    bool      `json:"IsTokenized"`
+	IsProcessed    bool      `json:"IsProcessed"`
+	Isin           string    `json:"Isin"`
+	MbeId          string    `json:"MbeId"`
 	IssuerName     string    `json:"IssuerName"`
 	CouponRate     string    `json:"CouponRate"`
-	faceValue      string    `json:"faceValue"`
+	FaceValue      string    `json:"FaceValue"`
 	CreditRating   string    `json:"CreditRating"`
-	MaturityDate   string    `json: "MaturityDate"`
-	purchasePrice  string    `json :"purchasePrice"`
-	NumToken       string    `json :"NumToken"`
-	currentPrice   string    `json :"currentPrice"`
-	numOfLots      string    `json :"numOfLots"`
-	tokenizedLot   string    `json :"tokenizedLot"`
-	totalTokenQty  string    `json :"totalTokenQty"`
-	RemainingToken string    `json :"RemainingToken"`
+	Maturitydate   string    `json:"Maturitydate"`
+	PurchasePrice  string    `json:"PurchasePrice"`
+	NumToken       string    `json:"NumToken"`
+	CurrentPrice   string    `json:"CurrentPrice"`
+	NumOfLots      string    `json:"NumOfLots"`
+	TokenizedLot   string    `json:"TokenizedLot"`
+	TotalTokenQty  string    `json:"TotalTokenQty"`
+	RemainingToken string    `json:"RemainingToken"`
 }
 
 func (cc *BondHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
@@ -80,21 +79,21 @@ func (cc *BondHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []s
 		CreatedBy:      args[2],
 		IsDelete:       boolValue3,
 		IsHidden:       boolValue4,
-		IsTokenized: boolValue5,
-		IsProcessed: boolValue6,
-		isin:           args[7],
-		mbeId:          args[8],
+		IsTokenized:    boolValue5,
+		IsProcessed:    boolValue6,
+		Isin:           args[7],
+		MbeId:          args[8],
 		IssuerName:     args[9],
 		CouponRate:     args[10],
-		faceValue:      args[11],
+		FaceValue:      args[11],
 		CreditRating:   args[12],
-		MaturityDate:   args[13],
-		purchasePrice:  args[14],
+		Maturitydate:   args[13],
+		PurchasePrice:  args[14],
 		NumToken:       args[15],
-		currentPrice:   args[16],
-		numOfLots:      args[17],
-		tokenizedLot:   args[18],
-		totalTokenQty:  args[19],
+		CurrentPrice:   args[16],
+		NumOfLots:      args[17],
+		TokenizedLot:   args[18],
+		TotalTokenQty:  args[19],
 		RemainingToken: args[20],
 	}
 
@@ -168,24 +167,23 @@ func (cc *BondHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []s
 		CreatedBy:      args[2],
 		IsDelete:       boolValue3,
 		IsHidden:       boolValue4,
-		IsTokenized: boolValue5,
-		IsProcessed: boolValue6,
-		isin:           args[7],
-		mbeId:          args[8],
+		IsTokenized:    boolValue5,
+		IsProcessed:    boolValue6,
+		Isin:           args[7],
+		MbeId:          args[8],
 		IssuerName:     args[9],
 		CouponRate:     args[10],
-		faceValue:      args[11],
+		FaceValue:      args[11],
 		CreditRating:   args[12],
-		MaturityDate:   args[13],
-		purchasePrice:  args[14],
+		Maturitydate:   args[13],
+		PurchasePrice:  args[14],
 		NumToken:       args[15],
-		currentPrice:   args[16],
-		numOfLots:      args[17],
-		tokenizedLot:   args[18],
-		totalTokenQty:  args[19],
+		CurrentPrice:   args[16],
+		NumOfLots:      args[17],
+		TokenizedLot:   args[18],
+		TotalTokenQty:  args[19],
 		RemainingToken: args[20],
 	}
-
 
 	dataBytes, errMarshal := json.Marshal(data)
 

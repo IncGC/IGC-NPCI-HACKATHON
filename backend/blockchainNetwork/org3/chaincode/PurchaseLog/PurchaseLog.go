@@ -16,20 +16,19 @@ type PurchaseLogChaincode struct {
 }
 
 type PurchaseLog struct {
-	Id            string    `json:"Id"`
-	CreatedOn     time.Time `json:"CreatedOn"`
-	CreatedBy     string    `json:"CreatedBy"`
-	IsDelete      bool      `json:"IsDelete"`
-	IsHidden      bool      `json:"IsHidden"`
-	IsProcessed	bool `json:"IsProcessed"`
-	IsAuthorize	bool `json:"IsAuthorize"`
-	IsPurchase	bool `json:"IsPurchase"`	
-	mbeId        string    `json:"mbeId"`
-	isin          string    `json:"isin"`
-	price        string    `json:"price"`
-	noOfTokens    string    `json:"noOfTokens"`
-	tradeValue          string    `json:"tradeValue"`
-
+	Id          string    `json:"Id"`
+	CreatedOn   time.Time `json:"CreatedOn"`
+	CreatedBy   string    `json:"CreatedBy"`
+	IsDelete    bool      `json:"IsDelete"`
+	IsHidden    bool      `json:"IsHidden"`
+	IsProcessed bool      `json:"IsProcessed"`
+	IsAuthorize bool      `json:"IsAuthorize"`
+	IsPurchase  bool      `json:"IsPurchase"`
+	MbeId       string    `json:"MbeId"`
+	Isin        string    `json:"Isin"`
+	Price       string    `json:"Price"`
+	NumOfToken  string    `json:"NumOfToken"`
+	TradeValue  string    `json:"TradeValue"`
 }
 
 func (cc *PurchaseLogChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
@@ -39,10 +38,10 @@ func (cc *PurchaseLogChaincode) create(stub shim.ChaincodeStubInterface, arg []s
 	if len(args) != 13 {
 		return shim.Error("Incorrect number arguments. Expecting 13")
 	}
-	tradeValueValue1, err1 := time.Parse(time.RFC3339, args[1])
+	TradeValueValue1, err1 := time.Parse(time.RFC3339, args[1])
 
 	if err1 != nil {
-		return shim.Error("Error converting string to tradeValue: " + err1.Error())
+		return shim.Error("Error converting string to TradeValue: " + err1.Error())
 	}
 	boolValue3, err3 := strconv.ParseBool(args[3])
 
@@ -73,19 +72,19 @@ func (cc *PurchaseLogChaincode) create(stub shim.ChaincodeStubInterface, arg []s
 		return shim.Error("Error converting string to bool : " + err7.Error())
 	}
 	data := PurchaseLog{
-		Id:            args[0],
-		CreatedOn:     tradeValueValue1,
-		CreatedBy:     args[2],
-		IsDelete:      boolValue3,
-		IsHidden:      boolValue4,
-		IsProcessed:		boolValue5,
+		Id:          args[0],
+		CreatedOn:   TradeValueValue1,
+		CreatedBy:   args[2],
+		IsDelete:    boolValue3,
+		IsHidden:    boolValue4,
+		IsProcessed: boolValue5,
 		IsAuthorize: boolValue6,
-		IsPurchase: boolValue7,
-		mbeId:        args[8],
-		isin:          args[9],
-		price:        args[10],
-		noOfTokens:    args[11],
-		tradeValue:          args[12],
+		IsPurchase:  boolValue7,
+		MbeId:       args[8],
+		Isin:        args[9],
+		Price:       args[10],
+		NumOfToken:  args[11],
+		TradeValue:  args[12],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -117,17 +116,17 @@ func (cc *PurchaseLogChaincode) get(stub shim.ChaincodeStubInterface, args []str
 
 	return shim.Success(stateBytes)
 }
-func (cc *PurchaseLogChaincode) uptradeValue(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
+func (cc *PurchaseLogChaincode) upTradeValue(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
 
 	args := strings.Split(arg[0], "^^")
 
 	if len(args) != 13 {
 		return shim.Error("Incorrect number arguments. Expecting 13")
 	}
-	tradeValueValue1, err1 := time.Parse(time.RFC3339, args[1])
+	TradeValueValue1, err1 := time.Parse(time.RFC3339, args[1])
 
 	if err1 != nil {
-		return shim.Error("Error converting string to tradeValue: " + err1.Error())
+		return shim.Error("Error converting string to TradeValue: " + err1.Error())
 	}
 	boolValue3, err3 := strconv.ParseBool(args[3])
 
@@ -158,21 +157,20 @@ func (cc *PurchaseLogChaincode) uptradeValue(stub shim.ChaincodeStubInterface, a
 		return shim.Error("Error converting string to bool : " + err7.Error())
 	}
 	data := PurchaseLog{
-		Id:            args[0],
-		CreatedOn:     tradeValueValue1,
-		CreatedBy:     args[2],
-		IsDelete:      boolValue3,
-		IsHidden:      boolValue4,
-		IsProcessed:		boolValue5,
+		Id:          args[0],
+		CreatedOn:   TradeValueValue1,
+		CreatedBy:   args[2],
+		IsDelete:    boolValue3,
+		IsHidden:    boolValue4,
+		IsProcessed: boolValue5,
 		IsAuthorize: boolValue6,
-		IsPurchase: boolValue7,
-		mbeId:        args[8],
-		isin:          args[9],
-		price:        args[10],
-		noOfTokens:    args[11],
-		tradeValue:          args[12],
+		IsPurchase:  boolValue7,
+		MbeId:       args[8],
+		Isin:        args[9],
+		Price:       args[10],
+		NumOfToken:  args[11],
+		TradeValue:  args[12],
 	}
-
 
 	dataBytes, errMarshal := json.Marshal(data)
 
@@ -206,13 +204,13 @@ func (cc *PurchaseLogChaincode) delete(stub shim.ChaincodeStubInterface, args []
 
 	data.IsDelete = true
 
-	uptradeValueDataBytes, err1 := json.Marshal(data)
+	upTradeValueDataBytes, err1 := json.Marshal(data)
 
 	if err1 != nil {
 		return shim.Error("Error converting data as bytes: " + err1.Error())
 	}
 
-	err2 := stub.PutState(args[0], uptradeValueDataBytes)
+	err2 := stub.PutState(args[0], upTradeValueDataBytes)
 
 	if err2 != nil {
 		return shim.Error("Error putting the data state: " + err2.Error())
@@ -302,8 +300,8 @@ func (cc *PurchaseLogChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Re
 		return cc.create(stub, args)
 	} else if function == "get" {
 		return cc.get(stub, args)
-	} else if function == "uptradeValue" {
-		return cc.uptradeValue(stub, args)
+	} else if function == "upTradeValue" {
+		return cc.upTradeValue(stub, args)
 	} else if function == "delete" {
 		return cc.delete(stub, args)
 	} else if function == "history" {

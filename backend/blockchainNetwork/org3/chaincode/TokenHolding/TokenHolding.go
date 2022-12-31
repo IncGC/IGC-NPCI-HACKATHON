@@ -21,20 +21,20 @@ type TokenHolding struct {
 	CreatedBy      string    `json:"CreatedBy"`
 	IsDelete       bool      `json:"IsDelete"`
 	IsHidden       bool      `json:"IsHidden"`
-	isin           string    `json:"isin"`
-	mbeId          string    `json:"mbeId"`
+	Isin           string    `json:"Isin"`
+	MbeId          string    `json:"MbeId"`
 	IssuerName     string    `json:"IssuerName"`
 	CouponRate     string    `json:"CouponRate"`
-	faceValue      string    `json:"faceValue"`
+	FaceValue      string    `json:"FaceValue"`
 	Ltp            string    `json:"Ltp"`
 	CreditRating   string    `json:"CreditRating"`
-	MaturityDate   string    `json: "MaturityDate"`
-	latestBidPrice string    `json:"latestBidPrice"`
-	latestAskPrice string    `json :"latestAskPrice"`
-	purchasePrice  string    `json :"purchasePrice"`
-	NumToken       string    `json :"NumToken"`
-	currentPrice   string    `json :"currentPrice"`
-	numOfLots      string    `json :"numOfLots"`
+	MaturityDate   string    `json:"MaturityDate"`
+	LatestBidPrice string    `json:"LatestBidPrice"`
+	LatestAskPrice string    `json:"LatestAskPrice"`
+	PurchasePrice  string    `json:"PurchasePrice"`
+	NumOfToken       string    `json:"NumOfToken"`
+	CurrentPrice   string    `json:"CurrentPrice"`
+	NumOfLots      string    `json:"NumOfLots"`
 	DetokenizedTokens	string `json:"DetokenizedTokens"`
 	DetokenizedValue	string `json:"DetokenizedValue"`
 }
@@ -70,20 +70,20 @@ func (cc *TokenHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []
 		CreatedBy:           args[2],
 		IsDelete:            boolValue3,
 		IsHidden:            boolValue4,
-		isin:                args[5],
-		mbeId: args[6],
+		Isin:                args[5],
+		MbeId: args[6],
 		IssuerName:          args[7],
 		CouponRate:          args[8],
-		faceValue:           args[9],
+		FaceValue:           args[9],
 		Ltp:                 args[10],
 		CreditRating:        args[11],
 		MaturityDate:        args[12],
-		latestBidPrice:      args[13],
-		latestAskPrice:      args[14],
-		purchasePrice:       args[15],
-		NumToken:            args[16],
-		currentPrice:        args[17],
-		numOfLots:           args[18],
+		LatestBidPrice:      args[13],
+		LatestAskPrice:      args[14],
+		PurchasePrice:       args[15],
+		NumOfToken:            args[16],
+		CurrentPrice:        args[17],
+		NumOfLots:           args[18],
 		DetokenizedTokens: args[19],
 		DetokenizedValue: args[20],
 
@@ -149,20 +149,20 @@ func (cc *TokenHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []
 		CreatedBy:           args[2],
 		IsDelete:            boolValue3,
 		IsHidden:            boolValue4,
-		isin:                args[5],
-		mbeId: args[6],
+		Isin:                args[5],
+		MbeId: args[6],
 		IssuerName:          args[7],
 		CouponRate:          args[8],
-		faceValue:           args[9],
+		FaceValue:           args[9],
 		Ltp:                 args[10],
 		CreditRating:        args[11],
 		MaturityDate:        args[12],
-		latestBidPrice:      args[13],
-		latestAskPrice:      args[14],
-		purchasePrice:       args[15],
-		NumToken:            args[16],
-		currentPrice:        args[17],
-		numOfLots:           args[18],
+		LatestBidPrice:      args[13],
+		LatestAskPrice:      args[14],
+		PurchasePrice:       args[15],
+		NumOfToken:            args[16],
+		CurrentPrice:        args[17],
+		NumOfLots:           args[18],
 		DetokenizedTokens: args[19],
 		DetokenizedValue: args[20],
 	}
