@@ -82,8 +82,10 @@ app.post("/pushSellorders", async (req, res) => {
             OrderId: row[0],
             mbeId: row[1],
             isin: row[2],
-            NumOfToken: row[3],
-            Price: row[4],
+            issuerName: row[3],
+            transactionType: row[4],
+            NumOfToken: row[5],
+            Price: row[6]
           };
           let record = new SellOrder(obj);
           record.save();
@@ -118,8 +120,10 @@ app.post("/pushBuyorders", async (req, res) => {
             OrderId: row[0],
             mbeId: row[1],
             isin: row[2],
-            NumOfToken: row[3],
-            Price: row[4],
+            issuerName: row[3],
+            transactionType: row[4],
+            NumOfToken: row[5],
+            Price:row[6]
           };
           let record = new BuyOrder(obj);
           record.save();
@@ -495,8 +499,6 @@ app.get("/purchaselog", async(req,res)=>{
 app.get("/balance", async(req,res)=>{
   try{
       let balanceData= await Wallet.findOne({mbeId:req.query.mbeId});
-
-
       res.status(200).json({
         status:200,
         message:balanceData
@@ -509,5 +511,104 @@ app.get("/balance", async(req,res)=>{
     }); 
   }
 })
+
+app.get('/buyOrder', async(req, res)=>{
+  try{
+      let buyOrder = await BuyOrder.find();
+
+      res.status(200).json({
+        status:200,
+        message:buyOrder
+      })
+
+  }catch (e) {
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
+  }
+});
+
+app.post('/buyOrder', async(req, res)=>{
+  try{
+      let buyOrder = await BuyOrder.findOne({mbeId:req.query});
+
+      let data = req.body;
+      data.isProcessed = false;
+      data.createdBy = req.user;
+
+      buyOrder = await BuyOrder.create(data);
+
+      await buyOrder.save();
+
+      res.status(200).json({
+        status:200,
+        message:buyOrder
+      })
+
+  }catch (e) {
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
+  }
+});
+
+app.get('/sellOrder', async(req, res)=>{
+  try{
+      let sellOrder = await SellOrder.find({});
+      
+      res.status(200).json({
+        status:200,
+        message:sellOrder
+      })
+
+  }catch (e) {
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
+  }
+});
+
+app.post('/sellOrder', async(req, res)=>{
+  try{
+      let sellOrder = await SellOrder.findOne({OrderId:req.query});
+
+      let data = req.body;
+      data.isProcessed = false;
+      data.createdBy = req.user;
+
+      sellOrder = await SellOrder.create(data);
+
+      await sellOrder.save();
+
+      res.status(200).json({
+        status:200,
+        message:sellOrder
+      })
+
+  }catch (e) {
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
+  }
+});
+
+// app.get('/wallet', async(req, res)=>{
+//   try{
+//       let walletData = await Wallet.findOne({mbeId:req.query});
+//       res.status(200).json({
+//         status:200,
+//         message:walletData
+//       })
+//   }catch (e) {
+//      res.json({
+//       status:404,
+//       message:"Not found"
+//     }); 
+//   }
+// })
 
 module.exports = app;

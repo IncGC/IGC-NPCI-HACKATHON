@@ -1,5 +1,5 @@
-OrderId,mbeId,isin,NumOfToken,Price
-S_ORDER1,muhsin@inclusivegrowthchain.com,INE00XE07101,50,2000
-S_ORDER2,shreyanshnema@inclusivegrowthchain.com,INE01I507042,60,3000
-S_ORDER3,rajkumar@inclusivegrowthchain.com,INE027E07923,70,4000
-S_ORDER4,prudhvi@inclusivegrowthchain.com,INE033L07FZ3,80,5000
+OrderId,mbeId,isin,issuerName,transactionType,NumOfToken,Price
+S_ORDER1,muhsin@inclusivegrowthchain.com,INE00XE07101,MUTHOOT VEHICLE & ASSET FINANCE LIMITED,sellOrder,50,2000
+S_ORDER2,shreyanshnema@inclusivegrowthchain.com,INE01I507042,KLM AXIVA FINVEST LIMITED,sellOrder,60,3000
+S_ORDER3,rajkumar@inclusivegrowthchain.com,INE027E07923,L&T FINANCE LIMITED,sellOrder,70,4000
+S_ORDER4,prudhvi@inclusivegrowthchain.com,INE033L07FZ3,TATA CAPITAL HOUSING FINANCE LIMITED,sellOrder,80,5000
