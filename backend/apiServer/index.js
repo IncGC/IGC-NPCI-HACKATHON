@@ -573,7 +573,7 @@ app.get('/sellOrder', async(req, res)=>{
 
 app.get('/sellOrderSingle', async(req, res)=>{
   try{
-      let sellOrder = await SellOrder.findOne({OrderId:req.query.OrderId});
+      let sellOrder = await SellOrder.findOne({mbeId:req.query.mbeId});
 
       // let data = req.body;
       // data.isProcessed = false;
