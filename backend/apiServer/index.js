@@ -2,6 +2,7 @@ const fs = require("fs");
 const { parse } = require("csv-parse");
 const express = require("express");
 const bodyParser = require("body-parser");
+const passport = require('passport')
 
 //READ Trade Schema
 const {
@@ -613,7 +614,7 @@ app.get('/sellOrderSingle', async(req, res)=>{
   }
 });
 
-app.post('/walletbalanceAddition', async(req,res)=>{
+app.post('/walletbalanceAddition',  passport.authenticate("jwt", { session: false }),async(req,res)=>{
   try{
       let {
         mbeId
