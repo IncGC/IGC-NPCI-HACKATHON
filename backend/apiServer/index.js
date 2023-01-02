@@ -20,7 +20,7 @@ const {
   storeRecord,
 } = require("./config/helper");
 const { setEngine } = require("crypto");
-const { findOneAndUpdate } = require("./models/User");
+const { findOneAndUpdate, findOne } = require("./models/User");
 
 require("dotenv").config();
 
@@ -616,11 +616,13 @@ app.get('/sellOrderSingle', async(req, res)=>{
 app.post('/walletbalanceAddition', async(req,res)=>{
   try{
       let {
-        mbeId,
-        amount
+        mbeId
       }= req.body;
 
-      const wallet = await findOneAndUpdate({mbeId:mbeId}, {$set:{CBDCbalance:(CBDCbalance+amount)}})
+      const walletData = await findOne({mbeId});
+      let balance = parseFloat( walletData.CBDCbalance);
+      let amount = parseFloat(req.body.amount);
+      const wallet = await findOneAndUpdate({mbeId:mbeId}, {$set:{CBDCbalance:(balance+amount)}})
 
       res.status(200).json({
         status:200,
