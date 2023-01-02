@@ -621,11 +621,13 @@ app.post('/walletbalanceAddition',  passport.authenticate("jwt", { session: fals
       }= req.user;
 
       const walletData = await Wallet.findOne({mbeId:email});
+
+      console.log(walletData);
       let balance = parseFloat( walletData.CBDCbalance);
       let amount = parseFloat(req.body.amount);
       const wallet = await Wallet.findOneAndUpdate({mbeId:email}, {$set:{CBDCbalance:(balance+amount)}})
 
-      const updatedwallet = await Wallet.findOne({mbeId});
+      const updatedwallet = await Wallet.findOne({mbeId:email});
       res.status(200).json({
         status:200,
         message:updatedwallet
