@@ -20,9 +20,9 @@ function Sell({ isOpen, data, closeModal }) {
   // const [total, setTotal] = useState(null)
 
   const [details, setDetails] = useState({
-    "orderId": "S_ORDER" + data.isin,
-    "mbeId": email,
-    "isin": data.isin
+    "orderId": "S_ORDER" + data.Isin,
+    "MbeId": email,
+    "Isin": data.Isin
   })
 
   const onChange = e => {
@@ -59,24 +59,24 @@ function Sell({ isOpen, data, closeModal }) {
       <div className='scroll-y'>
         <div className='grid md:grid-cols-2 gap-4 mb-4'>
           <Input
-            lable='ISIN'
-            value={data.isin}
+            lable='Isin'
+            value={data.Isin}
           />
           <Input
             lable='Issuer Name'
-            value={data.issuerName}
+            value={data.IssuerName}
           />
           <Input
             lable='Coupon Rate'
-            value={data.couponrate}
+            value={data.CouponRate}
           />
           <Input
-            lable='LTP'
-            value={data.ltp}
+            lable='Ltp'
+            value={data.Ltp}
           />
           <Input
             lable='Maturity Date'
-            value={data.maturitydate}
+            value={data.MaturityDate}
           />
           <Input
             lable='Currency'
@@ -95,7 +95,7 @@ function Sell({ isOpen, data, closeModal }) {
           </div>
 
           <div>
-            <label className='mb-1 font-medium' htmlFor="">Ask price (per token)</label>
+            <label className='mb-1 font-medium' htmlFor="">Ask Price (per token)</label>
             <input type="text" onChange={onChange} name="Price" />
           </div>
         </div>
@@ -109,7 +109,7 @@ function Sell({ isOpen, data, closeModal }) {
             </div>
 
             <div>
-              <label className='mb-1 font-medium' htmlFor="">Price Per Token (LTP)</label>
+              <label className='mb-1 font-medium' htmlFor="">Price Per Token (Ltp)</label>
               <input type="text" value={details.Price} readOnly />
             </div>
 

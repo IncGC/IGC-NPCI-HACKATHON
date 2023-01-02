@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const{HandleError}= require('../utils/HandleResponseError');
-const {CHAINCODE_ACTIONS, CHAIN_CHANNEL, CHAINCODE_NAMES, getNow, CHAINCODE_CHANNEL, generateId}=require('../utils/helper');
+const {CHAINCODE_ACTIONS, CHAINCODE_NAMES, getNow, CHAINCODE_CHANNEL, generateId}=require('../utils/helper');
 const {invokeTransaction}= require('../app/invoke');
 
 router.post('/', async (req, res)=>{
@@ -9,7 +9,7 @@ router.post('/', async (req, res)=>{
         let{ PanCardNum, FirstName, LastName, SurName, Gender, FatherName, DOB, Address, Nationality,AadharNum}=req.body;
            
         
-        // const tokenValue= parseInt(volume)/parseInt(noOfTokens);
+        // const TokenValue= parseInt(volume)/parseInt(NumOfToken);
         let data = {
             Id:generateId(),
             CreatedOn: getNow(),

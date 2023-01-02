@@ -37,7 +37,7 @@ exports.phone_email_otp = async (req, res) => {
       console.log(panCarddata);
 
       // let query = {
-      //   MBEid: "4231",
+      //   MbeId: "4231",
       // };
       // const orderresult = await OrderBookModel.findOne({ query });
 

@@ -4,9 +4,9 @@ const { String, ObjectId } = mongoose.Schema.Types;
 
 const TransactionsModel = new schema({
     trnxID: String,
-    isin: String,
+    Isin: String,
     userID:String,
-    noOfTokens: String,
+    NumOfToken: String,
     date: String,
     type: String,
     status: String,

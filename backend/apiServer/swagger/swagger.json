@@ -254,10 +254,10 @@
                                 "securityCode": {
                                     "type": "string"
                                 },
-                                "issuerName": {
+                                "IssuerName": {
                                     "type": "string"
                                 },
-                                "couponRate": {
+                                "CouponRate": {
                                     "type": "string"
                                 },
                                 "maturity": {
@@ -266,16 +266,16 @@
                                 "volume": {
                                     "type": "string"
                                 },
-                                "price": {
+                                "Price": {
                                     "type": "string"
                                 },
-                                "yield": {
+                                "Yield": {
                                     "type": "string"
                                 },
-                                "currency": {
+                                "Currency": {
                                     "type": "string"
                                 },
-                                "tokenValue":{
+                                "TokenValue":{
                                     "type":"string"
                                 }
                             }

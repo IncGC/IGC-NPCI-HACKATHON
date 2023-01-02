@@ -3,29 +3,29 @@ const buyModel= require("../models/buy");
 exports.buypost=async(req,res)=>{
     try{
        let {
-        isin,
-        issuerName,
-        couponRate,
-        price,
-        maturityDate,
-        yield,
-        noOfTokens,
-        currency,
-        reqTokens,
-        tokenValue
+        Isin,
+        IssuerName,
+        CouponRate,
+        Price,
+        MaturityDate,
+        Yield,
+        NumOfToken,
+        Currency,
+        ReqTokens,
+        TokenValue
        } = req.body;
 
        const buyData = {
-        isin,
-        issuerName,
-        couponRate,
-        price,
-        maturityDate,
-        yield,
-        noOfTokens,
-        currency,
-        reqTokens,
-        tokenValue
+        Isin,
+        IssuerName,
+        CouponRate,
+        Price,
+        MaturityDate,
+        Yield,
+        NumOfToken,
+        Currency,
+        ReqTokens,
+        TokenValue
        }
 
        const buyResult = await buyModel.create({buyData});
@@ -42,10 +42,10 @@ exports.buypost=async(req,res)=>{
 exports.buyGet = async(req,res)=>{
     try{
         let{
-            isin
+            Isin
         }= req.body;
 
-        const buyResult = await buyModel.findOne({isin});
+        const buyResult = await buyModel.findOne({Isin});
 
        res.status(200).json({
         status:200,

@@ -20,13 +20,13 @@ function Report() {
   //     let start = new Date(dateFilter.start).getTime()
   //     let end = new Date(dateFilter.end).getTime()
   //     cloned = cloned.filter(l => {
-  //       let currDate = new Date(l.maturityDate).getTime()
+  //       let currDate = new Date(l.MaturityDate).getTime()
   //       return currDate >= start && currDate <= end
   //     })
   //   }
 
   //   if (type) {
-  //     cloned = cloned.filter(l => l.transactionType.match(type))
+  //     cloned = cloned.filter(l => l.TransactionsType.match(type))
   //   }
 
   //   return cloned
@@ -42,7 +42,7 @@ function Report() {
         // }
         setTradeValueData(p => ({
           ...p,
-          [entry.isin]: entry.TradeValue + tradeValueData[entry.isin]
+          [entry.Isin]: entry.TradeValue + tradeValueData[entry.Isin]
         }))
       }
       setIsLoading(false)
@@ -83,7 +83,7 @@ function Report() {
           <thead>
             <tr className="sticky top-0 text-sm bg-slate-900 shadow-[0_1px_3px_0_rgba(255,255,255,.1)] z-1">
               {/* <td className="w-32 px-4 py-2">Trade Date</td> */}
-              <td className="w-36 px-4 py-2">ISIN</td>
+              <td className="w-36 px-4 py-2">Isin</td>
               <td className="w-52 px-4 py-2">Issuer Name</td>
               <td className="w-32 px-4 py-2">Coupon Rate</td>
               <td className="w-32 px-4 py-2">Maturity Date</td>
@@ -99,11 +99,11 @@ function Report() {
                   key={li.id}
                   className="hover:bg-[rgba(255,255,255,.1)] cursor-pointer group"
                 >
-                  {/* <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.maturitydate} </td> */}
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.isin} </td>
-                  <td className="px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.issuerName} </td>
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.couponrate} </td>
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.maturitydate} </td>
+                  {/* <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.MaturityDate} </td> */}
+                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.Isin} </td>
+                  <td className="px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.IssuerName} </td>
+                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.CouponRate} </td>
+                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.MaturityDate} </td>
                   <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.volumn / 1000} </td>
                   <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.volumn} </td>
                 </tr>

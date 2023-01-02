@@ -3,17 +3,17 @@ const schema = mongoose.Schema;
 const { String, ObjectId } = mongoose.Schema.Types;
 
 const orderBook = new schema({
-    MBEid: String,
+    MbeId: String,
     ISINnum: String,
     IssuerName:String,
     CouponRate:String,
     MaturityDate:String,
-    yield:String,
-    currency:String,
+    Yield:String,
+    Currency:String,
     ReqToken:String,
     PricePerToken:String,
     orderType:String,
-    price: String,
+    Price: String,
     CBDCbalance:String,
     NumOfToken:String,
     // createdBy: { type: ObjectId, ref: 'User' }

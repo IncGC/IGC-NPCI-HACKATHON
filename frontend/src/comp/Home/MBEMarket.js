@@ -8,7 +8,7 @@ import Loader from '../Common/Loader';
 import Buy from './Modals/Buy';
 
 function MBEMarket() {
-  // const mbeId = useStore(state => state.email)
+  // const MbeId = useStore(state => state.email)
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState("")
   const [market, setMarket] = useState([])
@@ -37,7 +37,7 @@ function MBEMarket() {
           <input
             type="text"
             className='w-44 p-0 bg-inherit border-none leading-none text-white'
-            placeholder='Search by ISIN/Issuer name'
+            placeholder='Search by Isin/Issuer name'
             value={filter}
             onChange={e => setFilter(e.target.value)}
           />
@@ -54,11 +54,11 @@ function MBEMarket() {
         <table className="w-full table-fixed">
           <thead>
             <tr className="sticky top-0 text-sm bg-slate-900 shadow-[0_1px_3px_0_rgba(255,255,255,.1)] z-1">
-              <td className="w-36 px-4 py-2">ISIN</td>
+              <td className="w-36 px-4 py-2">Isin</td>
               <td className="w-52 px-4 py-2">Issuer Name</td>
               <td className="w-32 px-4 py-2">Coupon Rate</td>
               <td className="w-28 px-4 py-2">Face Value</td>
-              <td className="w-24 px-4 py-2">LTP</td>
+              <td className="w-24 px-4 py-2">Ltp</td>
               <td className="w-80 px-4 py-2">Credit Rating</td>
               <td className="w-32 px-4 py-2 text-center">Maturity Date</td>
               <td className="w-28 px-4 py-2 text-center">Bid Price</td>
@@ -69,20 +69,20 @@ function MBEMarket() {
           <tbody>
             {
               market
-                .filter((a, i) => market[i].isTokenized === true)
+                .filter((a, i) => market[i].IsTokenized === true)
                 .map(li => (
                   <tr
                     key={li._id}
                     className="hover:bg-[rgba(255,255,255,.1)] cursor-pointer group"
-                    onClick={() => updateOpen(li.isin)}
+                    onClick={() => updateOpen(li.Isin)}
                   >
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.isin} </td>
-                    <td className="px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.issuerName} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.couponrate} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.faceValue} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.ltp} </td>
-                    <td className="px-4 py-2 text-xs opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.creditrating} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.maturitydate} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.Isin} </td>
+                    <td className="px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.IssuerName} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.CouponRate} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.FaceValue} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.Ltp} </td>
+                    <td className="px-4 py-2 text-xs opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.CreditRating} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.MaturityDate} </td>
                     <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center">
                       <button className="w-20 px-3 py-1.5 rounded border border-emerald-600">
                         {li.bidPrice || 0}
@@ -104,7 +104,7 @@ function MBEMarket() {
         (open || open === 0) &&
         <Buy
           isOpen
-          data={market.find(li => li.isin === open)}
+          data={market.find(li => li.Isin === open)}
           closeModal={closeModal}
         />
       }

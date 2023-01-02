@@ -10,17 +10,17 @@ const generateId = require('../utils/helper');
 exports.BondAPI= async(req,res)=>{
     try{
         let{
-            isin,
+            Isin,
             IssuerName,
             CouponRate,
-            faceValue,
+            FaceValue,
             Ltp,
             CreditRating,
             MaturityDate,
-            securityDescription,
+            SecurityDescription,
             latestBidPrice,
             latestAskPrice,
-            currency,
+            Currency,
             NumToken,
             Detokenizedtoken,
             detokenizedValue,
@@ -33,17 +33,17 @@ exports.BondAPI= async(req,res)=>{
             CreatedBy: "admin",
             IsDelete:false,
             IsHidden:false,
-            isin,
+            Isin,
             IssuerName,
             CouponRate,
-            faceValue,
+            FaceValue,
             Ltp,
             CreditRating,
             MaturityDate,
-            securityDescription,
+            SecurityDescription,
             latestBidPrice,
             latestAskPrice,
-            currency,
+            Currency,
             NumToken,
             Detokenizedtoken,
             detokenizedValue,
@@ -72,7 +72,7 @@ console.log('hereee')
 
 exports.BondAPIGet= async(req,res)=>{
     try{
-        let { isin }=req.body;
+        let { Isin }=req.body;
         BondResult = await BondModel.findById({_id})
 
         res.status(200).json({
@@ -88,9 +88,9 @@ exports.BondAPIGet= async(req,res)=>{
 exports.getBondDetails= async(req,res)=>{
     try{
 
-        let {mbeId} = req.query;
+        let {MbeId} = req.query;
 
-        let bondDetailsData = await Bonds.find({mbeId})
+        let bondDetailsData = await Bonds.find({MbeId})
 
         res.status(200).json({
             status:200,

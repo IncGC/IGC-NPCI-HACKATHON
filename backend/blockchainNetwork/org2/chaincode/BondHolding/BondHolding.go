@@ -1,4 +1,5 @@
 package main
+
 import (
 	"bytes"
 	"encoding/json"
@@ -28,11 +29,11 @@ type BondHolding struct {
 	CouponRate     string    `json:"CouponRate"`
 	FaceValue      string    `json:"FaceValue"`
 	CreditRating   string    `json:"CreditRating"`
-	Maturitydate   string    `json:"Maturitydate"`
+	MaturityDate   string    `json:"MaturityDate"`
 	PurchasePrice  string    `json:"PurchasePrice"`
 	NumToken       string    `json:"NumToken"`
 	CurrentPrice   string    `json:"CurrentPrice"`
-	NumOfLots      string    `json:"NumOfLots"`
+	LotQty         string    `json:"LotQty"`
 	TokenizedLot   string    `json:"TokenizedLot"`
 	TotalTokenQty  string    `json:"TotalTokenQty"`
 	RemainingToken string    `json:"RemainingToken"`
@@ -87,11 +88,11 @@ func (cc *BondHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []s
 		CouponRate:     args[10],
 		FaceValue:      args[11],
 		CreditRating:   args[12],
-		Maturitydate:   args[13],
+		MaturityDate:   args[13],
 		PurchasePrice:  args[14],
 		NumToken:       args[15],
 		CurrentPrice:   args[16],
-		NumOfLots:      args[17],
+		LotQty:         args[17],
 		TokenizedLot:   args[18],
 		TotalTokenQty:  args[19],
 		RemainingToken: args[20],
@@ -175,11 +176,11 @@ func (cc *BondHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []s
 		CouponRate:     args[10],
 		FaceValue:      args[11],
 		CreditRating:   args[12],
-		Maturitydate:   args[13],
+		MaturityDate:   args[13],
 		PurchasePrice:  args[14],
 		NumToken:       args[15],
 		CurrentPrice:   args[16],
-		NumOfLots:      args[17],
+		LotQty:         args[17],
 		TokenizedLot:   args[18],
 		TotalTokenQty:  args[19],
 		RemainingToken: args[20],

@@ -3,15 +3,15 @@ const schema = mongoose.Schema;
 const { String, ObjectId } = mongoose.Schema.Types;
 
 const BondModel = new schema({
-    isin: String,
-    issuerName: String,
-    couponRate:String,
-    price: String,
-    maturityDate: String,
-    yield: String,
-    currency:String,
-    noOfTokens: String,
-    tokenValue: String     
+    Isin: String,
+    IssuerName: String,
+    CouponRate:String,
+    Price: String,
+    MaturityDate: String,
+    Yield: String,
+    Currency:String,
+    NumOfToken: String,
+    TokenValue: String     
 }, { timestamps: true });
 
 module.exports = mongoose.model('BondModel', BondModel);

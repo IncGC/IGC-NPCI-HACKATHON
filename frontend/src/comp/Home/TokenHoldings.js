@@ -21,7 +21,7 @@ function TokenHoldings() {
       setLoading(false)
     }
 
-    fetchTokenHoldings({ "mbeId": email }, onSuccess)
+    fetchTokenHoldings({ "MbeId": email }, onSuccess)
   }, [email])
 
   const updateOpen = (id, category) => {
@@ -46,11 +46,11 @@ function TokenHoldings() {
         <table className="w-full table-fixed">
           <thead>
             <tr className="sticky top-0 text-sm bg-slate-900 shadow-[0_1px_3px_0_rgba(255,255,255,.1)] z-1">
-              <td className="w-36 px-4 py-2">ISIN</td>
+              <td className="w-36 px-4 py-2">Isin</td>
               <td className="w-52 px-4 py-2">Issuer Name</td>
               <td className="w-32 px-4 py-2">Coupon Rate</td>
               <td className="w-28 px-4 py-2">Face Value</td>
-              <td className="w-24 px-4 py-2">LTP</td>
+              <td className="w-24 px-4 py-2">Ltp</td>
               <td className="w-72 px-4 py-2">Credit Rating</td>
               <td className="w-32 px-4 py-2 text-center">Maturity Date</td>
               <td className="w-28 px-4 py-2 text-center">Bid Price</td>
@@ -66,20 +66,20 @@ function TokenHoldings() {
           <tbody>
             {
               tokenHoldings
-                .filter((a, i) => tokenHoldings[i].isTokenized === true)
+                .filter((a, i) => tokenHoldings[i].IsTokenized === true)
                 .map(li => (
                   <tr
                     key={li._id}
                     className="hover:bg-[rgba(255,255,255,.1)] cursor-pointer group"
-                    onClick={() => updateOpen(li.isin, "Sell")}
+                    onClick={() => updateOpen(li.Isin, "Sell")}
                   >
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.isin} </td>
-                    <td className="px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.issuerName} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.couponrate} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.faceValue} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.ltp} </td>
-                    <td className="px-4 py-2 text-xs opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.creditrating} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.maturitydate} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.Isin} </td>
+                    <td className="px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.IssuerName} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.CouponRate} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.FaceValue} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.Ltp} </td>
+                    <td className="px-4 py-2 text-xs opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.CreditRating} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.MaturityDate} </td>
                     <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center">
                       <button className="w-20 px-3 py-1.5 rounded border border-emerald-600">
                         {li.bidPrice || 0}
@@ -92,14 +92,14 @@ function TokenHoldings() {
                     </td>
                     <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.TotalTokenQty} </td>
                     <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.LotQty} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.purchasePrice || "-"} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.currentPrice || "-"} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.PurchasePrice || "-"} </td>
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.CurrentPrice || "-"} </td>
                     <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center">
                       <button
                         className='px-3 py-1.5 rounded border border-red-500 hover:bg-red-500 hover:text-white'
                         onClick={e => {
                           e.stopPropagation()
-                          updateOpen(li.isin, "Detokenzise")
+                          updateOpen(li.Isin, "Detokenzise")
                         }}
                       >
                         Detokenize
@@ -117,7 +117,7 @@ function TokenHoldings() {
         type === 'Sell' &&
         <Sell
           isOpen
-          data={tokenHoldings.find(li => li.isin === open)}
+          data={tokenHoldings.find(li => li.Isin === open)}
           closeModal={closeModal}
         />
       }
@@ -126,7 +126,7 @@ function TokenHoldings() {
         type === 'Detokenzise' &&
         <Detokenzise
           isOpen
-          data={tokenHoldings.find(li => li.isin === open)}
+          data={tokenHoldings.find(li => li.Isin === open)}
           closeModal={closeModal}
         />
       }

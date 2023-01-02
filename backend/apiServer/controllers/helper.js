@@ -55,7 +55,7 @@ module.exports.CompareLimitOrder = async (
                 BondId: seller.BondId,
                 OrderId: seller.OrderId
               },
-              { $set: { isProcessed: true } },
+              { $set: { IsProcessed: true } },
               { upsert: true }
             );
             var _updWallet = await Wallet.findOneAndUpdate(
@@ -80,7 +80,7 @@ module.exports.CompareLimitOrder = async (
                 BondId: _match.BondId,
                 OrderId: _match.OrderId
               },
-              { $set: { isProcessed: true } },
+              { $set: { IsProcessed: true } },
               { upsert: true }
             );
             var _updWallet = await Wallet.findOneAndUpdate(
@@ -157,7 +157,7 @@ module.exports.VerifyBuyOrderList = async (sellorder, buyOrderArray) => {
               BondId: _match.BondId,
               Quantity: _match.Quantity,
               Price: _match.Price,
-              isProcessed: true
+              IsProcessed: true
             };
             var record = new SellOrder(obj);
             record.save();
@@ -182,7 +182,7 @@ module.exports.VerifyBuyOrderList = async (sellorder, buyOrderArray) => {
                 BondId: buyer.BondId,
                 OrderId: buyer.OrderId
               },
-              { $set: { isProcessed: true } },
+              { $set: { IsProcessed: true } },
               { upsert: true }
             );
             var _updWallet = await Wallet.findOneAndUpdate(
@@ -200,7 +200,7 @@ module.exports.VerifyBuyOrderList = async (sellorder, buyOrderArray) => {
               Price: buyer.Price,
               TradeValue: parseFloat(buyer.Price) * parseFloat(buyer.Quantity),
               Purchased: true,
-              isAuthorized: true
+              IsAuthorized: true
             };
             var record = new PurchaseLog(obj);
             record.save();
@@ -298,7 +298,7 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
                 BondId: seller.BondId,
                 OrderId: seller.OrderId
               },
-              { $set: { isProcessed: true } },
+              { $set: { IsProcessed: true } },
               { upsert: true }
             );
             var _updWallet = await Wallet.findOneAndUpdate(
@@ -316,14 +316,14 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
             var updatedFunds =
               totalFunds -
               parseFloat(_match.Price) * parseFloat(_match.Quantity);
-            // var _updBuyOrder = await BuyOrder.findOneAndUpdate({ UserId: _match.UserId, BondId: _match.BondId, OrderId: _match.OrderId }, { $set: { isProcessed: true } }, { upsert: true })
+            // var _updBuyOrder = await BuyOrder.findOneAndUpdate({ UserId: _match.UserId, BondId: _match.BondId, OrderId: _match.OrderId }, { $set: { IsProcessed: true } }, { upsert: true })
             let obj = {
               OrderId: _match.OrderId,
               UserId: _match.UserId,
               BondId: _match.BondId,
               Quantity: _match.Quantity,
               Price: _match.Price,
-              isProcessed: true
+              IsProcessed: true
             };
             var record = new BuyOrder(obj);
             record.save();
@@ -344,8 +344,8 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
               TradeValue:
                 parseFloat(_match.Price) * parseFloat(_match.Quantity),
               Purchased: true,
-              isProcessed: true,
-              isAuthorized: true
+              IsProcessed: true,
+              IsAuthorized: true
             };
             var record = new PurchaseLog(obj2);
             record.save();

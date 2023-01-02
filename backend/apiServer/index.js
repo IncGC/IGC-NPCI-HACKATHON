@@ -36,16 +36,16 @@ app.post("/pushBondDetails", async (req, res) => {
         .pipe(parse({ delimiter: ",", from_line: 2 }))
         .on("data", async function (row) {
           let obj = {
-            // "isin": row[0],
-            isin: row[0],
-            mbeId: row[1],
-            issuerName: row[2],
-            couponrate: row[3],
-            faceValue: row[4],
-            ltp: row[5],
-            creditrating: row[6],
-            maturitydate: row[7],
-            securitydescription: row[8],
+            // "Isin": row[0],
+            Isin: row[0],
+            MbeId: row[1],
+            IssuerName: row[2],
+            CouponRate: row[3],
+            FaceValue: row[4],
+            Ltp: row[5],
+            CreditRating: row[6],
+            MaturityDate: row[7],
+            SecurityDescription: row[8],
             Currency: row[9],
             LotQty: row[10],
             TokenizedLot: row[11],
@@ -82,10 +82,10 @@ app.post("/pushSellorders", async (req, res) => {
         .on("data", async function (row) {
           let obj = {
             OrderId: row[0],
-            mbeId: row[1],
-            isin: row[2],
-            issuerName: row[3],
-            transactionType: row[4],
+            MbeId: row[1],
+            Isin: row[2],
+            IssuerName: row[3],
+            TransactionsType: row[4],
             NumOfToken: row[5],
             Price: row[6]
           };
@@ -120,10 +120,10 @@ app.post("/pushBuyorders", async (req, res) => {
         .on("data", async function (row) {
           let obj = {
             OrderId: row[0],
-            mbeId: row[1],
-            isin: row[2],
-            issuerName: row[3],
-            transactionType: row[4],
+            MbeId: row[1],
+            Isin: row[2],
+            IssuerName: row[3],
+            TransactionsType: row[4],
             NumOfToken: row[5],
             Price:row[6]
           };
@@ -157,7 +157,7 @@ app.post("/pushWallets", async (req, res) => {
         .pipe(parse({ delimiter: ",", from_line: 2 }))
         .on("data", async function (row) {
           let obj = {
-            mbeId: row[0],
+            MbeId: row[0],
             CBDCbalance: row[1],
           };
           let record = new Wallet(obj);
@@ -185,8 +185,8 @@ app.post("/pushWallets", async (req, res) => {
 app.post("/tokenize", async (req, res) => {
   try {
     let bondDetails = await Bonds.find({
-      isin: req.body.isin,
-      mbeId: req.body.mbeId,
+      Isin: req.body.Isin,
+      MbeId: req.body.MbeId,
     });
     console.log("bondDetails", bondDetails);
     if (
@@ -208,12 +208,12 @@ app.post("/tokenize", async (req, res) => {
         console.log(bondDetails[0])
         console.log( req.body.TotalTokenQty)
       let obj = await Bonds.findOneAndUpdate(
-        { mbeId: req.body.mbeId, isin: req.body.isin },
+        { MbeId: req.body.MbeId, Isin: req.body.Isin },
         {
           $set: {
             TokenizedLot: _tokenizedLot,
             LotQty: _newLotQty,
-            isTokenized: true,
+            IsTokenized: true,
             TotalTokenQty: _totalTokenQty,
             TokenQtyRemaining:_TokenQtyRemaining,
           },
@@ -225,7 +225,7 @@ app.post("/tokenize", async (req, res) => {
       console.log({
         TokenizedLot: _tokenizedLot,
         LotQty: _newLotQty,
-        isTokenized: true,
+        IsTokenized: true,
         TotalTokenQty:( _totalTokenQty),
         TokenQtyRemaining:_TokenQtyRemaining,
       })
@@ -252,8 +252,8 @@ app.post("/tokenize", async (req, res) => {
 app.post("/deTokenize", async (req, res) => {
   try {
     let bondDetails = await Bonds.find({
-      isin: req.body.isin,
-      mbeId: req.body.mbeId,
+      Isin: req.body.Isin,
+      MbeId: req.body.MbeId,
     });
     console.log("bondDetails", bondDetails);
     if (
@@ -261,12 +261,6 @@ app.post("/deTokenize", async (req, res) => {
       parseFloat(req.body.tokenQty) >= 200000
     ) {
       let _lotQty = parseFloat(req.body.tokenQty) / 200000;
-      // //--- update by MPK ----
-      // if(_lotQty > parseFloat(bondDetails[0].TokenizedLot)){
-      //     res.status(400).send("new lots grater than tokenized lots");
-      //     return;
-      // }
-      // //--- updated by MPK ----
       let _newLotQty = parseFloat(bondDetails[0].LotQty) + _lotQty;
       let _newTokenizedLot = parseFloat(bondDetails[0].TokenizedLot) - _lotQty;
       let _newTotalTokenQty =
@@ -280,7 +274,7 @@ app.post("/deTokenize", async (req, res) => {
         _newTotalTokenQty
       );
       let obj = await Bonds.findOneAndUpdate(
-        { mbeId: req.body.mbeId, isin: req.body.isin },
+        { MbeId: req.body.MbeId, Isin: req.body.Isin },
         {
           $set: {
             TokenizedLot: _newTokenizedLot,
@@ -310,6 +304,37 @@ app.post("/deTokenize", async (req, res) => {
   }
 });
 
+app.get('/detokenizedtoken', async(req,res)=>{
+  try{
+    const{
+      MbeId,
+      Isin
+    } = req.query;
+
+    console.log("MbeId:",MbeId,"isin:",Isin);
+    const bondData = await Bonds.findOne({MbeId, Isin});
+
+    console.log(bondData);
+
+    const detokenizedtoken = parseFloat(bondData.TokenQtyRemaining)-parseFloat(bondData.TotalTokenQty);
+
+    console.log(detokenizedtoken);
+
+    res.status(200).json({
+      status:200,
+      message:detokenizedtoken
+    })
+
+  }catch (e) {
+     res.json({
+      status:400,
+      message:"Not found"
+    }); 
+  }
+})
+
+
+
 //IN PROGRESS
 app.post("/convertToBond", async (req, res) => {
   try {
@@ -324,8 +349,8 @@ app.post("/convertToBond", async (req, res) => {
 app.post("/placeSellOrder", async (req, res) => {
   try {
     let bondDetails = await Bonds.find({
-      isin: req.body.isin,
-      mbeId: req.body.mbeId,
+      Isin: req.body.Isin,
+      MbeId: req.body.MbeId,
     });
     console.log("bondDetails", bondDetails);
     if (
@@ -335,18 +360,18 @@ app.post("/placeSellOrder", async (req, res) => {
       let sellorder = [
         {
           OrderId: req.body.OrderId,
-          mbeId: req.body.mbeId,
-          isin: req.body.isin,
+          MbeId: req.body.MbeId,
+          Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
           Price: req.body.Price,
         },
       ];
       let bArray = [];
       let buyOrderBook = await BuyOrder.findOne({
-        isin: req.body.isin,
+        Isin: req.body.Isin,
         NumOfToken: req.body.NumOfToken,
         Price: req.body.Price,
-        isProcessed: false,
+        IsProcessed: false,
       });
       bArray.push(buyOrderBook);
       console.log("sellorder", sellorder, buyOrderBook);
@@ -359,8 +384,8 @@ app.post("/placeSellOrder", async (req, res) => {
       } else {
         let obj = {
           OrderId: req.body.OrderId,
-          mbeId: req.body.mbeId,
-          isin: req.body.isin,
+          MbeId: req.body.MbeId,
+          Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
           Price: req.body.Price,
         };
@@ -393,7 +418,7 @@ app.post("/placeSellOrder", async (req, res) => {
 
 app.post("/placeBuyOrder", async (req, res) => {
   try {
-    let walletBalance = await Wallet.find({ mbeId: req.body.mbeId });
+    let walletBalance = await Wallet.find({ MbeId: req.body.MbeId });
     console.log(walletBalance);
     // Updated by MPK
     // if (parseFloat(walletBalance[0].CBDCbalance) >= parseFloat(req.body.Price)) {
@@ -404,8 +429,8 @@ app.post("/placeBuyOrder", async (req, res) => {
       let buyorder = [
         {
           OrderId: req.body.OrderId,
-          mbeId: req.body.mbeId,
-          isin: req.body.isin,
+          MbeId: req.body.MbeId,
+          Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
           Price: req.body.Price,
         },
@@ -414,10 +439,10 @@ app.post("/placeBuyOrder", async (req, res) => {
 
       let sArray = [];
       let sellorderBook = await SellOrder.findOne({
-        isin: req.body.isin,
+        Isin: req.body.Isin,
         NumOfToken: req.body.NumOfToken,
         Price: req.body.Price,
-        isProcessed: false,
+        IsProcessed: false,
       });
       console.log(sellorderBook);
       sArray.push(sellorderBook);
@@ -434,8 +459,8 @@ app.post("/placeBuyOrder", async (req, res) => {
       } else {
         let obj = {
           OrderId: req.body.OrderId,
-          mbeId: req.body.mbeId,
-          isin: req.body.isin,
+          MbeId: req.body.MbeId,
+          Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
           Price: req.body.Price,
         };
@@ -469,8 +494,8 @@ app.post("/placeBuyOrder", async (req, res) => {
 
 app.get("/compareOrderBook", async (req, res) => {
   try {
-    let buyorderBook = await BuyOrder.find({ isProcessed: false });
-    let sellOrderBook = await SellOrder.find({ isProcessed: false });
+    let buyorderBook = await BuyOrder.find({ IsProcessed: false });
+    let sellOrderBook = await SellOrder.find({ IsProcessed: false });
     await CompareLimitOrder(sellOrderBook, buyorderBook, false);
   } catch (e) {
      res.json({
@@ -500,7 +525,7 @@ app.get("/purchaselog", async(req,res)=>{
 
 app.get("/balance", async(req,res)=>{
   try{
-      let balanceData= await Wallet.findOne({mbeId:req.query.mbeId});
+      let balanceData= await Wallet.findOne({MbeId:req.query.MbeId});
       res.status(200).json({
         status:200,
         message:balanceData
@@ -549,10 +574,10 @@ app.get('/buyOrder', async(req, res)=>{
 
 app.get('/buyOrdersingle', async(req, res)=>{
   try{
-      let buyOrder = await BuyOrder.findOne({mbeId:req.query.mbeId});
+      let buyOrder = await BuyOrder.findOne({MbeId:req.query.MbeId});
 
       // let data = req.body;
-      // data.isProcessed = false;
+      // data.IsProcessed = false;
       // data.createdBy = req.user;
 
       // buyOrder = await BuyOrder.create(data);
@@ -591,10 +616,10 @@ app.get('/sellOrder', async(req, res)=>{
 
 app.get('/sellOrderSingle', async(req, res)=>{
   try{
-      let sellOrder = await SellOrder.findOne({mbeId:req.query.mbeId});
+      let sellOrder = await SellOrder.findOne({MbeId:req.query.MbeId});
 
       // let data = req.body;
-      // data.isProcessed = false;
+      // data.IsProcessed = false;
       // data.createdBy = req.user;
 
       // sellOrder = await SellOrder.create(data);
@@ -620,14 +645,14 @@ app.post('/walletbalanceAddition',  passport.authenticate("jwt", { session: fals
         email
       }= req.user;
 
-      const walletData = await Wallet.findOne({mbeId:email});
+      const walletData = await Wallet.findOne({MbeId:email});
 
       console.log(walletData);
       let balance = parseFloat( walletData.CBDCbalance);
       let amount = parseFloat(req.body.amount);
-      const wallet = await Wallet.findOneAndUpdate({mbeId:email}, {$set:{CBDCbalance:(balance+amount)}})
+      const wallet = await Wallet.findOneAndUpdate({MbeId:email}, {$set:{CBDCbalance:(balance+amount)}})
 
-      const updatedwallet = await Wallet.findOne({mbeId:email});
+      const updatedwallet = await Wallet.findOne({MbeId:email});
       res.status(200).json({
         status:200,
         message:updatedwallet

@@ -31,7 +31,7 @@ function Profile() {
 
     getUserDetails({ "email": email }, onSuccessUserDetails)
 
-    fetchCBDCBalance({ "mbeId": email }, onSuccessCBDCBalanceFetch)
+    fetchCBDCBalance({ "MbeId": email }, onSuccessCBDCBalanceFetch)
   }, [email])
 
   if (loading) return <Loader wrapperCls='h-[calc(100vh-64px)]' />

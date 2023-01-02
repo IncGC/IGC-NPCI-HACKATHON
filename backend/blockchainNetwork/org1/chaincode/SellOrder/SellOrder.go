@@ -16,18 +16,18 @@ type SellOrderChaincode struct {
 }
 
 type SellOrder struct {
-	Id          string    `json:"Id"`
-	CreatedOn   time.Time `json:"CreatedOn"`
-	CreatedBy   string    `json:"CreatedBy"`
-	IsDelete    bool      `json:"IsDelete"`
-	IsHidden    bool      `json:"IsHidden"`
-	IsProcessed bool      `json:"IsProcessed"`
-	MbeId       string    `json:"MbeId"`
-	Isin        string    `json:"Isin"`
-	IssuerName string `json:"IssuerName"`
-	TransactionType string `json:"TransactionType"`
-	Price       string    `json:"Price"`
-	NumOfToken  string    `json:"NumOfToken"`
+	Id               string    `json:"Id"`
+	CreatedOn        time.Time `json:"CreatedOn"`
+	CreatedBy        string    `json:"CreatedBy"`
+	IsDelete         bool      `json:"IsDelete"`
+	IsHidden         bool      `json:"IsHidden"`
+	IsProcessed      bool      `json:"IsProcessed"`
+	MbeId            string    `json:"MbeId"`
+	Isin             string    `json:"Isin"`
+	IssuerName       string    `json:"IssuerName"`
+	TransactionsType string    `json:"TransactionsType"`
+	Price            string    `json:"Price"`
+	NumOfToken       string    `json:"NumOfToken"`
 }
 
 func (cc *SellOrderChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
@@ -60,18 +60,18 @@ func (cc *SellOrderChaincode) create(stub shim.ChaincodeStubInterface, arg []str
 	}
 
 	data := SellOrder{
-		Id:          args[0],
-		CreatedOn:   dateValue1,
-		CreatedBy:   args[2],
-		IsDelete:    boolValue3,
-		IsHidden:    boolValue4,
-		IsProcessed: boolValue5,
-		MbeId:       args[6],
-		Isin:        args[7],
-		IssuerName:  args[8],
-		TransactionType: args[9],
-		Price:       args[10],
-		NumOfToken:  args[11],
+		Id:               args[0],
+		CreatedOn:        dateValue1,
+		CreatedBy:        args[2],
+		IsDelete:         boolValue3,
+		IsHidden:         boolValue4,
+		IsProcessed:      boolValue5,
+		MbeId:            args[6],
+		Isin:             args[7],
+		IssuerName:       args[8],
+		TransactionsType: args[9],
+		Price:            args[10],
+		NumOfToken:       args[11],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -134,19 +134,18 @@ func (cc *SellOrderChaincode) update(stub shim.ChaincodeStubInterface, arg []str
 	}
 
 	data := SellOrder{
-		Id:          args[0],
-		CreatedOn:   dateValue1,
-		CreatedBy:   args[2],
-		IsDelete:    boolValue3,
-		IsHidden:    boolValue4,
-		IsProcessed: boolValue5,
-		MbeId:       args[6],
-		Isin:        args[7],
-		IssuerName:  args[8],
-		TransactionType: args[9],
-		Price:       args[10],
-		NumOfToken:  args[11],
-
+		Id:               args[0],
+		CreatedOn:        dateValue1,
+		CreatedBy:        args[2],
+		IsDelete:         boolValue3,
+		IsHidden:         boolValue4,
+		IsProcessed:      boolValue5,
+		MbeId:            args[6],
+		Isin:             args[7],
+		IssuerName:       args[8],
+		TransactionsType: args[9],
+		Price:            args[10],
+		NumOfToken:       args[11],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)

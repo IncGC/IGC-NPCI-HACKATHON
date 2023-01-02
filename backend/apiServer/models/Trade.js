@@ -2,25 +2,25 @@ const mongoose = require("mongoose");
 
 var BondSchema = new mongoose.Schema(
   {
-    isin: String,
-    mbeId: String,
-    issuerName: String,
-    couponrate: String,
-    faceValue:String,
-    ltp: String,
-    creditrating:String,
-    maturitydate:String,
-    securitydescription:String,
+    Isin: String,
+    MbeId: String,
+    IssuerName: String,
+    CouponRate: String,
+    FaceValue:String,
+    Ltp: String,
+    CreditRating:String,
+    MaturityDate:String,
+    SecurityDescription:String,
     Currency:String,
     LotQty:String,
-    isTokenized: {
+    IsTokenized: {
       type: Boolean,
       default: false
     },
     TokenizedLot: String,
     TotalTokenQty: String,
     TokenQtyRemaining: String,
-    isProcessed: {
+    IsProcessed: {
       type: Boolean,
       default: false
     }
@@ -31,13 +31,13 @@ var BondSchema = new mongoose.Schema(
 var SellOrderSchema = new mongoose.Schema(
   {
     OrderId: String,
-    mbeId: String,
-    isin: String,
-    issuerName:String,
-    transactionType:String,
+    MbeId: String,
+    Isin: String,
+    IssuerName:String,
+    TransactionsType:String,
     NumOfToken: String,
     Price: String,
-    isProcessed: {
+    IsProcessed: {
       type: Boolean,
       default: false
     }
@@ -48,13 +48,13 @@ var SellOrderSchema = new mongoose.Schema(
 var BuyOrderSchema = new mongoose.Schema(
   {
     OrderId: String,
-    mbeId: String,
-    isin: String,
-    issuerName:String,
-    transactionType:String,
+    MbeId: String,
+    Isin: String,
+    IssuerName:String,
+    TransactionsType:String,
     NumOfToken: String,
     Price: String,
-    isProcessed: {
+    IsProcessed: {
       type: Boolean,
       default: false
     }
@@ -66,12 +66,12 @@ var PurchaseLogSchema = new mongoose.Schema(
   {
     BuyOrderId: String,
     SellOrderId: String,
-    mbeId: String,
-    SellermbeId: String,
-    isin: String,
-    issuerName:String,
-    couponrate: String,
-    maturitydate:String,
+    MbeId: String,
+    SellerMbeId: String,
+    Isin: String,
+    IssuerName:String,
+    CouponRate: String,
+    MaturityDate:String,
     NumOfToken: String,
     Price: String,
     TradeValue: String,
@@ -79,11 +79,11 @@ var PurchaseLogSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
-    isProcessed: {
+    IsProcessed: {
       type: Boolean,
       default: false
     },
-    isAuthorized: {
+    IsAuthorized: {
       type: Boolean,
       default: false
     }
@@ -93,9 +93,9 @@ var PurchaseLogSchema = new mongoose.Schema(
 
 var WalletSchema = new mongoose.Schema(
   {
-    mbeId: String,
+    MbeId: String,
     CBDCbalance: String, //Seller or Buyer
-    isUpdated: {
+    IsUpdated: {
       type: Boolean,
       default: false
     }

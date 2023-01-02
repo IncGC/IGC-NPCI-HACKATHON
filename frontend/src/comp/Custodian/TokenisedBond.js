@@ -38,7 +38,7 @@ function TokenisedBond() {
         <table className="w-full table-fixed">
           <thead>
             <tr className="sticky top-0 text-sm bg-slate-900 shadow-[0_1px_3px_0_rgba(255,255,255,.1)] z-1">
-              <td className="w-36 px-4 py-2">ISIN</td>
+              <td className="w-36 px-4 py-2">Isin</td>
               {
                 role !== "mbe" &&
                 <td className="w-52 px-4 py-2">Issuer Name</td>
@@ -46,7 +46,7 @@ function TokenisedBond() {
               <td className="w-32 px-4 py-2">Coupon Rate</td>
               <td className="w-32 px-4 py-2 text-center">Maturity Date</td>
               <td className="w-28 px-4 py-2 text-center">No. of Tokens</td>
-              <td className="w-24 px-4 py-2">LTP</td>
+              <td className="w-24 px-4 py-2">Ltp</td>
               <td className="w-28 px-4 py-2">Current Price</td>
               <td className="w-28 px-4 py-2">List of Investors</td>
               <td className="w-40 px-4 py-2 text-center">Number of tokens detokenized</td>
@@ -61,15 +61,15 @@ function TokenisedBond() {
                   key={li._id}
                   className="hover:bg-[rgba(255,255,255,.1)] cursor-pointer group"
                 >
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.isin} </td>
+                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.Isin} </td>
                   {
                     role !== "mbe" &&
-                    <td className="px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.issuerName} </td>
+                    <td className="px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.IssuerName} </td>
                   }
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.couponrate} </td>
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.maturitydate} </td>
+                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.CouponRate} </td>
+                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.MaturityDate} </td>
                   <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center"> {li.TotalTokenQty} </td>
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.ltp} </td>
+                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.Ltp} </td>
                   <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.askPrice || 0} </td>
                   <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 text-center">
                     <button
@@ -96,7 +96,7 @@ function TokenisedBond() {
         open.state === "InvestorsList" &&
         <InvestorsList
           isOpen
-          title={open.data?.issuerName || "SHRIRAM TRANSPORT"}
+          title={open.data?.IssuerName || "SHRIRAM TRANSPORT"}
           updateOpen={updateOpen}
           closeModal={closeModal}
           needInvesterName={role !== "mbe"}

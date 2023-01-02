@@ -13,10 +13,10 @@ export async function getInvestorLists(onSuccess) {
   }
 }
 
-export async function getUserDetails(mbeId, onSuccess) {
+export async function getUserDetails(MbeId, onSuccess) {
   try {
     const res = await sendApiReq({
-      url: `${endPoints.userDetail}?mbeId=${mbeId}`,
+      url: `${endPoints.userDetail}?MbeId=${MbeId}`,
     })
 
     console.log(res)

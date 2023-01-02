@@ -16,27 +16,27 @@ type TokenHoldingChaincode struct {
 }
 
 type TokenHolding struct {
-	Id             string    `json:"Id"`
-	CreatedOn      time.Time `json:"CreatedOn"`
-	CreatedBy      string    `json:"CreatedBy"`
-	IsDelete       bool      `json:"IsDelete"`
-	IsHidden       bool      `json:"IsHidden"`
-	Isin           string    `json:"Isin"`
-	MbeId          string    `json:"MbeId"`
-	IssuerName     string    `json:"IssuerName"`
-	CouponRate     string    `json:"CouponRate"`
-	FaceValue      string    `json:"FaceValue"`
-	Ltp            string    `json:"Ltp"`
-	CreditRating   string    `json:"CreditRating"`
-	MaturityDate   string    `json:"MaturityDate"`
-	LatestBidPrice string    `json:"LatestBidPrice"`
-	LatestAskPrice string    `json:"LatestAskPrice"`
-	PurchasePrice  string    `json:"PurchasePrice"`
-	NumOfToken       string    `json:"NumOfToken"`
-	CurrentPrice   string    `json:"CurrentPrice"`
-	NumOfLots      string    `json:"NumOfLots"`
-	DetokenizedTokens	string `json:"DetokenizedTokens"`
-	DetokenizedValue	string `json:"DetokenizedValue"`
+	Id                string    `json:"Id"`
+	CreatedOn         time.Time `json:"CreatedOn"`
+	CreatedBy         string    `json:"CreatedBy"`
+	IsDelete          bool      `json:"IsDelete"`
+	IsHidden          bool      `json:"IsHidden"`
+	Isin              string    `json:"Isin"`
+	MbeId             string    `json:"MbeId"`
+	IssuerName        string    `json:"IssuerName"`
+	CouponRate        string    `json:"CouponRate"`
+	FaceValue         string    `json:"FaceValue"`
+	Ltp               string    `json:"Ltp"`
+	CreditRating      string    `json:"CreditRating"`
+	MaturityDate      string    `json:"MaturityDate"`
+	LatestBidPrice    string    `json:"LatestBidPrice"`
+	LatestAskPrice    string    `json:"LatestAskPrice"`
+	PurchasePrice     string    `json:"PurchasePrice"`
+	NumOfToken        string    `json:"NumOfToken"`
+	CurrentPrice      string    `json:"CurrentPrice"`
+	LotQty            string    `json:"LotQty"`
+	DetokenizedTokens string    `json:"DetokenizedTokens"`
+	DetokenizedValue  string    `json:"DetokenizedValue"`
 }
 
 func (cc *TokenHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
@@ -65,28 +65,27 @@ func (cc *TokenHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []
 	}
 
 	data := TokenHolding{
-		Id:                  args[0],
-		CreatedOn:           dateValue1,
-		CreatedBy:           args[2],
-		IsDelete:            boolValue3,
-		IsHidden:            boolValue4,
-		Isin:                args[5],
-		MbeId: args[6],
-		IssuerName:          args[7],
-		CouponRate:          args[8],
-		FaceValue:           args[9],
-		Ltp:                 args[10],
-		CreditRating:        args[11],
-		MaturityDate:        args[12],
-		LatestBidPrice:      args[13],
-		LatestAskPrice:      args[14],
-		PurchasePrice:       args[15],
-		NumOfToken:            args[16],
-		CurrentPrice:        args[17],
-		NumOfLots:           args[18],
+		Id:                args[0],
+		CreatedOn:         dateValue1,
+		CreatedBy:         args[2],
+		IsDelete:          boolValue3,
+		IsHidden:          boolValue4,
+		Isin:              args[5],
+		MbeId:             args[6],
+		IssuerName:        args[7],
+		CouponRate:        args[8],
+		FaceValue:         args[9],
+		Ltp:               args[10],
+		CreditRating:      args[11],
+		MaturityDate:      args[12],
+		LatestBidPrice:    args[13],
+		LatestAskPrice:    args[14],
+		PurchasePrice:     args[15],
+		NumOfToken:        args[16],
+		CurrentPrice:      args[17],
+		LotQty:            args[18],
 		DetokenizedTokens: args[19],
-		DetokenizedValue: args[20],
-
+		DetokenizedValue:  args[20],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -144,27 +143,27 @@ func (cc *TokenHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []
 	}
 
 	data := TokenHolding{
-		Id:                  args[0],
-		CreatedOn:           dateValue1,
-		CreatedBy:           args[2],
-		IsDelete:            boolValue3,
-		IsHidden:            boolValue4,
-		Isin:                args[5],
-		MbeId: args[6],
-		IssuerName:          args[7],
-		CouponRate:          args[8],
-		FaceValue:           args[9],
-		Ltp:                 args[10],
-		CreditRating:        args[11],
-		MaturityDate:        args[12],
-		LatestBidPrice:      args[13],
-		LatestAskPrice:      args[14],
-		PurchasePrice:       args[15],
-		NumOfToken:            args[16],
-		CurrentPrice:        args[17],
-		NumOfLots:           args[18],
+		Id:                args[0],
+		CreatedOn:         dateValue1,
+		CreatedBy:         args[2],
+		IsDelete:          boolValue3,
+		IsHidden:          boolValue4,
+		Isin:              args[5],
+		MbeId:             args[6],
+		IssuerName:        args[7],
+		CouponRate:        args[8],
+		FaceValue:         args[9],
+		Ltp:               args[10],
+		CreditRating:      args[11],
+		MaturityDate:      args[12],
+		LatestBidPrice:    args[13],
+		LatestAskPrice:    args[14],
+		PurchasePrice:     args[15],
+		NumOfToken:        args[16],
+		CurrentPrice:      args[17],
+		LotQty:            args[18],
 		DetokenizedTokens: args[19],
-		DetokenizedValue: args[20],
+		DetokenizedValue:  args[20],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)

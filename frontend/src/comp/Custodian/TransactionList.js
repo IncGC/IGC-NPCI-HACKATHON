@@ -60,7 +60,7 @@ function TransactionList() {
     //   let start = new Date(dateFilter.start).getTime()
     //   let end = new Date(dateFilter.end).getTime()
     //   cloned = cloned.filter(l => {
-    //     let currDate = new Date(l.maturityDate).getTime()
+    //     let currDate = new Date(l.MaturityDate).getTime()
     //     return currDate >= start && currDate <= end
     //   })
     // }
@@ -74,7 +74,7 @@ function TransactionList() {
     }
 
     if (type) {
-      cloned = cloned.filter(l => l.transactionType.match(type))
+      cloned = cloned.filter(l => l.TransactionsType.match(type))
     }
 
     return cloned
@@ -134,14 +134,14 @@ function TransactionList() {
           tokenDetails ? <>
             <span className='ml-auto'></span>
             <Input
-              lable='ISIN'
-              value={tokenDetails.isin}
+              lable='Isin'
+              value={tokenDetails.Isin}
               inputCls="bg-slate-800 text-white border-none"
               lableCls='w-auto mb-0'
             />
             <Input
               lable='Issuer Name'
-              value={tokenDetails.issuerName}
+              value={tokenDetails.IssuerName}
               inputCls="bg-slate-800 text-white border-none"
               lableCls='w-auto mb-0'
             />
@@ -187,9 +187,9 @@ function TransactionList() {
                     className="hover:bg-[rgba(255,255,255,.1)] cursor-pointer group"
                   >
                     <td className="pl-8 pr-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.OrderId} </td>
-                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.transactionType} </td>
-                    <td className={`px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 ${getTypeClr(li.transactionType)}`}>
-                      {li.transactionType}
+                    <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.TransactionsType} </td>
+                    <td className={`px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 ${getTypeClr(li.TransactionsType)}`}>
+                      {li.TransactionsType}
                     </td>
                     <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100">
                       <button
@@ -237,7 +237,7 @@ function TransactionList() {
         open.state === "InvestorsList" &&
         <InvestorsList
           isOpen
-          title={tokenDetails?.issuerName || "SHRIRAM TRANSPORT"}
+          title={tokenDetails?.IssuerName || "SHRIRAM TRANSPORT"}
           updateOpen={updateOpen}
           closeModal={closeModal}
           needInvesterName={role !== "mbe"}

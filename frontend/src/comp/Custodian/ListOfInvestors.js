@@ -54,14 +54,14 @@ function ListOfInvestors() {
           tokenDetails ?
             <>
               <Input
-                lable='ISIN'
+                lable='Isin'
                 value={tokenDetails.securityCode}
                 inputCls="bg-slate-800 text-white border-none"
                 lableCls='w-auto mb-0'
               />
               <Input
                 lable='Issuer Name'
-                value={tokenDetails.issuerName}
+                value={tokenDetails.IssuerName}
                 inputCls="bg-slate-800 text-white border-none"
                 lableCls='w-auto mb-0'
               />

@@ -2,7 +2,7 @@ const {Bonds} = require("../models/Trade");
 
 exports.bonddetails= async(req,res)=>{
     try{
-        const bonddetailsDAta = await Bonds.find({isTokenized:true});
+        const bonddetailsDAta = await Bonds.find({IsTokenized:true});
 
         console.log(bonddetailsDAta);
 

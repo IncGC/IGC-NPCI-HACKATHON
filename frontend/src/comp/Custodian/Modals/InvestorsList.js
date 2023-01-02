@@ -55,7 +55,7 @@ function InvestorsList({ isOpen, title = "", needInvesterName = true, updateOpen
                       <td className="px-4 py-2 text-sm font-medium opacity-80 group-hover:opacity-100">
                         <button
                           className='p-0 hover:scale-105 transition-transform'
-                          onClick={() => updateOpen("UserInfo", { ...li, issuerName: title })}
+                          onClick={() => updateOpen("UserInfo", { ...li, IssuerName: title })}
                         >
                           {li.firstName}
                         </button>

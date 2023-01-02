@@ -3,16 +3,16 @@ const schema = mongoose.Schema;
 const { String, ObjectId } = mongoose.Schema.Types;
 
 const BidModel = new schema({
-    isin: String,
-    issuerName: String,
-    couponRate:String,
-    price: String,
-    maturityDate: String,
-    yield: String,
-    noOfTokens: String,
-    currency:String,
-    reqTokens: String,
-    tokenValue: String     
+    Isin: String,
+    IssuerName: String,
+    CouponRate:String,
+    Price: String,
+    MaturityDate: String,
+    Yield: String,
+    NumOfToken: String,
+    Currency:String,
+    ReqTokens: String,
+    TokenValue: String     
 }, { timestamps: true });
 
 module.exports = mongoose.model('BidModel', BidModel);

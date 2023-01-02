@@ -10,8 +10,8 @@ import { errorNotify, successNotify } from "../../../helper/toastifyHelp";
 function Tokenise({ isOpen, data, closeModal }) {
   const [noOfLots, setNoOfLots] = useState(0)
   const [details, setDetails] = useState({
-    "isin": data.isin,
-    "mbeId": data.mbeId,
+    "Isin": data.Isin,
+    "MbeId": data.MbeId,
   })
 
   const onChange = e => {
@@ -45,24 +45,24 @@ function Tokenise({ isOpen, data, closeModal }) {
       <div className='scroll-y'>
         <div className='grid md:grid-cols-2 gap-4 mb-4'>
           <Input
-            lable='ISIN'
-            value={data.isin}
+            lable='Isin'
+            value={data.Isin}
           />
           <Input
             lable='Issuer Name'
-            value={data.issuerName}
+            value={data.IssuerName}
           />
           <Input
             lable='Coupon Rate'
-            value={data.couponrate}
+            value={data.CouponRate}
           />
           <Input
-            lable='LTP'
-            value={data.ltp}
+            lable='Ltp'
+            value={data.Ltp}
           />
           <Input
             lable='Maturity Date'
-            value={data.maturitydate}
+            value={data.MaturityDate}
           />
           <Input
             lable='No. of lots'
@@ -76,7 +76,7 @@ function Tokenise({ isOpen, data, closeModal }) {
           <div className='grid-col-full'>
             <Input
               lable='Security Description'
-              value={data.securitydescription}
+              value={data.SecurityDescription}
               inputCls="w-full max-w-none"
               lableCls='w-auto'
             />

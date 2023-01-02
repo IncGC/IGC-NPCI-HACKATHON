@@ -5,9 +5,9 @@ exports.transaction= async(req,res)=>{
     try {
         let {
             trnxID,
-            isin,
+            Isin,
             userID,
-            noOfTokens,
+            NumOfToken,
             date,
             type,
             status,
@@ -18,9 +18,9 @@ exports.transaction= async(req,res)=>{
 
         const transactionData={
             trnxID,
-            isin,
+            Isin,
             userID,
-            noOfTokens,
+            NumOfToken,
             date,
             type,
             status,

@@ -2,12 +2,19 @@ const { invokeTransaction } = require("../app/invoke");
 
 const {
   CHAINCODE_ACTIONS,
-  CHAIN_CHANNEL,
   CHAINCODE_NAMES,
   getNow,
   CHAINCODE_CHANNEL,
   generateId,
 } = require("../utils/helper");
+
+const {
+  Bonds,
+  SellOrder,
+  BuyOrder,
+  Wallet,
+  PurchaseLog,
+} = require("../models/Trade");
 
 exports.cbdcwallet = async (req, res) => {
   try{
@@ -15,19 +22,17 @@ exports.cbdcwallet = async (req, res) => {
       MbeId,
       CBDCbalance,
     } = req.body;
-console.log(req.body)
     const cbdcwalletData= {
       Id:generateId(),
       CreatedOn:getNow(),
       CreatedBy: "admin",
       IsDelete:"false",
       IsHidden:"false",
-      IsUpDated:'false',
+      IsUpdated:'false',
       MbeId,
       CBDCbalance
     }
 console.log(cbdcwalletData);
-console.log('hereee')
 
     let message = await invokeTransaction({
         metaInfo:{userName:"pintu", org:"org1MSP"},
@@ -37,8 +42,17 @@ console.log('hereee')
         chainCodeFunctionName:'create',
         chainCodeName:'CBDCwallet'
     })
-console.log('hereewe')
     console.log(message);
+
+    const walletBalance = await Wallet.findOne({MbeId});
+
+    if (walletBalance){
+      let balance = parseFloat( walletBalance.CBDCbalance);
+      let amount = parseFloat(req.body.CBDCbalance);
+      const wallet = await Wallet.findOneAndUpdate({MbeId:email}, {$set:{CBDCbalance:(balance+amount)}})
+
+    }
+
     res.status(201).json({
         status:201,
         message:message
@@ -97,7 +111,7 @@ exports.bondHoldings = async (req, res) => {
       PurchasePrice,
       NumOfToken,
       CurrentPrice,
-      NumOfLots,
+      LotQty,
       TokenizedLot,
       TotalTokenQty,
       RemainingToken,
@@ -122,7 +136,7 @@ exports.bondHoldings = async (req, res) => {
       PurchasePrice,
       NumOfToken,
       CurrentPrice,
-      NumOfLots,
+      LotQty,
       TokenizedLot,
       TotalTokenQty,
       RemainingToken,
@@ -197,7 +211,7 @@ exports.TokenHolding = async (req, res) => {
       PurchasePrice,
       NumOfToken,
       CurrentPrice,
-      NumOfLots,
+      LotQty,
       DetokenizedTokens,
       DetokenizedValue
     } = req.body;
@@ -221,7 +235,7 @@ exports.TokenHolding = async (req, res) => {
       PurchasePrice,
       NumOfToken,
       CurrentPrice,
-      NumOfLots,
+      LotQty,
       DetokenizedTokens,
       DetokenizedValue
     };
@@ -371,7 +385,7 @@ exports.getTransaction = async (req, res) => {
 exports.buyOrder = async (req, res) => {
   try {
     let { MbeId, Isin,    IssuerName,
-      TransactionType,Price, NumOfToken } = req.body;
+      TransactionsType,Price, NumOfToken } = req.body;
 
     const buyOrderData = {
       Id: generateId(),
@@ -383,7 +397,7 @@ exports.buyOrder = async (req, res) => {
       MbeId,
       Isin,
       IssuerName,
-      TransactionType,
+      TransactionsType,
       Price,
       NumOfToken,
     };
@@ -446,7 +460,7 @@ exports.getBuyOrder = async (req, res) => {
 exports.sellOrder = async (req, res) => {
   try {
     let { MbeId, Isin,   IssuerName,
-      TransactionType, Price, NumOfToken } = req.body;
+      TransactionsType, Price, NumOfToken } = req.body;
 
     const sellOrderData = {
       Id: generateId(),
@@ -458,7 +472,7 @@ exports.sellOrder = async (req, res) => {
       MbeId,
       Isin,
       IssuerName,
-      TransactionType,
+      TransactionsType,
       Price,
       NumOfToken,
     };
@@ -531,7 +545,7 @@ exports.mbeMarket = async (req, res) => {
       LatestBidPrice,
       LatestAskPrice,
       Currency,
-      NumOfLots,
+      LotQty,
       TokenizedLot,
       TotalTokenQty,
       RemainingToken,
@@ -557,7 +571,7 @@ exports.mbeMarket = async (req, res) => {
       LatestBidPrice,
       LatestAskPrice,
       Currency,
-      NumOfLots,
+      LotQty,
       TokenizedLot,
       TotalTokenQty,
       RemainingToken,

@@ -3,29 +3,29 @@ const AskModel= require("../models/ask");
 exports.askpost=async(req,res)=>{
     try{
        let {
-        isin,
-        issuerName,
-        couponRate,
-        price,
-        maturityDate,
-        yield,
-        noOfTokens,
-        currency,
-        reqTokens,
-        tokenValue
+        Isin,
+        IssuerName,
+        CouponRate,
+        Price,
+        MaturityDate,
+        Yield,
+        NumOfToken,
+        Currency,
+        ReqTokens,
+        TokenValue
        } = req.body;
 
        const askData = {
-        isin,
-        issuerName,
-        couponRate,
-        price,
-        maturityDate,
-        yield,
-        noOfTokens,
-        currency,
-        reqTokens,
-        tokenValue
+        Isin,
+        IssuerName,
+        CouponRate,
+        Price,
+        MaturityDate,
+        Yield,
+        NumOfToken,
+        Currency,
+        ReqTokens,
+        TokenValue
        }
        console.log(askData)
        const askResult = await AskModel.create(askData);
@@ -44,10 +44,10 @@ exports.askpost=async(req,res)=>{
 exports.askGet = async(req,res)=>{
     try{
         let{
-            isin
+            Isin
         }= req.body;
 
-        const askResult = await AskModel.findOne({isin});
+        const askResult = await AskModel.findOne({Isin});
 
         console.log(askResult);
 

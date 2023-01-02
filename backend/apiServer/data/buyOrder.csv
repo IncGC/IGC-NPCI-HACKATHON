@@ -1,2 +1,2 @@
-OrderId,mbeId,isin,issuerName,transactionType,NumOfToken,Price
+OrderId,MbeId,Isin,IssuerName,TransactionsType,NumOfToken,Price
 B_ORDER1,muhsin@inclusivegrowthchain.com,INE00XE07101,MUTHOOT VEHICLE & ASSET FINANCE LIMITED,buyOrder,50,2000

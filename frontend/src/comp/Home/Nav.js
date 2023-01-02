@@ -42,7 +42,7 @@ function Nav() {
   const isLoggedIn = useStore(state => state.isLoggedIn)
   const logOut = useStore(state => state.logOut)
   const role = useStore(state => state.role)
-  const mbeId = useStore(state => state.email)
+  const MbeId = useStore(state => state.email)
 
   const [open, setOpen] = useState(false)
   const [list, setList] = useState([])
@@ -57,7 +57,7 @@ function Nav() {
       setCBDCBalance(payload)
     }
 
-    fetchCBDCBalance({ "mbeId": mbeId }, onSuccess)
+    fetchCBDCBalance({ "MbeId": MbeId }, onSuccess)
   }, [role])
 
   const onClk = val => {

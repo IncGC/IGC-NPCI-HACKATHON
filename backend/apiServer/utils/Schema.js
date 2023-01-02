@@ -7,7 +7,7 @@ const CBDCWALLET_SCHEMA = [
   { name: "CreatedBy" },
   { name: "IsDelete" },
   { name: "IsHidden" },
-  { name: "IsUpDated" },
+  { name: "IsUpdated" },
   { name: "MbeId" },
   { name: "CBDCbalance" },
 ];
@@ -30,7 +30,7 @@ const BONDHOLDING_SCHEMA = [
   { name: "PurchasePrice" },
   { name: "NumOfToken" },
   { name: "CurrentPrice" },
-  { name: "NumOfLots" },
+  { name: "LotQty" },
   { name: "TokenizedLot" },
   { name: "TotalTokenQty" },
   { name: "RemainingToken" },
@@ -55,7 +55,7 @@ const TOKENHOLDING_SCHEMA = [
   { name: "PurchasePrice" },
   { name: "NumOfToken" },
   { name: "CurrentPrice" },
-  { name: "NumOfLots" },
+  { name: "LotQty" },
   { name: "DetokenizedTokens" },
   { name: "DetokenizedValue" },
 ];
@@ -88,7 +88,7 @@ const BUYORDER_SCHEMA = [
   { name: "MbeId" },
   { name: "Isin" },
   {name:"IssuerName"},
-  {name:"TransactionType"},
+  {name:"TransactionsType"},
   { name: "Price" },
   { name: "NumOfToken" },
 ];
@@ -103,7 +103,7 @@ const SELLORDER_SCHEMA = [
   { name: "MbeId" },
   { name: "Isin" },
     {name:"IssuerName"},
-  {name:"TransactionType"},
+  {name:"TransactionsType"},
   { name: "Price" },
   { name: "NumOfToken" },
 ];
@@ -126,7 +126,7 @@ const MBEMARKET_SCHEMA = [
   { name: "LatestBidPrice" },
   { name: "LatestAskPrice" },
   { name: "Currency" },
-  { name: "NumOfLots" },
+  { name: "LotQty" },
   { name: "TokenizedLot" },
   { name: "TotalTokenQty" },
   { name: "RemainingToken" },

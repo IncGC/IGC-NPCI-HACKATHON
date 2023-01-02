@@ -14,8 +14,8 @@ function Detokenzise({ isOpen, data, closeModal }) {
   const [noOfLots, setNoOfLots] = useState(0)
   const email = useStore(state => state.email)
   const [details, setDetails] = useState({
-    "isin": data.isin,
-    "mbeId": email,
+    "Isin": data.Isin,
+    "MbeId": email,
   })
 
   const onChange = e => {
@@ -49,24 +49,24 @@ function Detokenzise({ isOpen, data, closeModal }) {
       <div className='scroll-y'>
         <div className='grid md:grid-cols-2 gap-4 mb-4'>
           <Input
-            lable='ISIN'
-            value={data.isin}
+            lable='Isin'
+            value={data.Isin}
           />
           <Input
             lable='Issuer Name'
-            value={data.issuerName}
+            value={data.IssuerName}
           />
           <Input
             lable='Coupon Rate'
-            value={data.couponrate}
+            value={data.CouponRate}
           />
           <Input
-            lable='LTP'
-            value={data.ltp}
+            lable='Ltp'
+            value={data.Ltp}
           />
           <Input
             lable='Maturity Date'
-            value={data.maturitydate}
+            value={data.MaturityDate}
           />
           <Input
             lable='No. of lots'
@@ -84,7 +84,7 @@ function Detokenzise({ isOpen, data, closeModal }) {
           <div className='grid-col-full'>
             <Input
               lable='Security Description'
-              value={data.securitydescription}
+              value={data.SecurityDescription}
               inputCls="w-full max-w-none"
               lableCls='w-auto'
             />
@@ -120,7 +120,7 @@ function Detokenzise({ isOpen, data, closeModal }) {
 
           <div>
             <label className='mb-1 font-medium' htmlFor="">Current Price</label>
-            <input type="text" defaultValue={data.ltp} disabled />
+            <input type="text" defaultValue={data.Ltp} disabled />
           </div>
         </div>
       </div>

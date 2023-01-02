@@ -16,29 +16,29 @@ type MBEmarketChaincode struct {
 }
 
 type MBEmarket struct {
-	Id             string    `json:"Id"`
-	CreatedOn      time.Time `json:"CreatedOn"`
-	CreatedBy      string    `json:"CreatedBy"`
-	IsDelete       bool      `json:"IsDelete"`
-	IsHidden       bool      `json:"IsHidden"`
-	Isin           string    `json:"Isin"`
-	MbeId          string    `json:"MbeId"`
-	IssuerName     string    `json:"IssuerName"`
-	CouponRate     string    `json:"CouponRate"`
-	FaceValue      string    `json:"FaceValue"`
-	Ltp            string    `json:"Ltp"`
-	CreditRating   string    `json:"CreditRating"`
-	MaturityDate   string    `json:"MaturityDate"`
-	SecurityDescription   string    `json:"SecurityDescription"`
-	LatestBidPrice string    `json:"LatestBidPrice"`
-	LatestAskPrice string    `json:"LatestAskPrice"`
-	Currency string    `json:"Currency"`
-	NumOfLots      string    `json:"NumOfLots"`
-	TokenizedLot      string    `json:"TokenizedLot"`
-	TotalTokenQty      string    `json:"TotalTokenQty"`
-	RemainingToken  string    `json:"RemainingToken"`
-	Detokenizedtoken       string    `json:"Detokenizedtoken"`
-	DetokenizedValue   string    `json:"DetokenizedValue"`
+	Id                  string    `json:"Id"`
+	CreatedOn           time.Time `json:"CreatedOn"`
+	CreatedBy           string    `json:"CreatedBy"`
+	IsDelete            bool      `json:"IsDelete"`
+	IsHidden            bool      `json:"IsHidden"`
+	Isin                string    `json:"Isin"`
+	MbeId               string    `json:"MbeId"`
+	IssuerName          string    `json:"IssuerName"`
+	CouponRate          string    `json:"CouponRate"`
+	FaceValue           string    `json:"FaceValue"`
+	Ltp                 string    `json:"Ltp"`
+	CreditRating        string    `json:"CreditRating"`
+	MaturityDate        string    `json:"MaturityDate"`
+	SecurityDescription string    `json:"SecurityDescription"`
+	LatestBidPrice      string    `json:"LatestBidPrice"`
+	LatestAskPrice      string    `json:"LatestAskPrice"`
+	Currency            string    `json:"Currency"`
+	LotQty              string    `json:"LotQty"`
+	TokenizedLot        string    `json:"TokenizedLot"`
+	TotalTokenQty       string    `json:"TotalTokenQty"`
+	RemainingToken      string    `json:"RemainingToken"`
+	Detokenizedtoken    string    `json:"Detokenizedtoken"`
+	DetokenizedValue    string    `json:"DetokenizedValue"`
 }
 
 func (cc *MBEmarketChaincode) create(stub shim.ChaincodeStubInterface, arg []string) peer.Response {
@@ -73,7 +73,7 @@ func (cc *MBEmarketChaincode) create(stub shim.ChaincodeStubInterface, arg []str
 		IsDelete:            boolValue3,
 		IsHidden:            boolValue4,
 		Isin:                args[5],
-		MbeId: args[6],
+		MbeId:               args[6],
 		IssuerName:          args[7],
 		CouponRate:          args[8],
 		FaceValue:           args[9],
@@ -83,13 +83,13 @@ func (cc *MBEmarketChaincode) create(stub shim.ChaincodeStubInterface, arg []str
 		SecurityDescription: args[13],
 		LatestBidPrice:      args[14],
 		LatestAskPrice:      args[15],
-		Currency: args[16],
-		NumOfLots:           args[17],
-		TokenizedLot: args[18],
-		TotalTokenQty: args[19],
-		RemainingToken:       args[20],
-		Detokenizedtoken:            args[21],
-		DetokenizedValue:        args[22],
+		Currency:            args[16],
+		LotQty:              args[17],
+		TokenizedLot:        args[18],
+		TotalTokenQty:       args[19],
+		RemainingToken:      args[20],
+		Detokenizedtoken:    args[21],
+		DetokenizedValue:    args[22],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -146,7 +146,6 @@ func (cc *MBEmarketChaincode) update(stub shim.ChaincodeStubInterface, arg []str
 		return shim.Error("Error converting string to bool: " + err4.Error())
 	}
 
-	
 	data := MBEmarket{
 		Id:                  args[0],
 		CreatedOn:           dateValue1,
@@ -154,7 +153,7 @@ func (cc *MBEmarketChaincode) update(stub shim.ChaincodeStubInterface, arg []str
 		IsDelete:            boolValue3,
 		IsHidden:            boolValue4,
 		Isin:                args[5],
-		MbeId: args[6],
+		MbeId:               args[6],
 		IssuerName:          args[7],
 		CouponRate:          args[8],
 		FaceValue:           args[9],
@@ -164,15 +163,14 @@ func (cc *MBEmarketChaincode) update(stub shim.ChaincodeStubInterface, arg []str
 		SecurityDescription: args[13],
 		LatestBidPrice:      args[14],
 		LatestAskPrice:      args[15],
-		Currency: args[16],
-		NumOfLots:           args[17],
-		TokenizedLot: args[18],
-		TotalTokenQty: args[19],
-		RemainingToken:       args[20],
-		Detokenizedtoken:            args[21],
-		DetokenizedValue:        args[22],
+		Currency:            args[16],
+		LotQty:              args[17],
+		TokenizedLot:        args[18],
+		TotalTokenQty:       args[19],
+		RemainingToken:      args[20],
+		Detokenizedtoken:    args[21],
+		DetokenizedValue:    args[22],
 	}
-
 
 	dataBytes, errMarshal := json.Marshal(data)
 
