@@ -370,7 +370,8 @@ exports.getTransaction = async (req, res) => {
 
 exports.buyOrder = async (req, res) => {
   try {
-    let { MbeId, Isin, Price, NumOfToken } = req.body;
+    let { MbeId, Isin,    IssuerName,
+      TransactionType,Price, NumOfToken } = req.body;
 
     const buyOrderData = {
       Id: generateId(),
@@ -381,6 +382,8 @@ exports.buyOrder = async (req, res) => {
       IsProcessed: 'false',
       MbeId,
       Isin,
+      IssuerName,
+      TransactionType,
       Price,
       NumOfToken,
     };
@@ -442,7 +445,8 @@ exports.getBuyOrder = async (req, res) => {
 
 exports.sellOrder = async (req, res) => {
   try {
-    let { MbeId, Isin, Price, NumOfToken } = req.body;
+    let { MbeId, Isin,   IssuerName,
+      TransactionType, Price, NumOfToken } = req.body;
 
     const sellOrderData = {
       Id: generateId(),
@@ -453,6 +457,8 @@ exports.sellOrder = async (req, res) => {
       IsProcessed: 'false',
       MbeId,
       Isin,
+      IssuerName,
+      TransactionType,
       Price,
       NumOfToken,
     };

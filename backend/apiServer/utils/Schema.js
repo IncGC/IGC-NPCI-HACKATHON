@@ -87,6 +87,8 @@ const BUYORDER_SCHEMA = [
   { name: "IsProcessed" },
   { name: "MbeId" },
   { name: "Isin" },
+  {name:"IssuerName"},
+  {name:"TransactionType"},
   { name: "Price" },
   { name: "NumOfToken" },
 ];
@@ -100,6 +102,8 @@ const SELLORDER_SCHEMA = [
   { name: "IsProcessed" },
   { name: "MbeId" },
   { name: "Isin" },
+    {name:"IssuerName"},
+  {name:"TransactionType"},
   { name: "Price" },
   { name: "NumOfToken" },
 ];
