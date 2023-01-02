@@ -617,13 +617,13 @@ app.get('/sellOrderSingle', async(req, res)=>{
 app.post('/walletbalanceAddition',  passport.authenticate("jwt", { session: false }),async(req,res)=>{
   try{
       let {
-        mbeId
+        email
       }= req.user;
 
-      const walletData = await Wallet.findOne({mbeId});
+      const walletData = await Wallet.findOne({mbeId:email});
       let balance = parseFloat( walletData.CBDCbalance);
       let amount = parseFloat(req.body.amount);
-      const wallet = await Wallet.findOneAndUpdate({mbeId}, {$set:{CBDCbalance:(balance+amount)}})
+      const wallet = await Wallet.findOneAndUpdate({mbeId:email}, {$set:{CBDCbalance:(balance+amount)}})
 
       const updatedwallet = await Wallet.findOne({mbeId});
       res.status(200).json({
