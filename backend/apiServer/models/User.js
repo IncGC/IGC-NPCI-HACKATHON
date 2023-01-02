@@ -22,7 +22,7 @@ const userSchema = new schema({
     bondholdingID: { type: mongoose.Schema.ObjectId, ref: 'Bonds' },
     tokenholdingID:{type: mongoose.Schema.ObjectId, ref :"Token"},
     transactionId: {type: mongoose.Schema.ObjectId, ref : "Transaction"},
-    cbdcBalance:{type:mongoose.Schema.ObjectId, ref:"Wallet"},
+    cbdcBalance:String,
     createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
 }, { timestamps: true });
 

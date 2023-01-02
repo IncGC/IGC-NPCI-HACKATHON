@@ -162,6 +162,8 @@ app.post("/pushWallets", async (req, res) => {
           };
           let record = new Wallet(obj);
           record.save();
+
+
         })
         .on("end", function () {
           console.log("end");
@@ -667,3 +669,19 @@ app.post('/walletbalanceAddition',  passport.authenticate("jwt", { session: fals
 });
 
 module.exports = app;
+
+
+app.get('/listInvestors', async (req, res) => {
+  try {
+   
+    console.log("hihihihi")
+    let investorList = await Bonds.find({}, {MbeId:1, TotalTokenQty:1})
+    console.log(investorList);
+    res.status(200).json({
+      status: 200,
+      message: investorList,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+});

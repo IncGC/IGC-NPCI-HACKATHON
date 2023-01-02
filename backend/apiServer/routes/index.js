@@ -59,6 +59,8 @@ router.post("/login", investor.login);
 router.get("/",investor.getInvestor);
 router.post("/forgot", investor.forgotPassword);
 
+router.get('/getInvestorList', investor.getInvestorList);
+
 router.get("/getUserDetails", investor.InvestorDetails);
 
 router.get('/singleUser', investor.getInvestor)

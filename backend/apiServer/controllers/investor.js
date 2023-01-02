@@ -16,6 +16,13 @@ const {
   HandleResponseError,
   ObjectExistsError,
 } = require("../utils/HandleResponseError");
+const {
+  Bonds,
+  SellOrder,
+  BuyOrder,
+  Wallet,
+  PurchaseLog,
+} = require("../models/Trade");
 
 //  registerUser({ OrgMSP: "org1MSP", userId: "pintu" });
 
@@ -257,6 +264,20 @@ exports.InvestorDetails = async (req, res) => {
     });
   } catch (err) {
     HandleResponseError(res, err);
+    res.send(err);
+  }
+};
+
+// const Bonds = require('../models/Trade');
+exports.getInvestorList = async (req, res) => {
+  try {
+   
+    let investorList = await Bonds.find().
+    res.status(200).json({
+      status: 200,
+      message: investorList,
+    });
+  } catch (err) {
     res.send(err);
   }
 };
