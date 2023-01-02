@@ -617,12 +617,12 @@ app.post('/walletbalanceAddition', async(req,res)=>{
   try{
       let {
         mbeId
-      }= req.body;
+      }= req.user;
 
       const walletData = await Wallet.findOne({mbeId});
       let balance = parseFloat( walletData.CBDCbalance);
       let amount = parseFloat(req.body.amount);
-      const wallet = await Wallet.findOneAndUpdate({mbeId:mbeId}, {$set:{CBDCbalance:(balance+amount)}})
+      const wallet = await Wallet.findOneAndUpdate({mbeId}, {$set:{CBDCbalance:(balance+amount)}})
 
       const updatedwallet = await Wallet.findOne({mbeId});
       res.status(200).json({
