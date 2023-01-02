@@ -16,18 +16,10 @@ const InitiateMongoServer = require('./config/db');
 
 const ConnectDB= require('./config/dbConfig');
 
-
-//Routes import
-
-
-// const usermanagement = require('./routes/usermgmt');
-// const token= require('./routes/token');
-
-
-//Connecting MongoDB
-
 InitiateMongoServer();
 ConnectDB();
+
+
 
 //Body parser of application/json
 app.use(bodyParser.json({limit:"50mb"}));
@@ -58,21 +50,6 @@ var host = process.env.HOST;
 var port = normalizePort(process.env.PORT);
 app.set('port', port);
 
-
-// set up plain http server
-// var http = express();
-
-// set up a route to redirect http to https
-// app.get('*', function(req, res) {  
-//     res.redirect('https://' + req.headers.host + req.url);
-// })
-
-//     // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
-//     // res.redirect('https://example.com' + req.url);
-// })
-
-// http.listen(9090);
-
 //Mongoose connection
 
 Mongoose.connection.once('open', ()=>{
@@ -84,7 +61,7 @@ Mongoose.connection.once('open', ()=>{
   })
 
   logger.info('-------------- SERVER STARTED ----------------------');
-  logger.info('*************** http://%s:%s ************************', host, port);
+  logger.info('*************** https://%s:%s ************************', host, port);
   server.timeout= 240000;
   server.on('error', onError);
   server.on('listening', onListening);
@@ -154,24 +131,3 @@ function onError(error){
       throw error;
   }
 }
-
-// app.use((req, res, next) => { //to handle CORS Errors.
-
-//   res.header("Access-Control-Allow-Origin", "*");
-
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Reqquested-With, Content-Type, Accept, Authorization");
-
-
-
-//   if(req.method === 'OPTIONS') {
-
-//       res.header('Access-Control-Allow-Methods', 'PUT POST, PATCH, DELETE GET');
-
-//       return res.status(200).json({});
-
-//   }
-
-//   next();
-
-// });
-

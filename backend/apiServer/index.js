@@ -20,6 +20,7 @@ const {
   storeRecord,
 } = require("./config/helper");
 const { setEngine } = require("crypto");
+const { findOneAndUpdate } = require("./models/User");
 
 require("dotenv").config();
 
@@ -612,19 +613,26 @@ app.get('/sellOrderSingle', async(req, res)=>{
   }
 });
 
-// app.get('/wallet', async(req, res)=>{
-//   try{
-//       let walletData = await Wallet.findOne({mbeId:req.query});
-//       res.status(200).json({
-//         status:200,
-//         message:walletData
-//       })
-//   }catch (e) {
-//      res.json({
-//       status:404,
-//       message:"Not found"
-//     }); 
-//   }
-// })
+app.post('/walletbalanceAddition', async(req,res)=>{
+  try{
+      let {
+        mbeId,
+        amount
+      }= req.body;
+
+      const wallet = await findOneAndUpdate({mbeId:mbeId}, {$set:{CBDCbalance:(CBDCbalance+amount)}})
+
+      res.status(200).json({
+        status:200,
+        message:wallet
+      })
+
+  }catch (e) {
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
+  }
+});
 
 module.exports = app;
