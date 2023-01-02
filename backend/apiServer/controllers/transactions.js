@@ -4,32 +4,54 @@ const TransactionsModel = require("../models/transactions");
 exports.transaction= async(req,res)=>{
     try {
         let {
-            trnxID,
-            Isin,
-            userID,
-            NumOfToken,
-            date,
-            type,
-            status,
-            authorization,
-            amount,
-            certificate
+            Date ,
+    OrderId,
+    MbeId: String,
+    Isin,
+    IssuerName,
+    CouponRate,
+    MaturityDate,
+    Ltp,
+    FaceValue,
+    CreditRating,
+    NumOfToken,
+    NumOfLots,
+    TransactionType,
+    DetokenizedToken,
+    AskedPrice,
+    BidPrice,
+    PurhcasePrice,
+    CurrentPrice,
+    Amount,
+    Authorization,
+    Status
         } = req.body;
 
         const transactionData={
-            trnxID,
+            Date ,
+            OrderId,
+            MbeId: String,
             Isin,
-            userID,
+            IssuerName,
+            CouponRate,
+            MaturityDate,
+            Ltp,
+            FaceValue,
+            CreditRating,
             NumOfToken,
-            date,
-            type,
-            status,
-            authorization,
-            amount,
-            certificate
+            NumOfLots,
+            TransactionType,
+            DetokenizedToken,
+            AskedPrice,
+            BidPrice,
+            PurhcasePrice,
+            CurrentPrice,
+            Amount,
+            Authorization,
+            Status
         }
 
-        const transactionResult = await TransactionsModel.create({transactionData});
+        const transactionResult = new TransactionsModel(transactionData);
 
         res.status(200).json({
             status:200,
@@ -43,10 +65,10 @@ exports.transaction= async(req,res)=>{
 exports.getTrasactions= async(req,res)=>{
     try{
         let {
-            trnxID
-        }= req.body;
+            Isin
+        }= req.query;
 
-        const transactionResult = await TransactionsModel.findOne({trnxID});
+        const transactionResult = await TransactionsModel.findOne({Isin});
 
         res.status(200).json({
             status:200,

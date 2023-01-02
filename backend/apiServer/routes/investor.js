@@ -1,6 +1,5 @@
 const router = require('express').Router();
 
-const{HandleError}= require('../utils/HandleResponseError');
 const {CHAINCODE_ACTIONS, CHAINCODE_NAMES, getNow, CHAINCODE_CHANNEL, generateId}=require('../utils/helper');
 const {invokeTransaction}= require('../app/invoke');
 

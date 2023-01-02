@@ -12,11 +12,9 @@ var logger = log4js.getLogger('servicepr-admin');
 var debug = require('debug')('secure:server');
 const passport = require('passport');
 var app = express();
-const InitiateMongoServer = require('./config/db');
 
 const ConnectDB= require('./config/dbConfig');
 
-InitiateMongoServer();
 ConnectDB();
 
 

@@ -17,20 +17,8 @@ const chaincode = require("../controllers/chaincodes");
 const dashBoard = require('../controllers/marketDashboard');
 
 router.get('/dashbord', dashBoard.bonddetails);
-// const reconcilation= require("../controllers/recollinations");
 
-// router.route('/pushBondOrderDetails').post(reconcilation.pushBondOrderDetails)
-// router.route('/pushWallets').post(reconcilation.pushWallets)
-// router.route('/pushSellOrders').post(reconcilation.pushSellOrders)
-// router.route('/pushBuyOrders').post(reconcilation.pushBuyOrders)
-// router.route('/tokenize').post(reconcilation.tokenize)
-// router.route('/placeSellOrder').post(reconcilation.placeSellOrder)
-// router.route('/placeBuyOrder').post(reconcilation.placeBuyOrder)
-// router.route('/compareOrderBook').post(reconcilation.compareOrderBook)
-// router.route('/deTokenize').post(reconcilation.deTokenize)
-
-
-const trade = require('../index');
+const trade = require('../trade');
 
 router.use('/trade', trade);
 
@@ -48,8 +36,8 @@ router.route('/purchaseLog').post(chaincode.purchaseLog).get(chaincode.getPurcha
 router.route('/ask').post( ask.askpost).get(ask.askGet);
 router.route('/bid').post(bid.bidpost).get(bid.bidGet);
 router.route('/buy').post( buy.buypost).get(buy.buyGet)
-router.route('/transactions').post( trasactions.transaction);
-router.get('/transactions', trasactions.getTrasactions)
+router.route('/transactionsCentre').post( trasactions.transaction);
+router.get('/transactionsCentre', trasactions.getTrasactions)
 
 router.post("/create_investor", investor.createInvestor);
 router.post("/login", investor.login);
@@ -58,8 +46,6 @@ router.post("/login", investor.login);
 //,passport.authenticate("jwt", { session: false })
 router.get("/",investor.getInvestor);
 router.post("/forgot", investor.forgotPassword);
-
-router.get('/getInvestorList', investor.getInvestorList);
 
 router.get("/getUserDetails", investor.InvestorDetails);
 

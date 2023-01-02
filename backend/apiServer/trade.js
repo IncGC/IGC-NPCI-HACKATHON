@@ -422,9 +422,7 @@ app.post("/placeBuyOrder", async (req, res) => {
   try {
     let walletBalance = await Wallet.find({ MbeId: req.body.MbeId });
     console.log(walletBalance);
-    // Updated by MPK
-    // if (parseFloat(walletBalance[0].CBDCbalance) >= parseFloat(req.body.Price)) {
-    if (
+       if (
       parseFloat(walletBalance[0].CBDCbalance) >=
       parseFloat(req.body.Price) * parseFloat(req.body.NumOfToken)
     ) {
@@ -527,7 +525,7 @@ app.get("/purchaselog", async(req,res)=>{
 
 app.get("/balance", async(req,res)=>{
   try{
-      let balanceData= await Wallet.findOne({mbeId:req.query.MbeId});
+      let balanceData= await Wallet.findOne({MbeId:req.query.MbeId});
       res.status(200).json({
         status:200,
         message:balanceData
@@ -578,12 +576,6 @@ app.get('/buyOrdersingle', async(req, res)=>{
   try{
       let buyOrder = await BuyOrder.findOne({MbeId:req.query.MbeId});
 
-      // let data = req.body;
-      // data.IsProcessed = false;
-      // data.createdBy = req.user;
-
-      // buyOrder = await BuyOrder.create(data);
-
       await buyOrder.save();
 
       res.status(200).json({
@@ -619,14 +611,6 @@ app.get('/sellOrder', async(req, res)=>{
 app.get('/sellOrderSingle', async(req, res)=>{
   try{
       let sellOrder = await SellOrder.findOne({MbeId:req.query.MbeId});
-
-      // let data = req.body;
-      // data.IsProcessed = false;
-      // data.createdBy = req.user;
-
-      // sellOrder = await SellOrder.create(data);
-
-      // await sellOrder.save();
 
       res.status(200).json({
         status:200,
@@ -674,8 +658,8 @@ module.exports = app;
 app.get('/listInvestors', async (req, res) => {
   try {
    
-    console.log("hihihihi")
-    let investorList = await Bonds.find({}, {MbeId:1, TotalTokenQty:1})
+    // console.log("hihihihi")
+    let investorList = await Bonds.find({}, {MbeId:1, TotalTokenQty:1, Isin:1})
     console.log(investorList);
     res.status(200).json({
       status: 200,

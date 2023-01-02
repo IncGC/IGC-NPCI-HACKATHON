@@ -57,7 +57,7 @@ exports.createInvestor = async (req, res) => {
             DOB: panCarddata.DOB,
             password: hashedpassword,
             role: "investor",
-            mbe_id: panCarddata.email,
+            MbeId: panCarddata.email,
             nse_registered: false,
           },
         }
@@ -94,7 +94,7 @@ exports.createInvestor = async (req, res) => {
             DOB: nseData.DOB,
             password: hashedpassword,
             role: "investor",
-            mbe_id: nseData.email,
+            MbeId: nseData.email,
             nse_registered: true,
           },
         }
@@ -268,16 +268,3 @@ exports.InvestorDetails = async (req, res) => {
   }
 };
 
-// const Bonds = require('../models/Trade');
-exports.getInvestorList = async (req, res) => {
-  try {
-   
-    let investorList = await Bonds.find().
-    res.status(200).json({
-      status: 200,
-      message: investorList,
-    });
-  } catch (err) {
-    res.send(err);
-  }
-};
