@@ -527,7 +527,7 @@ app.get("/purchaselog", async(req,res)=>{
 
 app.get("/balance", async(req,res)=>{
   try{
-      let balanceData= await Wallet.findOne({MbeId:req.query.MbeId});
+      let balanceData= await Wallet.findOne({mbeId:req.query.MbeId});
       res.status(200).json({
         status:200,
         message:balanceData
