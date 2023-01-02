@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* root constants */
+:root {
+  --toastify-text-color-light: #111;  
+  --toastify-toast-min-height: 34px;
+  --toastify-toast-width: 70vw;
+}
+
+@layer base {
+  body {
+    scroll-behavior: smooth;
+  }
+
+  body ::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  body ::-webkit-scrollbar-track {
+    border-radius: 8px;
+    box-shadow: none;
+  }
+
+  body ::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,.3);
+    border-radius: 8px;
+    box-shadow: none;
+  }
+
+  body ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255,255,255,.3);
+  }
+
+  label {
+    @apply block mb-2;
+  }
+
+  input,
+  textarea {
+    @apply block w-full px-3 py-2 text-sm text-gray-900 rounded focus:outline-none border border-gray-300;
+  }
+
+  select {
+    @apply w-full pl-4 pr-8 py-2 border appearance-none rounded focus:outline-none
+    bg-no-repeat border-gray-300 bg-[url('./assets/img/dropdown-arrow.png')];
+    background-position: 98%;
+    background-size: 24px;
+  }
+
+  button {
+    @apply inline-block cursor-pointer rounded-md px-4 py-1 w-fit;
+  }
+
+  svg {
+    @apply w-6 h-6 cursor-pointer;
+  }
+}
+
+@layer components {
+  .df,
+  .dfc,
+  .dc {
+    @apply flex gap-2;
+  }
+
+  .df, .dc {
+    @apply items-center;
+  }
+
+  .dfc {
+    @apply flex-col;
+  }
+
+  .dc {
+    @apply justify-center;
+  }
+
+  .scroll-y {
+    @apply flex-1 overflow-y-auto;
+  }
+
+  .no-scroll-bar::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
+
+  .mini-scroll-bar::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+
+
+  /* input number hide arrows - Chrome, Safari, Edge, Opera */
+  .no-number-arrows::-webkit-outer-spin-button,
+  .no-number-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* input number hide arrows - Firefox */
+  .no-number-arrows {
+    -moz-appearance: textfield;
+  }
+
+
+  /* svg */
+  .fill-none {
+    fill: none;
+  }
+
+  .str-rounded {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .str-miterlimit-7_3 {
+    stroke-miterlimit: 7.3333;
+  }
+
+  .str-miterlimit-10 {
+    stroke-miterlimit: 10;
+  }
+
+  /* css loader */
+  .loader {
+    @apply 
+      w-8 h-8 border-4 animate-spin rounded-full 
+      border-slate-100 border-t-slate-700;
+    ;
+  }
+  
+  
+  /* Modal */
+  .modal-wrapper {
+    @apply relative z-50;
+  }
+
+  .modal-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-25;
+  }
+    
+  .modal-content {
+    @apply p-4 lg:p-6 rounded-2xl bg-white shadow-xl transition-all;
+  }  
+
+  
+  /* DropDown */
+  .DropDownBtn {
+    @apply 
+      w-full focus:outline-0
+      py-1 px-2 text-sm 2xl:text-[15px] rounded 
+    ;
+  }
+
+  .DropDownBtn:not(.active){
+    @apply hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200;
+  }
+
+  .DropDownBox {
+    @apply 
+      gap-0.5 p-2 min-w-[110px] z-10 focus:outline-0 shadow-spread
+      rounded bg-white border border-white
+    ;
+  }
+
+  .DropDownArrow {
+    @apply bg-inherit w-4 h-4 rotate-45 -z-1 border border-inherit;
+  }
+
+
+  /* Other Comps */
+  .c-lable {
+    @apply w-28 font-medium shrink-0 mb-0;
+  }
+  
+  .c-input {
+    @apply md:max-w-[180px] ml-4;
+  }
+}
+
+.grid-col-full {
+  grid-column: 1/-1;
+}
+
+/* Toastify Confiuration */
+.Toastify__toast {
+  @apply w-fit px-1 py-2 rounded-full pr-2;
+  margin: 0 auto .8rem;
+  font-size: 14px;
+}
+
+.Toastify__toast-icon {
+  margin-inline: 6px;
+}
+
+.Toastify__toast-icon svg {
+  height: 18px;
+  width: 18px;
+}
+
+.Toastify__toast-body {
+  padding: 0 6px;
+}
+
+.profile-dd {
+  min-width: 160px;
+}

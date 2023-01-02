@@ -24,6 +24,8 @@ type BuyOrder struct {
 	IsProcessed bool      `json:"IsProcessed"`
 	MbeId       string    `json:"MbeId"`
 	Isin        string    `json:"Isin"`
+	IssuerName string `json:"IssuerName"`
+	TransactionType string `json:"TransactionType"`
 	Price       string    `json:"Price"`
 	NumOfToken  string    `json:"NumOfToken"`
 }
@@ -32,8 +34,8 @@ func (cc *BuyOrderChaincode) create(stub shim.ChaincodeStubInterface, arg []stri
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 10 {
-		return shim.Error("Incorrect number arguments. Expecting 10")
+	if len(args) != 12 {
+		return shim.Error("Incorrect number arguments. Expecting 12")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
@@ -66,8 +68,10 @@ func (cc *BuyOrderChaincode) create(stub shim.ChaincodeStubInterface, arg []stri
 		IsProcessed: boolValue5,
 		MbeId:       args[6],
 		Isin:        args[7],
-		Price:       args[8],
-		NumOfToken:  args[9],
+		IssuerName:  args[8],
+		TransactionType: args[9],
+		Price:       args[10],
+		NumOfToken:  args[11],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
@@ -103,8 +107,8 @@ func (cc *BuyOrderChaincode) update(stub shim.ChaincodeStubInterface, arg []stri
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 10 {
-		return shim.Error("Incorrect number arguments. Expecting 10")
+	if len(args) != 12 {
+		return shim.Error("Incorrect number arguments. Expecting 12")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 
@@ -130,7 +134,7 @@ func (cc *BuyOrderChaincode) update(stub shim.ChaincodeStubInterface, arg []stri
 	}
 
 	data := BuyOrder{
-		Id:          args[0],
+			Id:          args[0],
 		CreatedOn:   dateValue1,
 		CreatedBy:   args[2],
 		IsDelete:    boolValue3,
@@ -138,8 +142,10 @@ func (cc *BuyOrderChaincode) update(stub shim.ChaincodeStubInterface, arg []stri
 		IsProcessed: boolValue5,
 		MbeId:       args[6],
 		Isin:        args[7],
-		Price:       args[8],
-		NumOfToken:  args[9],
+		IssuerName:  args[8],
+		TransactionType: args[9],
+		Price:       args[10],
+		NumOfToken:  args[11],
 	}
 
 	dataBytes, errMarshal := json.Marshal(data)
