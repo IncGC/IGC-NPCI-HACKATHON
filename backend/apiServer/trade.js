@@ -422,8 +422,10 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
 
 app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
-    let walletBalance = await Wallet.find({ MbeId: req.body.MbeId });
+    let walletBalance = await Wallet.find({ MbeId:req.user.MbeId});
     console.log(walletBalance);
+
+    var bondIssued= await Bonds.findOne({Isin:req.body.Isin})
        if (
       parseFloat(walletBalance[0].CBDCbalance) >=
       parseFloat(req.body.Price) * parseFloat(req.body.NumOfToken)
@@ -431,10 +433,11 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
       let buyorder = [
         {
           OrderId: req.body.OrderId,
-          MbeId: req.body.MbeId,
+          MbeId: req.user.MbeId,
           Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
-          Price: req.body.Price,
+          IssuerName:bondIssued.IssuerName,
+          Price: req.body.Price 
         },
       ];
       console.log("buyorder", buyorder);
@@ -443,6 +446,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
       let sellorderBook = await SellOrder.findOne({
         Isin: req.body.Isin,
         NumOfToken: req.body.NumOfToken,
+        IssuerName:bondIssued.IssuerName,
         Price: req.body.Price,
         IsProcessed: false,
       });
@@ -461,8 +465,9 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
       } else {
         let obj = {
           OrderId: req.body.OrderId,
-          MbeId: req.body.MbeId,
+          MbeId: req.user.MbeId,
           Isin: req.body.Isin,
+          IssuerName:bondIssued.IssuerName,
           NumOfToken: req.body.NumOfToken,
           Price: req.body.Price,
         };
