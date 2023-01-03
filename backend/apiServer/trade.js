@@ -615,7 +615,7 @@ app.get('/sellOrder', async(req, res)=>{
 
 app.get('/sellOrderSingle',passport.authenticate("jwt", { session: false }), async(req, res)=>{
   try{
-      let sellOrder = await SellOrder.findOne({MbeId:req.query.MbeId});
+      let sellOrder = await SellOrder.find({MbeId:req.query.MbeId});
 
       res.status(200).json({
         status:200,
