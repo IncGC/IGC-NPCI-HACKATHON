@@ -44,11 +44,11 @@ exports.getCredentials = async (org) => {
             adminpwd = 'passw0rd';
             break;
         case 2:
-            adminid = 'mbev2org1';
+            adminid = 'mbev1org2';
             adminpwd = 'passw0rd';
             break;
         case 3:
-            adminid = 'mbev3org1';
+            adminid = 'mbev1org3';
             adminpwd = 'passw0rd';
             break;
 

@@ -24,7 +24,7 @@ const {
   PurchaseLog,
 } = require("../models/Trade");
 
-//  registerUser({ OrgMSP: "org1MSP", userId: "muhsin" });
+//  registerUser({ OrgMSP: "org3MSP", userId: "muhsin" });
 
 exports.createInvestor = async (req, res) => {
   try {

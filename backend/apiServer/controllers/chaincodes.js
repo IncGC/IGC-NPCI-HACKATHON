@@ -19,7 +19,6 @@ const {
 exports.cbdcwallet = async (req, res) => {
   try{
     let{
-      MbeId,
       CBDCbalance,
     } = req.body;
     const cbdcwalletData= {
@@ -29,13 +28,13 @@ exports.cbdcwallet = async (req, res) => {
       IsDelete:"false",
       IsHidden:"false",
       IsUpdated:'false',
-      MbeId,
+      MbeId:req.user.MbeId,
       CBDCbalance
     }
 console.log(cbdcwalletData);
 
     let message = await invokeTransaction({
-        metaInfo:{userName:"pintu", org:"org1MSP"},
+        metaInfo:{userName:req.user.MbeId, org:"org1MSP"},
         chainCodeAction:'create',
         channelName:'common',
         data:cbdcwalletData,
@@ -72,7 +71,7 @@ exports.getcbdcwallet = async (req, res) => {
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: 'pintu', org: 'org1MSP' },
+      metaInfo: { userName: req.user.MbeId, org: 'org1MSP' },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       channelName: CHAINCODE_CHANNEL,
       data: queryString,
@@ -97,6 +96,55 @@ exports.getcbdcwallet = async (req, res) => {
     })
   }
 };
+
+exports.cbdcwalletupdate = async (req, res) => {
+  try{
+    let{
+      CBDCbalance,
+    } = req.body;
+    const cbdcwalletData= {
+      Id:generateId(),
+      CreatedOn:getNow(),
+      CreatedBy: "admin",
+      IsDelete:"false",
+      IsHidden:"false",
+      IsUpdated:'false',
+      MbeId,
+      CBDCbalance
+    }
+console.log(cbdcwalletData);
+
+    let message = await invokeTransaction({
+        metaInfo:{userName:req.user.MbeId, org:"org1MSP"},
+        chainCodeAction:'create',
+        channelName:'common',
+        data:cbdcwalletData,
+        chainCodeFunctionName:'create',
+        chainCodeName:'CBDCwallet'
+    })
+    console.log(message);
+
+    const walletBalance = await Wallet.findOne({MbeId});
+
+    if (walletBalance){
+      let balance = parseFloat( walletBalance.CBDCbalance);
+      let amount = parseFloat(req.body.CBDCbalance);
+      const wallet = await Wallet.findOneAndUpdate({MbeId:email}, {$set:{CBDCbalance:(balance+amount)}})
+
+    }
+
+    res.status(201).json({
+        status:201,
+        message:message
+    })
+
+}catch(err){
+    res.send(err)
+}
+};
+
+
+
 
 exports.bondHoldings = async (req, res) => {
   try {
@@ -144,7 +192,7 @@ exports.bondHoldings = async (req, res) => {
 
     console.log(bondHoldingData);
     let message = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: "create",
       channelName: "common",
       data: bondHoldingData,
@@ -171,7 +219,7 @@ exports.getbondHoldings = async (req, res) => {
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       channelName: CHAINCODE_CHANNEL,
       data: queryString,
@@ -243,7 +291,7 @@ exports.TokenHolding = async (req, res) => {
     console.log(TokenHoldingData);
 
     let message = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
       channelName: CHAINCODE_CHANNEL,
       data: TokenHoldingData,
@@ -271,7 +319,7 @@ exports.getTokenHolding = async (req, res) => {
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       chainCodeFunctionName: "querystring",
       chainCodeName: CHAINCODE_NAMES.TOKENHOLDING,
@@ -331,7 +379,7 @@ exports.Transactions = async (req, res) => {
     };
 
     let message = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
       channelName: CHAINCODE_CHANNEL,
       data: transactionData,
@@ -360,7 +408,7 @@ exports.getTransaction = async (req, res) => {
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       chainCodeFunctionName: "querystring",
       chainCodeName: CHAINCODE_NAMES.TRASANSATIONS,
@@ -405,7 +453,7 @@ exports.buyOrder = async (req, res) => {
     console.log(buyOrderData);
 
     let message = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
       channelName: CHAINCODE_CHANNEL,
       data: buyOrderData,
@@ -434,7 +482,7 @@ exports.getBuyOrder = async (req, res) => {
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       chainCodeFunctionName: "querystring",
       chainCodeName: CHAINCODE_NAMES.BUYORDER,
@@ -479,7 +527,7 @@ exports.sellOrder = async (req, res) => {
 
     console.log(sellOrderData);
     let message = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
       channelName: CHAINCODE_CHANNEL,
       data: sellOrderData,
@@ -508,7 +556,7 @@ exports.getSellOrder = async (req, res) => {
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       chainCodeFunctionName: "querystring",
       chainCodeName: CHAINCODE_NAMES.SELLORDER,
@@ -580,7 +628,7 @@ exports.mbeMarket = async (req, res) => {
     };
 
     let message = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
       channelName: CHAINCODE_CHANNEL,
       data: marketData,
@@ -609,7 +657,7 @@ exports.getMbeMarket = async (req, res) => {
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       chainCodeFunctionName: "querystring",
       chainCodeName: CHAINCODE_NAMES.SELLORDER,
@@ -651,7 +699,7 @@ exports.purchaseLog = async (req, res) => {
       TradeValue,
     };
     let message = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
       channelName: CHAINCODE_CHANNEL,
       data: purchaseLogData,
@@ -680,7 +728,7 @@ exports.getPurchaseLog = async (req, res) => {
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: "pintu", org: "org1MSP" },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       chainCodeFunctionName: "querystring",
       chainCodeName: CHAINCODE_NAMES.PURCHASELOG,
