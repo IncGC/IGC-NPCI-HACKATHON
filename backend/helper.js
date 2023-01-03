@@ -10,7 +10,7 @@
 "CreditRating":"String",
 "NumOfToken":"String",
 "NumOfLots":"String",
-"TransactionType":"String",
+"TransactionsType":"String",
 "DetokenizedToken":"String",
 "AskedPrice":"String",
 "BidPrice":"String",

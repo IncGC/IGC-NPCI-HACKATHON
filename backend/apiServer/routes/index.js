@@ -41,7 +41,7 @@ router.get('/transactionsCentre', trasactions.getTrasactions)
 
 router.post("/create_investor", investor.createInvestor);
 router.post("/login", investor.login);
-
+router.post('/custodian', investor.custodian);
 
 
 router.get("/",passport.authenticate("jwt", { session: false }),investor.getInvestor);

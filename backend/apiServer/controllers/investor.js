@@ -263,3 +263,33 @@ exports.InvestorDetails = async (req, res) => {
   }
 };
 
+exports.custodian= async(req, res)=>{
+  try{
+    const {email} = req.body;
+    let user = await UserModel.findOne({email});
+    if(user){
+      const salt = await bcrypt.genSalt(10);
+      let generatedPassword = "custodian"
+      let hashedpassword = await bcrypt.hash(generatedPassword, salt);
+  
+  
+      let custodian = await CustodianModel.findOneAndUpdate({email}, {$set:{
+        password:hashedpassword
+      }});
+      custodian.password=hashedpassword
+      res.status(200).json({
+        status: 200,
+        message: custodian,
+      });
+    } else{
+      res.status(200).json({
+        status: 200,
+        message: "No custodian is there !",
+      });
+    }
+  }catch(err){
+    // HandleResponseError(res, err);
+    res.send(err);
+  }
+};
+
