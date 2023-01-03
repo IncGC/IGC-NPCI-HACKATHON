@@ -44,10 +44,10 @@ router.post("/login", investor.login);
 
 
 
-router.get("/",investor.getInvestor);
+router.get("/",passport.authenticate("jwt", { session: false }),investor.getInvestor);
 router.post("/forgot", investor.forgotPassword);
 
-router.get("/getUserDetails", investor.InvestorDetails);
+router.get("/getUserDetails",passport.authenticate("jwt", { session: false }), investor.InvestorDetails);
 
 router.get('/singleUser', investor.getInvestor)
 
@@ -55,7 +55,7 @@ router.route('/order').post(order.orderbook).get(order.orderbookget);
 
 router.route('/Bond').post(Bond.BondAPI).get(Bond.BondAPIGet)
 
-router.get('/getBonddetailsofUser', Bond.getBondDetails);
+router.get('/getBonddetailsofUser',passport.authenticate("jwt", { session: false }), Bond.getBondDetails);
 
 router.route('/org').post(data.orgPost).get(data.orgGet)
 

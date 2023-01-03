@@ -186,7 +186,7 @@ app.post("/pushWallets", async (req, res) => {
 
 const TransactionsModel = require('./models/transactions');
 
-app.post("/tokenize", async (req, res) => {
+app.post("/tokenize",passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     let bondDetails = await Bonds.find({
       Isin: req.body.Isin,
@@ -253,7 +253,7 @@ app.post("/tokenize", async (req, res) => {
   }
 });
 
-app.post("/deTokenize", async (req, res) => {
+app.post("/deTokenize", passport.authenticate("jwt", { session: false }),async (req, res) => {
   try {
     let bondDetails = await Bonds.find({
       Isin: req.body.Isin,
@@ -308,7 +308,7 @@ app.post("/deTokenize", async (req, res) => {
   }
 });
 
-app.get('/detokenizedtoken', async(req,res)=>{
+app.get('/detokenizedtoken',passport.authenticate("jwt", { session: false }), async(req,res)=>{
   try{
     const{
       MbeId,
@@ -350,7 +350,7 @@ app.post("/convertToBond", async (req, res) => {
   }
 });
 
-app.post("/placeSellOrder", async (req, res) => {
+app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),async (req, res) => {
   try {
     let bondDetails = await Bonds.find({
       Isin: req.body.Isin,
@@ -420,7 +420,7 @@ app.post("/placeSellOrder", async (req, res) => {
   }
 });
 
-app.post("/placeBuyOrder", async (req, res) => {
+app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     let walletBalance = await Wallet.find({ MbeId: req.body.MbeId });
     console.log(walletBalance);
@@ -507,7 +507,7 @@ app.get("/compareOrderBook", async (req, res) => {
   }
 });
 
-app.get("/purchaselog", async(req,res)=>{
+app.get("/purchaselog",passport.authenticate("jwt", { session: false }), async(req,res)=>{
   try{
       let purchaseLogData= await PurchaseLog.find();
 
@@ -525,7 +525,7 @@ app.get("/purchaselog", async(req,res)=>{
 })
 
 
-app.get("/balance", async(req,res)=>{
+app.get("/balance",passport.authenticate("jwt", { session: false }), async(req,res)=>{
   try{
       let balanceData= await Wallet.findOne({MbeId:req.query.MbeId});
       res.status(200).json({
@@ -574,7 +574,7 @@ app.get('/buyOrder', async(req, res)=>{
   }
 });
 
-app.get('/buyOrdersingle', async(req, res)=>{
+app.get('/buyOrdersingle',passport.authenticate("jwt", { session: false }), async(req, res)=>{
   try{
       let buyOrder = await BuyOrder.findOne({MbeId:req.query.MbeId});
 
@@ -610,7 +610,7 @@ app.get('/sellOrder', async(req, res)=>{
   }
 });
 
-app.get('/sellOrderSingle', async(req, res)=>{
+app.get('/sellOrderSingle',passport.authenticate("jwt", { session: false }), async(req, res)=>{
   try{
       let sellOrder = await SellOrder.findOne({MbeId:req.query.MbeId});
 
@@ -657,7 +657,7 @@ app.post('/walletbalanceAddition',  passport.authenticate("jwt", { session: fals
 module.exports = app;
 
 
-app.get('/listInvestors', async (req, res) => {
+app.get('/listInvestors',passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
    
     // console.log("hihihihi")
