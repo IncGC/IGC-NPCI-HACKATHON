@@ -40,6 +40,20 @@ exports.createInvestor = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     let generatedPassword = "pwd_" + panCarddata.panCard;
     let hashedpassword = await bcrypt.hash(generatedPassword, salt);
+
+
+
+    var generateMBEid = function () {
+      var digits = "0123456789";
+      let OTP = "";
+      for (let i = 0; i < 4; i++) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+      }
+      return OTP;
+    };
+    var MBEID = "MBE"+generateMBEid();
+    console.log(MBEID);
+
     // console.log(userResult);
     if (panCarddata) {
       var userResult = await UserModel.updateOne(
@@ -57,7 +71,7 @@ exports.createInvestor = async (req, res) => {
             DOB: panCarddata.DOB,
             password: hashedpassword,
             role: "investor",
-            MbeId: panCarddata.email,
+            MbeId:panCarddata.email,
             nse_registered: false,
           },
         }
@@ -116,27 +130,6 @@ exports.createInvestor = async (req, res) => {
       });
     }
 
-    const userData = {
-      Id: generateId(),
-      Participant_id: generateId(),
-      CreatedOn: new Date(),
-      CreatedBy: "admin",
-      IsDelete: false,
-      FirstName: panCarddata.firstName,
-      LastName: panCarddata.lastName,
-      FatherName: panCarddata.fatherName,
-      Nationality: panCarddata.Nationality,
-      Email: panCarddata.email,
-      PhoneNumber: panCarddata.phoneNumber,
-      Gender: panCarddata.gender,
-      Address: panCarddata.address,
-      DOB: panCarddata.DOB,
-      role: "investor",
-    };
-    console.log(userData);
-
-    console.log(userData);
-
 
     // userResult = { ...userResult._doc };
     const userResult1 = await UserModel.findOne({ panCard }).select(
@@ -167,6 +160,7 @@ exports.login = async (req, res) => {
           userId: exiRes._id,
           email: exiRes.email,
           role: exiRes.role,
+          MbeId:exiRes.MbeId
         }; //Create JWT Payload
 
         //Sign Token

@@ -184,6 +184,8 @@ app.post("/pushWallets", async (req, res) => {
   }
 });
 
+const TransactionsModel = require('./models/transactions');
+
 app.post("/tokenize", async (req, res) => {
   try {
     let bondDetails = await Bonds.find({

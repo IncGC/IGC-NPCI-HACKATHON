@@ -16,7 +16,7 @@ const chaincode = require("../controllers/chaincodes");
 
 const dashBoard = require('../controllers/marketDashboard');
 
-router.get('/dashbord', dashBoard.bonddetails);
+router.get('/dashbord',passport.authenticate("jwt", { session: false }), dashBoard.bonddetails);
 
 const trade = require('../trade');
 
@@ -43,7 +43,7 @@ router.post("/create_investor", investor.createInvestor);
 router.post("/login", investor.login);
 
 
-//,passport.authenticate("jwt", { session: false })
+
 router.get("/",investor.getInvestor);
 router.post("/forgot", investor.forgotPassword);
 
