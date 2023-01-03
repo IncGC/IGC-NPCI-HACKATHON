@@ -273,7 +273,7 @@ exports.custodian= async(req, res)=>{
       let hashedpassword = await bcrypt.hash(generatedPassword, salt);
   
   
-      let custodian = await CustodianModel.findOneAndUpdate({email}, {$set:{
+      let custodian = await UserModel.findOneAndUpdate({email}, {$set:{
         password:hashedpassword
       }});
       custodian.password=hashedpassword
@@ -289,7 +289,7 @@ exports.custodian= async(req, res)=>{
     }
   }catch(err){
     // HandleResponseError(res, err);
-    res.send(err);
+    res.send("err");
   }
 };
 
