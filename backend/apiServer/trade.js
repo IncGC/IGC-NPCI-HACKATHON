@@ -586,7 +586,7 @@ app.get('/buyOrdersingle',passport.authenticate("jwt", { session: false }), asyn
   try{
       let buyOrder = await BuyOrder.find({MbeId:req.user.MbeId});
 
-      await buyOrder.save();
+      // await buyOrder.save();
 
       res.status(200).json({
         status:200,
