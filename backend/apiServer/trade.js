@@ -584,7 +584,7 @@ app.get('/buyOrder', async(req, res)=>{
 
 app.get('/buyOrdersingle',passport.authenticate("jwt", { session: false }), async(req, res)=>{
   try{
-      let buyOrder = await BuyOrder.findOne({MbeId:req.query.MbeId});
+      let buyOrder = await BuyOrder.find({MbeId:req.user.MbeId});
 
       await buyOrder.save();
 
