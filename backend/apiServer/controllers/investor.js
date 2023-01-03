@@ -82,10 +82,11 @@ exports.createInvestor = async (req, res) => {
               your username is : ${panCarddata.email} and your password is ${generatedPassword}. thank you `;
 
       console.log(userInfo);
-      const emailaddress = panCarddata.email;
-      await mailer.main(emailaddress, "credentials", userInfo);
+      const PanEmailaddress = panCarddata.email;
+      
+      await mailer.main(PanEmailaddress, "credentials", userInfo);
 
-      await registerUser({ OrgMSP: "org1MSP", userId: emailaddress });
+      await registerUser({ OrgMSP: "org1MSP", userId: PanEmailaddress });
 
       res.status(200).json({
         status_code: 200,
@@ -119,10 +120,10 @@ exports.createInvestor = async (req, res) => {
               your username is : ${nseData.email} and your password is ${generatedPassword}. thank you `;
 
       console.log(userInfo);
-      const emailaddress = nseData.email;
-      await mailer.main(emailaddress, "credentials", userInfo);
+      const NseEmailaddress = nseData.email;
+      await mailer.main(NseEmailaddress, "credentials", userInfo);
 
-      await registerUser({ OrgMSP: "org1MSP", userId: emailaddress });
+      await registerUser({ OrgMSP: "org1MSP", userId: NseEmailaddress });
 
       res.status(200).json({
         status_code: 200,
