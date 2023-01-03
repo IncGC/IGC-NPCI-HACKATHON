@@ -23,22 +23,24 @@ function Login() {
   }
 
   const onSubmit = () => {
-    console.log(details);
-    if (details.email === "custodian@gmail.com") {
-      onSuccess({ role: "custodian" })
-    } else if (details.email === "regulator@gmail.com") {
-      onSuccess({ role: "regulator" })
-    } else if (details.email === "mbe@gmail.com") {
-      onSuccess({ role: "mbe" })
-    } else {
-      login(details, onSuccess, onFailure);
-    }
+    // if (details.email === "custodian@gmail.com") {
+    //   onSuccess({ role: "custodian" })
+    // } else if (details.email === "regulator@gmail.com") {
+    //   onSuccess({ role: "regulator" })
+    // } else if (details.email === "mbe@gmail.com") {
+    //   onSuccess({ role: "mbe" })
+    // } else {
+    //   login(details, onSuccess, onFailure)
+    // }
+    login(details, onSuccess, onFailure)
   }
 
   const onSuccess = (payload) => {
     const nodes = ["investor", "custodian", "regulator", "mbe"]
+    const token = payload.token?.split(' ')[1] || ""
+    // console.log(token)
     if (nodes.includes(payload.role)) {
-      logIn(payload.role, details.email)
+      logIn(payload.role, details.email, token)
       navigate("/mbe-market")
     }
     successNotify("Successfully Logged In user")

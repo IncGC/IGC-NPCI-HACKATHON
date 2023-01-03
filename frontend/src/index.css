@@ -26,13 +26,13 @@
   }
 
   body ::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,.3);
+    background-color: rgba(0,0,0,.1);
     border-radius: 8px;
     box-shadow: none;
   }
 
   body ::-webkit-scrollbar-thumb:window-inactive {
-    background: rgba(255,255,255,.3);
+    background: rgba(0,0,0,.1);
   }
 
   label {

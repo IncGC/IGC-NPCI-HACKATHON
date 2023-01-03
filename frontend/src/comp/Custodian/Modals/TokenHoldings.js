@@ -18,7 +18,7 @@ function TokenHoldings({ isOpen, data, closeModal }) {
       setList(res)
     }
 
-    getTokenHoldings({"MbeId": data.email}, onSuccess)
+    getTokenHoldings({ "MbeId": data.email }, onSuccess)
   }, [data.email])
 
   return (
@@ -33,13 +33,13 @@ function TokenHoldings({ isOpen, data, closeModal }) {
           isLoading ? <Loader wrapperCls='h-[50vh]' /> :
             <table>
               <thead>
-                <tr className="sticky top-0 text-sm font-medium bg-slate-100 shadow-[0_1px_3px_0_rgba(255,255,255,.1)] z-1">
-                  <td className="w-36 px-4 py-2">Isin</td>
+                <tr className="sticky top-0 text-sm font-medium bg-slate-100 shadow-[0_1px_3px_0_rgba(0,0,0,.1)] z-1">
+                  <td className="w-36 px-4 py-2">ISIN</td>
                   <td className="w-60 px-4 py-2">Issuer Name</td>
                   <td className="w-32 px-4 py-2 text-center">Maturity Date</td>
                   <td className="w-32 px-4 py-2">Coupon Rate</td>
                   <td className="w-28 px-4 py-2">Face Value</td>
-                  <td className="w-24 px-4 py-2">Purchase Price</td>
+                  {/* <td className="w-24 px-4 py-2">Purchase Price</td> */}
                   <td className="w-32 px-4 py-2">Number of tokens</td>
                   <td className="w-24 px-4 py-2">Ltp</td>
                   <td className="w-28 px-4 py-2">Current Price</td>
@@ -51,21 +51,21 @@ function TokenHoldings({ isOpen, data, closeModal }) {
                   list
                     .filter((a, i) => list[i].IsTokenized === true)
                     .map(li => (
-                    <tr
-                      key={li.id}
-                      className="even:bg-slate-50 hover:bg-slate-200 cursor-pointer group"
-                    >
-                      <td className="px-4 py-2 text-sm opacity-80 group-hover:opacity-100"> {li.Isin} </td>
-                      <td className="px-4 py-2 text-sm font-medium opacity-80 group-hover:opacity-100"> {li.IssuerName} </td>
-                      <td className="px-4 py-2 text-sm opacity-80 group-hover:opacity-100 text-center"> {li.MaturityDate} </td>
-                      <td className="px-4 py-2 text-sm opacity-80 group-hover:opacity-100"> {li.CouponRate} </td>
-                      <td className="px-4 py-2 text-sm opacity-80 group-hover:opacity-100"> {li.FaceValue} </td>
-                      <td className="px-4 py-2 text-sm opacity-80 group-hover:opacity-100"> {li.askPrice || 0}</td>
-                      <td className="px-4 py-2 text-xs opacity-80 group-hover:opacity-100"> {li.TokenQtyRemaining} </td>
-                      <td className="px-4 py-2 text-xs opacity-80 group-hover:opacity-100"> {li.Ltp} </td>
-                      <td className="px-4 py-2 text-xs opacity-80 group-hover:opacity-100"> {li.bidPrice || 0} </td>
-                    </tr>
-                  ))
+                      <tr
+                        key={li._id}
+                        className="text-sm even:bg-slate-50 hover:bg-slate-200 cursor-pointer"
+                      >
+                        <td className="px-4 py-2"> {li.Isin} </td>
+                        <td className="px-4 py-2 font-medium"> {li.IssuerName} </td>
+                        <td className="px-4 py-2 text-center"> {li.MaturityDate} </td>
+                        <td className="px-4 py-2"> {li.CouponRate} </td>
+                        <td className="px-4 py-2"> {li.FaceValue} </td>
+                        {/* <td className="px-4 py-2"> {li.askPrice || 0}</td> */}
+                        <td className="px-4 py-2 text-xs"> {li.TokenQtyRemaining} </td>
+                        <td className="px-4 py-2 text-xs"> {li.Ltp} </td>
+                        <td className="px-4 py-2 text-xs"> {Math.floor(li.Ltp * li.TokenQtyRemaining)} </td>
+                      </tr>
+                    ))
                 }
               </tbody>
             </table>

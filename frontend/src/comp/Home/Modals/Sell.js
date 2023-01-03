@@ -35,7 +35,6 @@ function Sell({ isOpen, data, closeModal }) {
   const onClick = () => {
     if (!isTradeOpen) return setIsTradeOpen(true)
     else {
-      console.log(details)
       sellOrder(details, onSuccess, onFailure)
     }
   }
@@ -59,7 +58,7 @@ function Sell({ isOpen, data, closeModal }) {
       <div className='scroll-y'>
         <div className='grid md:grid-cols-2 gap-4 mb-4'>
           <Input
-            lable='Isin'
+            lable='ISIN'
             value={data.Isin}
           />
           <Input
@@ -115,7 +114,7 @@ function Sell({ isOpen, data, closeModal }) {
 
             <div>
               <label className='mb-1 font-medium' htmlFor="">Total</label>
-              <input type="text" value={Number(details.NumOfToken) * Number(details.Price)} readOnly />
+              <input type="text" value={Math.round(Number(details.NumOfToken) * Number(details.Price))} readOnly />
             </div>
           </div>
         }
@@ -125,7 +124,7 @@ function Sell({ isOpen, data, closeModal }) {
         className='block w-1/2 mx-auto rounded-md text-white bg-emerald-400 hover:bg-emerald-700'
         onClick={onClick}
       >
-        {isTradeOpen ? "Execute Trade" : "Sell"}
+        {isTradeOpen ? "Place Order" : "Sell"}
       </button>
     </Modal>
   )

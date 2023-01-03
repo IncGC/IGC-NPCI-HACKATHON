@@ -64,7 +64,7 @@ console.log(cbdcwalletData);
 
 exports.getcbdcwallet = async (req, res) => {
   try {
-    let { MbeId } = req.query;
+    let { MbeId } = req.user;
 
     let query = { selector: { MbeId } };
 
@@ -97,29 +97,29 @@ exports.getcbdcwallet = async (req, res) => {
   }
 };
 
-exports.cbdcwalletupdate = async (req, res) => {
+exports.cbdcwalletUpdate = async (req, res) => {
   try{
     let{
       CBDCbalance,
     } = req.body;
     const cbdcwalletData= {
-      Id:generateId(),
+      // Id:generateId(),
       CreatedOn:getNow(),
-      CreatedBy: "admin",
+      CreatedBy: req.user.MbeId,
       IsDelete:"false",
       IsHidden:"false",
-      IsUpdated:'false',
-      MbeId,
+      IsUpdated:'true',
+      // MbeId,
       CBDCbalance
     }
 console.log(cbdcwalletData);
 
     let message = await invokeTransaction({
         metaInfo:{userName:req.user.MbeId, org:"org1MSP"},
-        chainCodeAction:'create',
+        chainCodeAction:'update',
         channelName:'common',
         data:cbdcwalletData,
-        chainCodeFunctionName:'create',
+        chainCodeFunctionName:'update',
         chainCodeName:'CBDCwallet'
     })
     console.log(message);

@@ -19,6 +19,7 @@ const BondHoldings = lazy(() => import("./comp/Home/BondHoldings"))
 const MBEMarket = lazy(() => import("./comp/Home/MBEMarket"))
 const Profile = lazy(() => import("./comp/Home/Profile"))
 const Home = lazy(() => import("./comp/Home"))
+const HomeIntro = lazy(() => import("./comp/Home/Home"))
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
         <Route path="forget-pass" element={<ForgetPass />} />
 
         <Route path="/" element={<Home />}>
-          <Route index element={<div></div>} />
+          <Route index element={<HomeIntro />} />
           <Route path="mbe-market" element={<MBEMarket />} />
           <Route path="/investor/profile" element={<Profile />} />
           {/* <Route path="/investor/cbdc-wallet" element={<CBDCWallet />} /> */}

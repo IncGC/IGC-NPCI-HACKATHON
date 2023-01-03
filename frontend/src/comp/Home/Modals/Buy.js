@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { buyOrder } from '../../../apis/apis';
 import useStore from '../../../store';
 
+import { errorNotify, successNotify } from "../../../helper/toastifyHelp";
 import Modal from '../../UIComp/Modal';
 import Input from '../common/Input';
-import { errorNotify, successNotify } from "../../../helper/toastifyHelp";
 
 // If executed “Trade executed, Visit transaction history for more details
 // If pending “Transaction pending, Visit transaction history for more details
@@ -40,7 +40,6 @@ function Buy({ isOpen, data, closeModal }) {
   const onClick = () => {
     if (!isTradeOpen) return setIsTradeOpen(true)
     else {
-      console.log(details)
       buyOrder(details, onSuccess, onFailure)
     }
   }
@@ -64,7 +63,7 @@ function Buy({ isOpen, data, closeModal }) {
       <div className='scroll-y'>
         <div className='grid md:grid-cols-2 gap-4 mb-4'>
           <Input
-            lable='Isin'
+            lable='ISIN'
             value={data.Isin}
           />
           <Input
@@ -109,12 +108,12 @@ function Buy({ isOpen, data, closeModal }) {
                 <input type="text" onChange={onChange} name="Price" />
               </div>
             </> : <>
-              <Input
+              {/* <Input
                 lable='Number of Tokens'
                 value="500"
                 lableCls='w-auto'
                 inputCls='ml-2'
-              />
+              /> */}
 
               <div className='dc gap-8 grid-col-full'>
                 <button
@@ -150,7 +149,7 @@ function Buy({ isOpen, data, closeModal }) {
 
             <div>
               <label className='mb-1 font-medium' htmlFor="">Total</label>
-              <input type="text" value={Number(details.NumOfToken) * Number(details.Price)} readOnly />
+              <input type="text" value={Math.round(Number(details.NumOfToken) * Number(details.Price))} readOnly />
             </div>
           </div>
         }
@@ -169,7 +168,7 @@ function Buy({ isOpen, data, closeModal }) {
           className='block w-1/2 mx-auto rounded-md text-white bg-emerald-400 hover:bg-emerald-700'
           onClick={onClick}
         >
-          {isTradeOpen ? "Execute Trade" : "Buy"}
+          {isTradeOpen ? "Place Order" : "Buy"}
         </button>
       }
     </Modal>

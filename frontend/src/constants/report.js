@@ -10,7 +10,7 @@ const report = [
     CouponRate: "7.21",
     MaturityDate: "30-01-2022",
     volumn: 20000,
-    noOfToken: 120000,
+    NumOfToken: 120000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -20,7 +20,7 @@ const report = [
     CouponRate: "6.4",
     MaturityDate: "29-02-2022",
     volumn: 300000,
-    noOfToken: 170000,
+    NumOfToken: 170000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -30,7 +30,7 @@ const report = [
     CouponRate: "8.55",
     MaturityDate: "08-03-2022",
     volumn: 1000000,
-    noOfToken: 106000,
+    NumOfToken: 106000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -40,7 +40,7 @@ const report = [
     CouponRate: "7.4",
     MaturityDate: "26-04-2022",
     volumn: 70000,
-    noOfToken: 19900,
+    NumOfToken: 19900,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -50,7 +50,7 @@ const report = [
     CouponRate: "9.2",
     MaturityDate: "28-04-2022",
     volumn: 108000,
-    noOfToken: 70000,
+    NumOfToken: 70000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -60,7 +60,7 @@ const report = [
     CouponRate: "8.95",
     MaturityDate: "21-05-2022",
     volumn: 3000000,
-    noOfToken: 90000,
+    NumOfToken: 90000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -70,7 +70,7 @@ const report = [
     CouponRate: "8",
     MaturityDate: "24-05-2022",
     volumn: 70000,
-    noOfToken: 83000,
+    NumOfToken: 83000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -80,7 +80,7 @@ const report = [
     CouponRate: "8.5",
     MaturityDate: "17-06-2022",
     volumn: 800000,
-    noOfToken: 520000,
+    NumOfToken: 520000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -90,7 +90,7 @@ const report = [
     CouponRate: "9.05",
     MaturityDate: "28-06-2022",
     volumn: 4000000,
-    noOfToken: 820000,
+    NumOfToken: 820000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -100,7 +100,7 @@ const report = [
     CouponRate: "8.15",
     MaturityDate: "30-07-2022",
     volumn: 1000000,
-    noOfToken: 200800,
+    NumOfToken: 200800,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -110,7 +110,7 @@ const report = [
     CouponRate: "8",
     MaturityDate: "07-08-2022",
     volumn: 90000,
-    noOfToken: 96200,
+    NumOfToken: 96200,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -120,7 +120,7 @@ const report = [
     CouponRate: "7.2",
     MaturityDate: "20-07-2022",
     volumn: 700000,
-    noOfToken: 120000,
+    NumOfToken: 120000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -130,7 +130,7 @@ const report = [
     CouponRate: "7.3",
     MaturityDate: "09-08-2022",
     volumn: 900000,
-    noOfToken: 72000,
+    NumOfToken: 72000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -140,7 +140,7 @@ const report = [
     CouponRate: "7.85",
     MaturityDate: "13-08-2022",
     volumn: 500000,
-    noOfToken: 45800,
+    NumOfToken: 45800,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -150,7 +150,7 @@ const report = [
     CouponRate: "8.5",
     MaturityDate: "17-08-2022",
     volumn: 600000,
-    noOfToken: 260000,
+    NumOfToken: 260000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -160,7 +160,7 @@ const report = [
     CouponRate: "6.15",
     MaturityDate: "19-09-2022",
     volumn: 8000000,
-    noOfToken: 270000,
+    NumOfToken: 270000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -170,7 +170,7 @@ const report = [
     CouponRate: "8.25",
     MaturityDate: "05-10-2022",
     volumn: 68000,
-    noOfToken: 120000,
+    NumOfToken: 120000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -180,7 +180,7 @@ const report = [
     CouponRate: "9.15",
     MaturityDate: "13-10-2022",
     volumn: 750000,
-    noOfToken: 100000,
+    NumOfToken: 100000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -190,7 +190,7 @@ const report = [
     CouponRate: "7.17",
     MaturityDate: "28-10-2022",
     volumn: 690000,
-    noOfToken: 270000,
+    NumOfToken: 270000,
     TransactionsType: type[getRandom(0, 2)],
   },
   {
@@ -200,7 +200,7 @@ const report = [
     CouponRate: "8.4",
     MaturityDate: "06-12-2022",
     volumn: 10000000,
-    noOfToken: 120000,
+    NumOfToken: 120000,
     TransactionsType: type[getRandom(0, 2)],
   },
 ]

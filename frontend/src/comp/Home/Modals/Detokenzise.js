@@ -49,7 +49,7 @@ function Detokenzise({ isOpen, data, closeModal }) {
       <div className='scroll-y'>
         <div className='grid md:grid-cols-2 gap-4 mb-4'>
           <Input
-            lable='Isin'
+            lable='ISIN'
             value={data.Isin}
           />
           <Input

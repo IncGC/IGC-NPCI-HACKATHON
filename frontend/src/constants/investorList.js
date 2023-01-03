@@ -5,7 +5,7 @@ const investorList = [
     MbeId: "mbe-1538-v-98",
     name: "Raj Kumar",
     arr: [2, 3, 7, 9, 10, 16],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "DVPR1438",
@@ -21,7 +21,7 @@ const investorList = [
     MbeId: "mbe-5800-v-07",
     name: "Shreyansh Nema",
     arr: [1, 4, 7, 9, 15, 18],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "BWMLK1234G",
@@ -37,7 +37,7 @@ const investorList = [
     MbeId: "mbe-5768-v-76",
     name: "Prudhvi Krishna",
     arr: [6, 16, 18, 19, 20],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "CHAAJ83736",
@@ -53,7 +53,7 @@ const investorList = [
     MbeId: "mbe-1158-v-67",
     name: "Mohammed Muhsin",
     arr: [9, 10, 18, 12, 13],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "ETMPM179N",
@@ -69,7 +69,7 @@ const investorList = [
     MbeId: "mbe-6679-v-87",
     name: "Kesavan",
     arr: [1, 6, 7, 14, 13, 20],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "KSV87654",
@@ -85,7 +85,7 @@ const investorList = [
     MbeId: "mbe-1238-v-46",
     name: "Vasanth",
     arr: [2, 3, 7, 9, 10, 16],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "DVVK1438",
@@ -101,7 +101,7 @@ const investorList = [
     MbeId: "mbe-3450-v-06",
     name: "Mohanlal Nema",
     arr: [1, 4, 7, 9, 15, 18],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "BWFRG1664G",
@@ -117,7 +117,7 @@ const investorList = [
     MbeId: "mbe-1885-v-99",
     name: "Srinivas",
     arr: [6, 16, 18, 19, 20],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "CHREF83767",
@@ -133,7 +133,7 @@ const investorList = [
     MbeId: "mbe-42114-v-87",
     name: "Musthafa",
     arr: [9, 10, 18, 12, 13],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "ETMPM179N",
@@ -149,7 +149,7 @@ const investorList = [
     MbeId: "mbe-4570-v-61",
     name: "Sekar",
     arr: [1, 6, 7, 14, 13, 20],
-    noOfToken: getRandom(5, 20) * 1000,
+    NumOfToken: getRandom(5, 20) * 1000,
     currentValue: getRandom(5, 16) * 800,
     personal: {
       pan: "KS399H654",

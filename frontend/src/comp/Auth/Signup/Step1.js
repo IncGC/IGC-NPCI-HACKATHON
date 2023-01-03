@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { errorNotify, successNotify } from '../../../helper/toastifyHelp';
 import useStore from "../../../store/index.js"
-import { fetchNseData, postNseData, sendOtp, verifyOtp } from "../../../apis/apis";
+import { fetchNseData, getPancardData, postNseData, sendOtp, verifyOtp } from "../../../apis/apis";
 
 function RegisteredInvesterWithNSE({ updateStep }) {
   const setNseDetials = useStore((state) => state.setNseData)
@@ -152,9 +152,20 @@ function NewUser({ updateStep }) {
     setShowOTPForPAN(true)
   }
 
+  const onSuccessPanCardDataFetch = (payload) => {
+    console.log(payload)
+    for (const [key, value] of Object.entries(payload)) {
+      setNseData(p => ({
+        ...p,
+        [key]: value
+      }))
+    }
+  }
+
   const onSuccessPanOtpVerify = () => {
-    setIsKycShown(true)
     delete details['enterOtp'];
+    getPancardData({ "panCard": nseData.panCard }, onSuccessPanCardDataFetch)
+    setIsKycShown(true)
   }
 
   const onSuccessAadharOtpSend = () => {
@@ -232,7 +243,8 @@ function NewUser({ updateStep }) {
                 className="p-3 rounded"
                 name="firstName"
                 placeholder="First Name"
-                onChange={updateNseData}
+                readOnly
+                value={nseData.firstName}
               />
 
               <input
@@ -240,7 +252,8 @@ function NewUser({ updateStep }) {
                 className="p-3 rounded"
                 name="lastName"
                 placeholder="Last Name"
-                onChange={updateNseData}
+                readOnly
+                value={nseData.lastName}
               />
             </div>
 
@@ -250,7 +263,8 @@ function NewUser({ updateStep }) {
                 className="p-3 rounded"
                 name="fatherName"
                 placeholder="Father Name"
-                onChange={updateNseData}
+                readOnly
+                value={nseData.fatherName}
               />
 
               <input
@@ -258,7 +272,8 @@ function NewUser({ updateStep }) {
                 className="p-3 rounded"
                 name="gender"
                 placeholder="Gender"
-                onChange={updateNseData}
+                readOnly
+                value={nseData.gender}
               />
             </div>
 
@@ -268,7 +283,8 @@ function NewUser({ updateStep }) {
                 className="p-3 rounded"
                 name="DOB"
                 placeholder="Date of Birth"
-                onChange={updateNseData}
+                readOnly
+                value={nseData.DOB}
               />
 
               <input
@@ -276,7 +292,8 @@ function NewUser({ updateStep }) {
                 className="p-3 rounded"
                 name="Nationality"
                 placeholder="Nationality"
-                onChange={updateNseData}
+                readOnly
+                value={nseData.Nationality}
               />
             </div>
 
@@ -285,6 +302,8 @@ function NewUser({ updateStep }) {
               className="p-3 rounded mb-4"
               name="address"
               placeholder="Address"
+              readOnly
+              value={nseData.address}
             />
 
             <label htmlFor="">KYC Verification</label>
@@ -293,7 +312,8 @@ function NewUser({ updateStep }) {
               className="p-3 rounded mb-4"
               name="aadharCard"
               placeholder="Aadhar Card Number"
-              onChange={updateNseData}
+              readOnly
+              value={nseData.aadharCard}
             />
 
             {

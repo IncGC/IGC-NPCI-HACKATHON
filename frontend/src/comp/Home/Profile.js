@@ -16,8 +16,8 @@ function Input({ lable = "", value = "" }) {
 function Profile() {
   const email = useStore(state => state.email)
   const [userDetails, setUserDetails] = useState({})
+  const [CBDCBalance, setCBDCBalance] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [CBDCBalance, setCBDCBalance] = useState({})
 
   useEffect(() => {
     const onSuccessUserDetails = (payload) => {
@@ -26,18 +26,17 @@ function Profile() {
     }
 
     const onSuccessCBDCBalanceFetch = (payload) => {
-      setCBDCBalance(payload)
+      setCBDCBalance(payload?.CBDCbalance || 0)
     }
 
     getUserDetails({ "email": email }, onSuccessUserDetails)
-
     fetchCBDCBalance({ "MbeId": email }, onSuccessCBDCBalanceFetch)
   }, [email])
 
   if (loading) return <Loader wrapperCls='h-[calc(100vh-64px)]' />
 
   return (
-    <section className="grid gap-4 max-w-xl mx-4 sm:mx-auto px-6 py-10 bg-slate-800 rounded-b-2xl">
+    <section className="grid gap-4 max-w-xl mx-4 sm:mx-auto px-6 py-10 bg-slate-50 rounded-b-2xl">
       <Input
         lable='Name'
         value={userDetails.firstName + " " + userDetails.lastName}
@@ -48,7 +47,7 @@ function Profile() {
       />
       <Input
         lable='CBDC Balance'
-        value={CBDCBalance.CBDCbalance}
+        value={CBDCBalance}
       />
       {/* <Input
         lable='PAN Number'

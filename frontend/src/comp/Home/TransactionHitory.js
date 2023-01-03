@@ -17,7 +17,7 @@ function TransactionHitory() {
 
   useEffect(() => {
     const onSuccess = (payload) => {
-      setTransactions(payload.message)
+      setTransactions(payload)
       setLoading(false)
     }
 
@@ -29,17 +29,17 @@ function TransactionHitory() {
   if (loading) return <Loader wrapperCls='h-[calc(100vh-64px)]' />
 
   return (
-    <section className="dfc h-[calc(100vh-64px)] border-r border-[rgba(255,255,255,.3)] overflow-y-hidden">
+    <section className="dfc gap-0 h-[calc(100vh-64px)] overflow-y-hidden">
       <h1 className='py-2 text-2xl text-center border-b border-[rgba(255,255,255,.6)]'>
-        Transactions Hitory
+        Transactions History
       </h1>
 
       <div className="scroll-y overflow-x-auto">
         <table className="w-full table-fixed">
           <thead>
-            <tr className="sticky top-0 text-sm bg-slate-900 shadow-[0_1px_3px_0_rgba(255,255,255,.1)] z-1">
+            <tr className="sticky top-0 text-sm bg-slate-200 shadow-[0_1px_3px_0_rgba(0,0,0,.1)] z-1">
               <td className="w-24 pl-8 pr-4 py-2">Date</td>
-              <td className="w-28 px-4 py-2">Isin</td>
+              <td className="w-28 px-4 py-2">ISIN</td>
               <td className="w-28 px-4 py-2">Transaction Id</td>
               <td className="w-56 px-4 py-2">Issuer Name</td>
               <td className="w-32 px-4 py-2">TransactionsType</td>
@@ -54,28 +54,25 @@ function TransactionHitory() {
             {
               transactions.map((li, i) => (
                 <tr
-                  key={li.id}
-                  className="hover:bg-[rgba(255,255,255,.1)] cursor-pointer group"
+                  key={li._id}
+                  className="text-sm even:bg-slate-50 hover:bg-slate-100 cursor-pointer"
                 >
-                  <td className="pl-8 pr-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.MaturityDate} </td>
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.securityCode} </td>
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.transactionId} </td>
-                  <td className="px-4 py-2 text-sm font-medium opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.IssuerName} </td>
-                  <td className={`px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 ${getTypeClr(li.TransactionsType)}`}> {li.TransactionsType} </td>
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.noOfToken / 100} </td>
-                  <td className="px-4 py-2 text-sm opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100"> {li.transactionAmount * 1000} </td>
-                  <td className={`px-4 py-2 text-xs opacity-80 border-b border-[rgba(255,255,255,.3)] group-hover:opacity-100 ${i % 5 === 0 ? "text-red-400" : "text-emerald-400"}`}>
+                  <td className="pl-8 pr-4 py-2"> {Intl.DateTimeFormat('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit'}).format(Date.parse(li.createdAt))} </td>
+                  <td className="px-4 py-2"> {li.Isin} </td>
+                  <td className="px-4 py-2 break-words"> {li.OrderId} </td>
+                  <td className="px-4 py-2 font-medium"> {li.IssuerName} </td>
+                  <td className={`px-4 py-2 ${getTypeClr(li.TransactionsType)}`}> {li.TransactionsType} </td>
+                  <td className="px-4 py-2"> {li.NumOfToken} </td>
+                  <td className="px-4 py-2"> {Number(li.NumOfToken) * Number(li.Price)} </td>
+                  <td className={`px-4 py-2 text-xs text-emerald-400`}>
                     {
-                      i % 5 === 0
-                        ? "Failure"
-                        : "Success"
+                      li.IsProcessed ? "Success" : "Pending"
                     }
                   </td>
-                  <td className='px-4 py-2 text-sm border-b border-[rgba(255,255,255,.3)]'>
+                  <td className='px-4 py-2'>
                     {
-                      i % 5 !== 0 &&
                       <Print
-                        className="mx-auto fill-white opacity-70 hover:opacity-100"
+                        className="mx-auto"
                         onClick={updateOpen}
                       />
                     }

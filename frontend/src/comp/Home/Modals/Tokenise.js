@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { errorNotify, successNotify } from "../../../helper/toastifyHelp";
 import { tokenize } from '../../../apis/apis';
 import Modal from '../../UIComp/Modal';
 import Input from '../common/Input';
-import { errorNotify, successNotify } from "../../../helper/toastifyHelp";
 
 // If Tokenized “Tokenized , Visit transaction history & My token holdings for more details”.
 // If pending “Transaction pending, Visit transaction history for more details”.
@@ -45,7 +45,7 @@ function Tokenise({ isOpen, data, closeModal }) {
       <div className='scroll-y'>
         <div className='grid md:grid-cols-2 gap-4 mb-4'>
           <Input
-            lable='Isin'
+            lable='ISIN'
             value={data.Isin}
           />
           <Input
@@ -98,7 +98,7 @@ function Tokenise({ isOpen, data, closeModal }) {
                 }))
                 setDetails(p => ({
                   ...p,
-                  "TotalTokenQty": e.target.value*200000
+                  "TotalTokenQty": (e.target.value * 200000).toString()
                 }))
               }}
               className="no-number-arrows"
@@ -107,7 +107,7 @@ function Tokenise({ isOpen, data, closeModal }) {
 
           <div>
             <label className='mb-1 font-medium' htmlFor="">Number of Tokens</label>
-            <input type="text" value={noOfLots * 200000 || ""} disabled onChange={() => {}} name="totalTokenQty" />
+            <input type="text" value={noOfLots * 200000 || ""} disabled onChange={() => { }} name="TotalTokenQty" />
           </div>
 
           <div>

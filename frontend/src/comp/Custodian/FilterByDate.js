@@ -12,7 +12,7 @@ function FilterByDate({ setDateFilter }) {
 
   return (
     <>
-      <div className="range-picker animate-enter bg-slate-800 z-10 rounded-lg shadow-sm shadow-slate-300 origin-top-left">
+      <div className="range-picker animate-enter bg-slate-100 z-10 rounded-lg origin-top-left">
         <DatePicker
           selected={startDate}
           onChange={setStartDate}
@@ -24,7 +24,7 @@ function FilterByDate({ setDateFilter }) {
         />
       </div>
 
-      <div className="range-picker animate-enter bg-slate-800 z-10 rounded-lg shadow-sm shadow-slate-300 origin-top-left">
+      <div className="range-picker animate-enter bg-slate-100 z-10 rounded-lg origin-top-left">
         <DatePicker
           selected={endDate}
           onChange={setEndDate}
@@ -37,7 +37,7 @@ function FilterByDate({ setDateFilter }) {
       </div>
 
       <Search
-        className="w-4 h-4 fill-white opacity-100"
+        className="w-4 h-4"
         onClick={search}
       />
 
