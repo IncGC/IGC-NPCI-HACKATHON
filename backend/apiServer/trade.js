@@ -308,7 +308,7 @@ app.post("/deTokenize", passport.authenticate("jwt", { session: false }),async (
   }
 });
 
-app.get('/detokenizedtoken',passport.authenticate("jwt", { session: false }), async(req,res)=>{
+app.get('/detokenizedtoken', async(req,res)=>{
   try{
     const{
       MbeId,
@@ -525,7 +525,7 @@ app.get("/purchaselog",passport.authenticate("jwt", { session: false }), async(r
 })
 
 
-app.get("/balance",passport.authenticate("jwt", { session: false }), async(req,res)=>{
+app.get("/balance", async(req,res)=>{
   try{
       let balanceData= await Wallet.findOne({MbeId:req.query.MbeId});
       res.status(200).json({
