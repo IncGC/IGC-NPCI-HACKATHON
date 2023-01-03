@@ -22,8 +22,7 @@ const userSchema = new schema({
     bondholdingID: { type: ObjectId, ref: 'Bonds' },
     tokenholdingID:{type: ObjectId, ref :"Token"},
     transactionId: {type: ObjectId, ref : "Transaction"},
-    cbdcBalance:String,
-    createdBy: { type: ObjectId, ref: 'User' }
+    cbdcBalance:{type:ObjectId, ref:"Wallet"},
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

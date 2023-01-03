@@ -24,7 +24,7 @@ const {
   PurchaseLog,
 } = require("../models/Trade");
 
-//  registerUser({ OrgMSP: "org1MSP", userId: "pintu" });
+//  registerUser({ OrgMSP: "org1MSP", userId: "muhsin" });
 
 exports.createInvestor = async (req, res) => {
   try {
@@ -43,19 +43,21 @@ exports.createInvestor = async (req, res) => {
 
 
 
-    var generateMBEid = function () {
-      var digits = "0123456789";
-      let OTP = "";
-      for (let i = 0; i < 4; i++) {
-        OTP += digits[Math.floor(Math.random() * 10)];
-      }
-      return OTP;
-    };
-    var MBEID = "MBE"+generateMBEid();
-    console.log(MBEID);
+    // var generateMBEid = function () {
+    //   var digits = "0123456789";
+    //   let OTP = "";
+    //   for (let i = 0; i < 4; i++) {
+    //     OTP += digits[Math.floor(Math.random() * 10)];
+    //   }
+    //   return OTP;
+    // };
+    // var MBEID = "MBE"+generateMBEid();
+   
 
     // console.log(userResult);
     if (panCarddata) {
+      let MbeId = panCarddata.email;
+      console.log(MbeId);
       var userResult = await UserModel.updateOne(
         { phoneNumber },
         {
@@ -71,7 +73,7 @@ exports.createInvestor = async (req, res) => {
             DOB: panCarddata.DOB,
             password: hashedpassword,
             role: "investor",
-            MbeId:panCarddata.email,
+            MbeId:MbeId,
             nse_registered: false,
           },
         }
@@ -79,14 +81,25 @@ exports.createInvestor = async (req, res) => {
       console.log(userResult);
       // Sending the mail
       let userInfo = `Hi ${panCarddata.firstName}, your login credantials have been created .
-              your username is : ${panCarddata.email} and your password is ${generatedPassword}. thank you `;
+              your username is : ${MbeId} and your password is ${generatedPassword}. thank you `;
 
       console.log(userInfo);
-      const PanEmailaddress = panCarddata.email;
+      // const PanEmailaddress = panCarddata.email;
       
-      await mailer.main(PanEmailaddress, "credentials", userInfo);
+      await mailer.main(MbeId, "credentials", userInfo);
 
-      await registerUser({ OrgMSP: "org1MSP", userId: PanEmailaddress });
+      await registerUser({ OrgMSP: "org1MSP", userId: MbeId });
+
+      let wallet = await Wallet.findOne({MbeId});
+
+      if (!wallet){
+        let newWallet = await Wallet.create({MbeId:MbeId, CBDCbalance:"0"});
+        // await newWallet.create();
+
+          console.log(newWallet);
+      }
+
+      console.log("Wallet:", wallet);
 
       res.status(200).json({
         status_code: 200,
@@ -94,6 +107,10 @@ exports.createInvestor = async (req, res) => {
       });
       return;
     } else if (nseData) {
+
+      let MbeId = nseData.email;
+      console.log(MbeId);
+  
       var userResult = await UserModel.updateOne(
         { phoneNumber },
         {
@@ -109,7 +126,7 @@ exports.createInvestor = async (req, res) => {
             DOB: nseData.DOB,
             password: hashedpassword,
             role: "investor",
-            MbeId: nseData.email,
+            MbeId: MbeId,
             nse_registered: true,
           },
         }
@@ -117,13 +134,25 @@ exports.createInvestor = async (req, res) => {
       console.log(userResult);
       // Sending the mail
       let userInfo = `Hi ${nseData.firstName}, your login credantials have been created .
-              your username is : ${nseData.email} and your password is ${generatedPassword}. thank you `;
+              your username is : ${MbeId} and your password is ${generatedPassword}. thank you `;
 
       console.log(userInfo);
-      const NseEmailaddress = nseData.email;
-      await mailer.main(NseEmailaddress, "credentials", userInfo);
+      // const NseEmailaddress = nseData.email;
+      await mailer.main(MbeId, "credentials", userInfo);
 
-      await registerUser({ OrgMSP: "org1MSP", userId: NseEmailaddress });
+      await registerUser({ OrgMSP: "org1MSP", userId: MbeId });
+
+      let wallet = await Wallet.findOne({MbeId});
+
+      if (!wallet){
+        let newWallet = new Wallet({MbeId});
+        await newWallet.create();
+
+          console.log(newWallet);
+      }
+
+      console.log("Wallet:", wallet);
+
 
       res.status(200).json({
         status_code: 200,

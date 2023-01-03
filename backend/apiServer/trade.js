@@ -527,7 +527,10 @@ app.get("/purchaselog",passport.authenticate("jwt", { session: false }), async(r
 
 app.get("/balance", async(req,res)=>{
   try{
-      let balanceData= await Wallet.findOne({MbeId:req.query.MbeId});
+    let{MbeId}=req.query;
+      let balanceData= await Wallet.findOne({MbeId});
+
+      console.log(balanceData);
       res.status(200).json({
         status:200,
         message:balanceData
