@@ -324,7 +324,7 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
             var updatedFunds =
               CBDCbalance -
               parseFloat(_match.Price) * parseFloat(_match.NumOfToken);
-            // var _updBuyOrder = await BuyOrder.findOneAndUpdate({ MbeId: _match.MbeId, Isin: _match.Isin, OrderId: _match.OrderId }, { $set: { IsProcessed: true } }, { upsert: true })
+            var _updBuyOrder = await BuyOrder.findOneAndUpdate({ MbeId: _match.MbeId, Isin: _match.Isin, OrderId: _match.OrderId }, { $set: { IsProcessed: true , IssuerName:_match.IssuerName} }, { upsert: true })
             let obj = {
               OrderId: _match.OrderId,
               MbeId: _match.MbeId,
