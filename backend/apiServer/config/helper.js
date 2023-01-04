@@ -328,6 +328,7 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
               MbeId: _match.MbeId,
               Isin: _match.Isin,
               NumOfToken: _match.NumOfToken,
+              IssuerName:_match.IssuerName,
               Price: _match.Price,
               IsProcessed: true
             };
