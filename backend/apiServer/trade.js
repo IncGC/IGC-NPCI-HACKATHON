@@ -442,7 +442,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
           MbeId: req.body.MbeId,
           Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
-          IssuerName:bondIssued.IssuerName,
+          // IssuerName:bondIssued.IssuerName,
           Price: req.body.Price 
         },
       ];
@@ -452,7 +452,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
       let sellorderBook = await SellOrder.findOne({
         Isin: req.body.Isin,
         NumOfToken: req.body.NumOfToken,
-        IssuerName:bondIssued.IssuerName,
+        // IssuerName:bondIssued.IssuerName,
         Price: req.body.Price,
         IsProcessed: false,
       });
@@ -473,7 +473,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
           OrderId: req.body.OrderId,
           MbeId: req.body.MbeId,
           Isin: req.body.Isin,
-          IssuerName:bondIssued.IssuerName,
+          // IssuerName:bondIssued.IssuerName,
           NumOfToken: req.body.NumOfToken,
           Price: req.body.Price,
         };
