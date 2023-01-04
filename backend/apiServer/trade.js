@@ -392,11 +392,13 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
         }
         );
       } else {
+        let bondDetails = await Bonds.findOne({Isin:req.body.Isin})
         let obj = {
           OrderId: req.body.OrderId,
           MbeId: req.body.MbeId,
           Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
+          IssuerName:bondDetails.IssuerName,
           Price: req.body.Price,
         };
         await storeRecord("Sell", obj);
