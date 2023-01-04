@@ -190,7 +190,7 @@ app.post("/tokenize",passport.authenticate("jwt", { session: false }), async (re
   try {
     let bondDetails = await Bonds.find({
       Isin: req.body.Isin,
-      MbeId: req.body.MbeId,
+      MbeId: req.user.MbeId,
     });
     console.log("bondDetails", bondDetails);
     if (
@@ -257,7 +257,7 @@ app.post("/deTokenize", passport.authenticate("jwt", { session: false }),async (
   try {
     let bondDetails = await Bonds.find({
       Isin: req.body.Isin,
-      MbeId: req.body.MbeId,
+      MbeId: req.user.MbeId,
     });
     console.log("bondDetails", bondDetails);
     if (
@@ -278,7 +278,7 @@ app.post("/deTokenize", passport.authenticate("jwt", { session: false }),async (
         _newTotalTokenQty
       );
       let obj = await Bonds.findOneAndUpdate(
-        { MbeId: req.body.MbeId, Isin: req.body.Isin },
+        { MbeId: req.user.MbeId, Isin: req.body.Isin },
         {
           $set: {
             TokenizedLot: _newTokenizedLot,
@@ -354,7 +354,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
   try {
     let bondDetails = await Bonds.find({
       Isin: req.body.Isin,
-      MbeId: req.body.MbeId,
+      MbeId: req.user.MbeId,
     });
     console.log("bondDetails", bondDetails);
     if (
@@ -364,7 +364,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
       let sellorder = [
         {
           OrderId: req.body.OrderId,
-          MbeId: req.body.MbeId,
+          MbeId: req.user.MbeId,
           Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
           Price: req.body.Price,
@@ -388,7 +388,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
       } else {
         let obj = {
           OrderId: req.body.OrderId,
-          MbeId: req.body.MbeId,
+          MbeId: req.user.MbeId,
           Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
           Price: req.body.Price,
@@ -620,7 +620,7 @@ app.get('/sellOrder', async(req, res)=>{
 
 app.get('/sellOrderSingle',passport.authenticate("jwt", { session: false }), async(req, res)=>{
   try{
-      let sellOrder = await SellOrder.find({MbeId:req.query.MbeId});
+      let sellOrder = await SellOrder.find({MbeId:req.user.MbeId});
 
       res.status(200).json({
         status:200,
