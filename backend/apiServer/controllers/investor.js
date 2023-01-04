@@ -103,7 +103,7 @@ exports.createInvestor = async (req, res) => {
 
       res.status(200).json({
         status_code: 200,
-        message: "MBE account created successfully",
+        message: "NSE account created successfully",
       });
       return;
     } else if (nseData) {

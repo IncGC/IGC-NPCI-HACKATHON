@@ -236,13 +236,13 @@ app.post("/tokenize",passport.authenticate("jwt", { session: false }), async (re
       if (obj) {
         res.json({
           status:200,
-          message:"Successfully Tokenized"
+          message:"Successfully tokenized "
         });
       }
     } else {
       res.json({
         status:400,
-        message:"No Sufficient Lot to Tokenized"
+        message:"Insufficient Lot to tokenize"
       });
     }
   } catch (e) {
@@ -291,13 +291,13 @@ app.post("/deTokenize", passport.authenticate("jwt", { session: false }),async (
       if (obj) {
         res.status(200).json({
           status:200,
-          message:"Successfully DeTokenized"
+          message:"Successfully de-tokenized"
         });
       }
     } else {
       res.status(200).json({
         status:400,
-        message:"No Sufficient Token to DeTokenized"
+        message:"Insufficient tokens to de-tokenize"
       });
     }
   } catch (e) {
@@ -388,7 +388,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
         await VerifyBuyOrderList(sellorder, bArray);
         res.json(
          {status:200,
-          message: "Successfully Placed Sell Order. Match found and processed your order"
+          message: "Successfully placed sell order . Match found and processed your order"
         }
         );
       } else {
@@ -402,7 +402,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
           Price: req.body.Price,
         };
         await storeRecord("Sell", obj);
-        // res.json("Successfully Placed Sell Order");
+        // res.json("Successfully placed sell order ");
 
         const SellOrderData = await SellOrder.find();
 
@@ -411,13 +411,13 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
 
         res.status(200).json({
           status: 200,
-          message: "Successfully Placed Sell Order",
+          message: "Successfully placed sell order ",
         });
       }
     } else {
       res.json({
         status:400,
-        message:"No Sufficient Token to place sell order"
+        message:"Insufficient tokens to place sell order"
       });
     }
   } catch (e) {
@@ -467,7 +467,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
         res.json(
           {
             status:200,
-            message:"Successfully Placed Buy Order. Match found and processed your order"
+            message:" Match found, order processed"
           }
         );
       } else {
@@ -489,14 +489,14 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
           status:200,
           message:"Succesfully placed Buy Order"
         })
-        // res.json("Successfully Placed Buy Order");
+        // res.json("Successfully placed buy order");
 
 
       }
     } else {
       res.json({
         status:400,
-        message:"No Sufficient Balance"
+        message:"Insufficient balance"
       });
     }
   } catch (e) {
