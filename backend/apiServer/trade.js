@@ -383,7 +383,9 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
       if (Object.keys(buyOrderBook || {}).length > 0) {
         await VerifyBuyOrderList(sellorder, bArray);
         res.json(
-          "Successfully Placed Sell Order. Match found and processed your order"
+         {status:200,
+          message: "Successfully Placed Sell Order. Match found and processed your order"
+        }
         );
       } else {
         let obj = {
