@@ -408,7 +408,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
       }
     } else {
       res.json({
-        status:200,
+        status:400,
         message:"No Sufficient Token to place sell order"
       });
     }
