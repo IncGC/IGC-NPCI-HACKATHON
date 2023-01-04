@@ -354,7 +354,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
   try {
     let bondDetails = await Bonds.find({
       Isin: req.body.Isin,
-      MbeId: req.user.MbeId,
+      MbeId: req.body.MbeId,
     });
     console.log("bondDetails", bondDetails);
     if (
@@ -388,7 +388,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
       } else {
         let obj = {
           OrderId: req.body.OrderId,
-          MbeId: req.user.MbeId,
+          MbeId: req.body.MbeId,
           Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
           Price: req.body.Price,
@@ -422,7 +422,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
 
 app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
-    let walletBalance = await Wallet.find({ MbeId:req.user.MbeId});
+    let walletBalance = await Wallet.find({ MbeId:req.body.MbeId});
     console.log(walletBalance);
 
     var bondIssued= await Bonds.findOne({Isin:req.body.Isin})
@@ -433,7 +433,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
       let buyorder = [
         {
           OrderId: req.body.OrderId,
-          MbeId: req.user.MbeId,
+          MbeId: req.body.MbeId,
           Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
           IssuerName:bondIssued.IssuerName,
@@ -465,7 +465,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
       } else {
         let obj = {
           OrderId: req.body.OrderId,
-          MbeId: req.user.MbeId,
+          MbeId: req.body.MbeId,
           Isin: req.body.Isin,
           IssuerName:bondIssued.IssuerName,
           NumOfToken: req.body.NumOfToken,
