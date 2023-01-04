@@ -257,7 +257,7 @@ app.post("/deTokenize", passport.authenticate("jwt", { session: false }),async (
   try {
     let bondDetails = await Bonds.find({
       Isin: req.body.Isin,
-      MbeId: req.user.MbeId,
+      MbeId: req.body.MbeId,
     });
     console.log("bondDetails", bondDetails);
     if (
@@ -278,7 +278,7 @@ app.post("/deTokenize", passport.authenticate("jwt", { session: false }),async (
         _newTotalTokenQty
       );
       let obj = await Bonds.findOneAndUpdate(
-        { MbeId: req.user.MbeId, Isin: req.body.Isin },
+        { MbeId: req.body.MbeId, Isin: req.body.Isin },
         {
           $set: {
             TokenizedLot: _newTokenizedLot,
