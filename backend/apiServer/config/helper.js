@@ -32,7 +32,7 @@ module.exports.CompareLimitOrder = async (
           (buyer) =>
             buyer.NumOfToken === seller.NumOfToken &&
             buyer.Isin == seller.Isin &&
-            buyer.Price == seller.Price
+            buyer.Price == seller.Price 
         );
         console.log("Match found", _match, seller);
         //Order Match Found
@@ -78,7 +78,8 @@ module.exports.CompareLimitOrder = async (
               {
                 MbeId: _match.MbeId,
                 Isin: _match.Isin,
-                OrderId: _match.OrderId
+                OrderId: _match.OrderId,
+                IssuerName:_match.IssuerName
               },
               { $set: { IsProcessed: true } },
               { upsert: true }
@@ -182,7 +183,8 @@ module.exports.VerifyBuyOrderList = async (sellorder, buyOrderArray) => {
               {
                 MbeId: buyer.MbeId,
                 Isin: buyer.Isin,
-                OrderId: buyer.OrderId
+                OrderId: buyer.OrderId,
+                IssuerName:buyer.IssuerName
               },
               { $set: { IsProcessed: true } },
               { upsert: true }
