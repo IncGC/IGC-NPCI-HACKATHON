@@ -408,7 +408,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
         console.log(SellOrderData);
 
         res.status(200).json({
-          status: 400,
+          status: 200,
           message: "Successfully Placed Sell Order",
         });
       }
@@ -442,7 +442,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
           MbeId: req.body.MbeId,
           Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
-          // IssuerName:bondIssued.IssuerName,
+          IssuerName:bondIssued.IssuerName,
           Price: req.body.Price 
         },
       ];
@@ -452,7 +452,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
       let sellorderBook = await SellOrder.findOne({
         Isin: req.body.Isin,
         NumOfToken: req.body.NumOfToken,
-        // IssuerName:bondIssued.IssuerName,
+        IssuerName:bondIssued.IssuerName,
         Price: req.body.Price,
         IsProcessed: false,
       });
