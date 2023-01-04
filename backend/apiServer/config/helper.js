@@ -128,7 +128,8 @@ module.exports.VerifyBuyOrderList = async (sellorder, buyOrderArray) => {
           (seller) =>
             seller.NumOfToken == buyer.NumOfToken &&
             buyer.Isin == seller.Isin &&
-            buyer.Price == seller.Price
+            buyer.Price == seller.Price &&
+            buyer.IssuerName== seller.IssuerName
         );
         //Order Match Found
         console.log("match value is", _match);
@@ -270,7 +271,8 @@ module.exports.VerifySellOrderList = async (buyorder, sellOrderArray) => {
           (buyer) =>
             seller.NumOfToken === buyer.NumOfToken &&
             buyer.Isin == seller.Isin &&
-            buyer.Price == seller.Price
+            buyer.Price == seller.Price &&
+            buyer.IssuerName == seller.IssuerName
         );
         if (Object.keys(_match).length > 0) {
           //Seller Wallet
