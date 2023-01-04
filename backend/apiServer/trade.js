@@ -190,7 +190,7 @@ app.post("/tokenize",passport.authenticate("jwt", { session: false }), async (re
   try {
     let bondDetails = await Bonds.find({
       Isin: req.body.Isin,
-      MbeId: req.user.MbeId,
+      MbeId: req.body.MbeId,
     });
     console.log("bondDetails", bondDetails);
     if (
@@ -357,6 +357,8 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
       MbeId: req.body.MbeId,
     });
     console.log("bondDetails", bondDetails);
+    var bondIssued= await Bonds.findOne({Isin:req.body.Isin})
+
     if (
       parseFloat(bondDetails[0].TokenQtyRemaining) >=
       parseFloat(req.body.NumOfToken)
@@ -367,6 +369,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
           MbeId: req.user.MbeId,
           Isin: req.body.Isin,
           NumOfToken: req.body.NumOfToken,
+          IssuerName:bondIssued.IssuerName,
           Price: req.body.Price,
         },
       ];
@@ -374,6 +377,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
       let buyOrderBook = await BuyOrder.findOne({
         Isin: req.body.Isin,
         NumOfToken: req.body.NumOfToken,
+        IssuerName:bondIssued.IssuerName,
         Price: req.body.Price,
         IsProcessed: false,
       });
