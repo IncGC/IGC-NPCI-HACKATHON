@@ -408,7 +408,7 @@ app.post("/placeSellOrder", passport.authenticate("jwt", { session: false }),asy
         console.log(SellOrderData);
 
         res.status(200).json({
-          status: 200,
+          status: 400,
           message: "Successfully Placed Sell Order",
         });
       }

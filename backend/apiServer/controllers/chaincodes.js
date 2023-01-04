@@ -1,5 +1,7 @@
 const { invokeTransaction } = require("../app/invoke");
 
+
+const {fs}= require('fs');
 const {
   CHAINCODE_ACTIONS,
   CHAINCODE_NAMES,
@@ -20,21 +22,26 @@ exports.cbdcwallet = async (req, res) => {
   try{
     let{
       CBDCbalance,
+
     } = req.body;
+    console.log(CBDCbalance)
+    let{MbeId}= req.user;
+
+    // console.log(req.user);
     const cbdcwalletData= {
       Id:generateId(),
       CreatedOn:getNow(),
-      CreatedBy: "admin",
+      CreatedBy: MbeId,
       IsDelete:"false",
       IsHidden:"false",
       IsUpdated:'false',
-      MbeId:req.user.MbeId,
+      MbeId,
       CBDCbalance
     }
-console.log(cbdcwalletData);
+  console.log(cbdcwalletData);
 
     let message = await invokeTransaction({
-        metaInfo:{userName:req.user.MbeId, org:"org1MSP"},
+        metaInfo:{userName:MbeId, org:"org1MSP"},
         chainCodeAction:'create',
         channelName:'common',
         data:cbdcwalletData,
@@ -43,23 +50,26 @@ console.log(cbdcwalletData);
     })
     console.log(message);
 
-    const walletBalance = await Wallet.findOne({MbeId});
-
-    if (walletBalance){
-      let balance = parseFloat( walletBalance.CBDCbalance);
-      let amount = parseFloat(req.body.CBDCbalance);
-      const wallet = await Wallet.findOneAndUpdate({MbeId:email}, {$set:{CBDCbalance:(balance+amount)}})
-
-    }
+  
 
     res.status(201).json({
         status:201,
         message:message
     })
+    // const walletBalance = await Wallet.findOne({MbeId});
+    // if (walletBalance){
+    //   let balance = parseFloat( walletBalance.CBDCbalance);
+    //   let amount = parseFloat(req.body.CBDCbalance);
+    //   const wallet = await Wallet.UpdateOne({MbeId:email}, {$set:{CBDCbalance:(balance+amount)}})
 
-}catch(err){
-    res.send(err)
-}
+    // }
+
+}catch (e) {
+    res.status(404).json({
+      status:404,
+      message:"Not Found"
+    });
+  }
 };
 
 exports.getcbdcwallet = async (req, res) => {
@@ -102,20 +112,38 @@ exports.cbdcwalletUpdate = async (req, res) => {
     let{
       CBDCbalance,
     } = req.body;
+    let{MbeId}= req.user;
+    let query = { selector: { MbeId } };
+
+    let queryString = JSON.stringify(query);
+
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: MbeId, org: 'org1MSP' },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: "CBDCwallet",
+    });
+
+  
+    console.log("dataStr"+dataStr);
+
+    let newBalance= parseInt(CBDCbalance)+parseInt(dataStr.CBDCbalance)
     const cbdcwalletData= {
-      // Id:generateId(),
+      Id:generateId(),
       CreatedOn:getNow(),
-      CreatedBy: req.user.MbeId,
+      CreatedBy: MbeId,
       IsDelete:"false",
       IsHidden:"false",
       IsUpdated:'true',
-      // MbeId,
-      CBDCbalance
+      MbeId,
+      CBDCbalance:newBalance
     }
-console.log(cbdcwalletData);
+    console.log(cbdcwalletData);
 
     let message = await invokeTransaction({
-        metaInfo:{userName:req.user.MbeId, org:"org1MSP"},
+        metaInfo:{userName:MbeId, org:"org1MSP"},
         chainCodeAction:'update',
         channelName:'common',
         data:cbdcwalletData,
@@ -123,24 +151,17 @@ console.log(cbdcwalletData);
         chainCodeName:'CBDCwallet'
     })
     console.log(message);
-
-    const walletBalance = await Wallet.findOne({MbeId});
-
-    if (walletBalance){
-      let balance = parseFloat( walletBalance.CBDCbalance);
-      let amount = parseFloat(req.body.CBDCbalance);
-      const wallet = await Wallet.findOneAndUpdate({MbeId:email}, {$set:{CBDCbalance:(balance+amount)}})
-
-    }
-
     res.status(201).json({
         status:201,
         message:message
     })
 
-}catch(err){
-    res.send(err)
-}
+}catch (e) {
+    res.status(404).json({
+      status:404,
+      message:"Not Found"
+    });
+  }
 };
 
 
@@ -150,7 +171,6 @@ exports.bondHoldings = async (req, res) => {
   try {
     let {
       Isin,
-      MbeId,
       IssuerName,
       CouponRate,
       FaceValue,
@@ -165,11 +185,66 @@ exports.bondHoldings = async (req, res) => {
       RemainingToken,
     } = req.body;
 
-    console.log(req.body);
+    let {MbeId}= req.user;
+
+    // console.log(req.body);
+    // async function readFile() {
+    //   fs.createReadStream("../data/bond.csv")
+    //     .pipe(parse({ delimiter: ",", from_line: 2 }))
+    //     .on("data", async function (row) {
+    //       let obj = {
+    //         // "Isin": row[0],
+    //         Id: generateId(),
+    //         CreatedOn: getNow(),
+    //         CreatedBy: req.user.MbeId,
+    //         IsDelete: 'false',
+    //         IsHidden: 'false',
+    //         IsTokenized: 'false',
+    //         IsProcessed: 'false',
+    //         Isin: row[0],
+    //         MbeId: row[1],
+    //         IssuerName: row[2],
+    //         CouponRate: row[3],
+    //         FaceValue: row[4],
+    //         Ltp: row[5],
+    //         CreditRating: row[6],
+    //         MaturityDate: row[7],
+    //         SecurityDescription: row[8],
+    //         Currency: row[9],
+    //         LotQty: row[10],
+    //         TokenizedLot: row[11],
+    //         TotalTokenQty: row[12],
+    //         RemainingToken: row[13],
+    //       };
+    //       // let record = new Bonds(obj);
+    //       // record.save();
+    //       let message = await invokeTransaction({
+    //         metaInfo: { userName:req.user.MbeId, org: "org1MSP" },
+    //         chainCodeAction: "create",
+    //         channelName: "common",
+    //         data: obj,
+    //         chainCodeFunctionName: "create",
+    //         chainCodeName: "BondHolding",
+    //       });
+    //       // console.log("hi ");
+    //       console.log(message);
+    //       res.status(201).json({
+    //         status: 201,
+    //         message: message,
+    //       });
+
+    //     })
+    //     .on("end", function () {
+    //       console.log("end");
+    //     });
+    // }
+
+
+
     const bondHoldingData = {
       Id: generateId(),
       CreatedOn: getNow(),
-      CreatedBy: "admin",
+      CreatedBy: MbeId,
       IsDelete: 'false',
       IsHidden: 'false',
       IsTokenized: 'false',
@@ -192,7 +267,7 @@ exports.bondHoldings = async (req, res) => {
 
     console.log(bondHoldingData);
     let message = await invokeTransaction({
-      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
+      metaInfo: { userName:MbeId, org: "org1MSP" },
       chainCodeAction: "create",
       channelName: "common",
       data: bondHoldingData,
@@ -205,21 +280,24 @@ exports.bondHoldings = async (req, res) => {
       status: 201,
       message: message,
     });
-  } catch (err) {
-    res.send("err");
+  }catch (e) {
+    res.status(404).json({
+      status:404,
+      message:"Not Found"
+    });
   }
 };
 
 exports.getbondHoldings = async (req, res) => {
   try {
-    let { Isin } = req.body;
+    let { MbeId } = req.user;
 
-    let query = { selector: { Isin } };
+    let query = { selector: { MbeId } };
 
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
+      metaInfo: { userName: MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       channelName: CHAINCODE_CHANNEL,
       data: queryString,
@@ -238,16 +316,105 @@ exports.getbondHoldings = async (req, res) => {
       status: 200,
       message: data,
     });
-  } catch (err) {
-    res.send("err");
+  }catch (e) {
+    res.status(404).json({
+      status:404,
+      message:"Not Found"
+    });
   }
 };
+
+exports.updateBondHolding= async(req,res)=>{
+  try{
+
+    let {
+      Isin,
+      IssuerName,
+      CouponRate,
+      FaceValue,
+      CreditRating,
+      MaturityDate,
+      PurchasePrice,
+      NumOfToken,
+      CurrentPrice,
+      LotQty,
+      TokenizedLot,
+      TotalTokenQty,
+      RemainingToken,
+    } = req.body;
+
+    let {MbeId}= req.user;
+
+    console.log(req.body);
+    const bondHoldingData = {
+      Id: generateId(),
+      CreatedOn: getNow(),
+      CreatedBy: MbeId,
+      IsDelete: 'false',
+      IsHidden: 'false',
+      IsTokenized: 'false',
+      IsProcessed: 'false',
+      Isin,
+      MbeId,
+      IssuerName,
+      CouponRate,
+      FaceValue,
+      CreditRating,
+      MaturityDate,
+      PurchasePrice,
+      NumOfToken,
+      CurrentPrice,
+      LotQty,
+      TokenizedLot,
+      TotalTokenQty,
+      RemainingToken,
+    };
+    let query = { selector: { MbeId } };
+
+    let queryString = JSON.stringify(query);
+
+    let dataStr = await invokeTransaction({
+      metaInfo: { userName: MbeId, org: "org1MSP" },
+      chainCodeAction: CHAINCODE_ACTIONS.GET,
+      channelName: CHAINCODE_CHANNEL,
+      data: queryString,
+      chainCodeFunctionName: "querystring",
+      chainCodeName: "BondHolding",
+    });
+
+    console.log(bondHoldingData);
+    let message = await invokeTransaction({
+      metaInfo: { userName:MbeId, org: "org1MSP" },
+      chainCodeAction: "update",
+      channelName: "common",
+      data: bondHoldingData,
+      chainCodeFunctionName: "update",
+      chainCodeName: "BondHolding",
+    });
+    // console.log("hi ");
+    console.log(message);
+    res.status(201).json({
+      status: 201,
+      message: message,
+    });
+
+  }catch (e) {
+    res.status(404).json({
+      status:404,
+      message:"Not Found"
+    });
+  }
+}
+
+
+
+
+
 
 exports.TokenHolding = async (req, res) => {
   try {
     let {
       Isin,
-      MbeId,
       IssuerName,
       CouponRate,
       FaceValue,
@@ -264,10 +431,12 @@ exports.TokenHolding = async (req, res) => {
       DetokenizedValue
     } = req.body;
 
+    let {MbeId}= req.user;
+
     const TokenHoldingData = {
       Id: generateId(),
       CreatedOn: getNow(),
-      CreatedBy: "admin",
+      CreatedBy: MbeId,
       IsDelete: 'false',
       IsHidden: 'false',
       Isin,
@@ -291,7 +460,7 @@ exports.TokenHolding = async (req, res) => {
     console.log(TokenHoldingData);
 
     let message = await invokeTransaction({
-      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
+      metaInfo: { userName:MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
       channelName: CHAINCODE_CHANNEL,
       data: TokenHoldingData,
@@ -507,13 +676,14 @@ exports.getBuyOrder = async (req, res) => {
 
 exports.sellOrder = async (req, res) => {
   try {
-    let { MbeId, Isin,   IssuerName,
+    let {  Isin,   IssuerName,
       TransactionsType, Price, NumOfToken } = req.body;
 
+      let {MbeId}= req.user;
     const sellOrderData = {
       Id: generateId(),
       CreatedOn: getNow(),
-      CreatedBy: "admin",
+      CreatedBy: MbeId,
       IsDelete: 'false',
       IsHidden: 'false',
       IsProcessed: 'false',
@@ -527,7 +697,7 @@ exports.sellOrder = async (req, res) => {
 
     console.log(sellOrderData);
     let message = await invokeTransaction({
-      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
+      metaInfo: { userName: MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.CREATE,
       channelName: CHAINCODE_CHANNEL,
       data: sellOrderData,

@@ -131,8 +131,8 @@ func (cc *BondHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []s
 
 	args := strings.Split(arg[0], "^^")
 
-	if len(args) != 20 {
-		return shim.Error("Incorrect number arguments. Expecting 20")
+	if len(args) != 21 {
+		return shim.Error("Incorrect number arguments. Expecting 21")
 	}
 	dateValue1, err1 := time.Parse(time.RFC3339, args[1])
 

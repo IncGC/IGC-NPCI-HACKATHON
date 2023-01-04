@@ -10,13 +10,13 @@ exports.enrollAdmin = async ({ OrgMSP, userId }) => {
 
     let org = Number(OrgMSP.match(/\d/g).join(""));
 
-    console.log("orga value is",org)
+    // console.log("orga value is",org)
 
     let ccp = getCCP(org);
 
     let walletPath = getWallets(org);
 
-    console.log("walletPath",walletPath)
+    // console.log("walletPath",walletPath)
 
     const caClient = buildCAClient(FabricCAServices, ccp, `ca.org${org}.mbe.com`);
 

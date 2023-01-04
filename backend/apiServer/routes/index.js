@@ -22,15 +22,34 @@ const trade = require('../trade');
 
 router.use('/trade', trade);
 
+                    /// CBDC wallet ///
+router.post('/cbdcwallet', passport.authenticate("jwt", { session: false }),chaincode.cbdcwallet);
+router.put('/cbdcwallet',passport.authenticate("jwt",{session: false} ), chaincode.cbdcwalletUpdate);
+router.get('/cbdcwallet',passport.authenticate("jwt", { session: false }),chaincode.getcbdcwallet);
+
+
+                    ///Bond Holdings ///
+
+router.post('/bondHolding', passport.authenticate("jwt", {session:false}), chaincode.bondHoldings)
+router.get('/bondHolding', passport.authenticate("jwt", {session:false}), chaincode.getbondHoldings);
+router.put('/bondHolding', passport.authenticate("jwt", {session:false}), chaincode.updateBondHolding);
 
 
 
-router.route('/cbdcwallet',passport.authenticate("jwt", { session: false })).post( chaincode.cbdcwallet).get(chaincode.getcbdcwallet);
-router.route('/bondholding',passport.authenticate("jwt", { session: false })).post( chaincode.bondHoldings).get(chaincode.getbondHoldings);
-router.route('/tokenholding',passport.authenticate("jwt", { session: false })).post( chaincode.TokenHolding).get(chaincode.getTokenHolding);
+                    ///Token Holdings///
+
+router.post('/tokenholding',passport.authenticate("jwt", { session: false }), chaincode.TokenHolding)
+
+
+
+
+router.post('/SellOrderChaincode',passport.authenticate("jwt", { session: false }), chaincode.sellOrder);
+// router.route('/cbdcwallet',passport.authenticate("jwt", { session: false })).post( chaincode.cbdcwallet).get(chaincode.getcbdcwallet);
+// router.route('/bondholding',passport.authenticate("jwt", { session: false })).post( chaincode.bondHoldings).get(chaincode.getbondHoldings);
+// router.route('/tokenholding',passport.authenticate("jwt", { session: false })).post( chaincode.TokenHolding).get(chaincode.getTokenHolding);
 router.route('/transactions',passport.authenticate("jwt", { session: false })).post( chaincode.Transactions).get(chaincode.getTransaction);
 router.route('/market',passport.authenticate("jwt", { session: false })).post(chaincode.mbeMarket).get(chaincode.getMbeMarket);
-router.route('/SellOrderChaincode',passport.authenticate("jwt", { session: false })).post(chaincode.sellOrder).get(chaincode.getSellOrder);
+// router.route('/SellOrderChaincode'.post(chaincode.sellOrder).get(chaincode.getSellOrder);
 router.route('/buyOrder',passport.authenticate("jwt", { session: false })).post(chaincode.buyOrder).get(chaincode.getBuyOrder);
 router.route('/purchaseLog',passport.authenticate("jwt", { session: false })).post(chaincode.purchaseLog).get(chaincode.getPurchaseLog);
 router.route('/ask',passport.authenticate("jwt", { session: false })).post( ask.askpost).get(ask.askGet);

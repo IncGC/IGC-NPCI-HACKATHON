@@ -12,7 +12,7 @@ exports.query = async (cp, channelName, chaincodeName, functionName, request, sc
 
         const walletPath = await getWallets(num);
     
-        console.log("wallet path is",walletPath);
+        // console.log("wallet path is",walletPath);
 
         const wallet = await buildWallet(Wallets, walletPath);
 
