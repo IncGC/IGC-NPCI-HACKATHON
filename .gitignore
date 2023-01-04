@@ -1,3 +1,5 @@
 # node_modules
-fabric-samples
-wallets
+/fabric-samples
+/wallets
+/node_modules
+package-lock.json
