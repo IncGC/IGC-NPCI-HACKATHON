@@ -819,7 +819,7 @@ app.get('/buyOrder', async(req, res)=>{
 
 app.get('/buyOrdersingle', async(req, res)=>{
   try{
-      let buyOrder = await BuyOrder.find({MbeId:req.user.MbeId});
+      let buyOrder = await BuyOrder.find({MbeId:req.query.MbeId});
 
       // await buyOrder.save();
 
@@ -855,7 +855,7 @@ app.get('/sellOrder', async(req, res)=>{
 
 app.get('/sellOrderSingle', async(req, res)=>{
   try{
-      let sellOrder = await SellOrder.find({MbeId:req.user.MbeId});
+      let sellOrder = await SellOrder.find({MbeId:req.query.MbeId});
 
       res.status(200).json({
         status:200,
