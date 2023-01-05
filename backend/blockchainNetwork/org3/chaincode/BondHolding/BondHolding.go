@@ -28,11 +28,11 @@ type BondHolding struct {
 	IssuerName     string    `json:"IssuerName"`
 	CouponRate     string    `json:"CouponRate"`
 	FaceValue      string    `json:"FaceValue"`
+	Ltp	string `json:"Ltp"`
 	CreditRating   string    `json:"CreditRating"`
 	MaturityDate   string    `json:"MaturityDate"`
-	PurchasePrice  string    `json:"PurchasePrice"`
-	NumToken       string    `json:"NumToken"`
-	CurrentPrice   string    `json:"CurrentPrice"`
+	SecurityDescription  string    `json:"SecurityDescription"`
+	Currency string `json:"Currency"`
 	LotQty         string    `json:"LotQty"`
 	TokenizedLot   string    `json:"TokenizedLot"`
 	TotalTokenQty  string    `json:"TotalTokenQty"`
@@ -87,11 +87,11 @@ func (cc *BondHoldingChaincode) create(stub shim.ChaincodeStubInterface, arg []s
 		IssuerName:     args[9],
 		CouponRate:     args[10],
 		FaceValue:      args[11],
-		CreditRating:   args[12],
-		MaturityDate:   args[13],
-		PurchasePrice:  args[14],
-		NumToken:       args[15],
-		CurrentPrice:   args[16],
+		Ltp: args[12],
+		CreditRating:   args[13],
+		MaturityDate:   args[14],
+		SecurityDescription:  args[15],
+		Currency:       args[16],
 		LotQty:         args[17],
 		TokenizedLot:   args[18],
 		TotalTokenQty:  args[19],
@@ -175,11 +175,11 @@ func (cc *BondHoldingChaincode) update(stub shim.ChaincodeStubInterface, arg []s
 		IssuerName:     args[9],
 		CouponRate:     args[10],
 		FaceValue:      args[11],
-		CreditRating:   args[12],
-		MaturityDate:   args[13],
-		PurchasePrice:  args[14],
-		NumToken:       args[15],
-		CurrentPrice:   args[16],
+		Ltp: args[12],
+		CreditRating:   args[13],
+		MaturityDate:   args[14],
+		SecurityDescription:  args[15],
+		Currency:       args[16],
 		LotQty:         args[17],
 		TokenizedLot:   args[18],
 		TotalTokenQty:  args[19],

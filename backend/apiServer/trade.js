@@ -12,6 +12,11 @@ const {
   Wallet,
   PurchaseLog,
 } = require("./models/Trade");
+// const passport = require('passport');
+
+const {invokeTransaction}= require('./app/invoke');
+const {CHAINCODE_ACTIONS, CHAINCODE_NAMES, getNow, CHAINCODE_CHANNEL, generateId}=require('./utils/helper');
+
 
 //MatchOrder function
 const {
@@ -27,6 +32,73 @@ require("dotenv").config();
 
 const app = express();
 app.use(bodyParser.json());
+
+
+app.post('/bondholdings',passport.authenticate("jwt", { session: false }), async(req,res)=>{
+  try{
+
+      // let {MbeId}= req.user;
+
+      // console.log(req.body);
+      async function readFile() {
+        fs.createReadStream('./data/bondData.csv')
+          .pipe(parse({ delimiter: ",", from_line: 2 }))
+          .on("data", async function (row) {
+            let obj = {
+              // "Isin": row[0],
+              Id: generateId(),
+              CreatedOn: getNow(),
+              CreatedBy: req.user.MbeId,
+              IsDelete: 'false',
+              IsHidden: 'false',
+              IsTokenized: 'false',
+              IsProcessed: 'false',
+              Isin: row[0],
+              MbeId: row[1],
+              IssuerName: row[2],
+              CouponRate: row[3],
+              FaceValue: row[4],
+              Ltp: row[5],
+              CreditRating  : row[6],
+              MaturityDate: row[7],
+              SecurityDescription: row[8],
+              Currency: row[9],
+              LotQty: row[10],
+              TokenizedLot: row[11],
+              TotalTokenQty: row[12],
+              RemainingToken: row[13],
+            };
+            // let record = new Bonds(obj);
+            // record.save();
+            let message = await invokeTransaction({
+              metaInfo: { userName:req.user.MbeId, org: "org1MSP" },
+              chainCodeAction: "create",
+              channelName: "common",
+              data: obj,
+              chainCodeFunctionName: "create",
+              chainCodeName: "BondHolding",
+            });
+            console.log(message);
+          
+  
+          })
+          .on("end", function () {
+            console.log("end");
+          });
+      }
+  
+   readFile()
+  //  console.log(message);
+   res.status(201).json({
+     status: 201,
+     message: "message",
+   });
+  }catch(err){
+      res.status(404).json({
+          status:404,
+          message:"Not Found"
+  })}
+}) 
 
 //API Endpoint to read file and push data
 app.post("/pushBondDetails", async (req, res) => {
@@ -73,6 +145,111 @@ app.post("/pushBondDetails", async (req, res) => {
     });
   }
 });
+
+
+app.post('/bulkbuyOrderChainCode', passport.authenticate("jwt", {session:false}), async(req,res)=>{
+
+  try{
+
+    // let {MbeId}= req.user;
+    async function readFile() {
+      fs.createReadStream("./data/buyOrder.csv")
+        .pipe(parse({ delimiter: ",", from_line: 2 }))
+        .on("data", async function (row) {
+          let obj = {
+            Id:row[0]+ generateId(),
+            CreatedOn: getNow(),
+            CreatedBy: req.user.MbeId,
+            IsDelete: 'false',
+            IsHidden: 'false',
+            IsProcessed: 'false',
+            // OrderId: row[0],
+            MbeId: row[1],
+            Isin: row[2],
+            IssuerName: row[3],
+            TransactionsType: row[4],
+            Price: row[6],
+            NumOfToken: row[5]
+
+          };
+          let message = await invokeTransaction({
+            metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
+            chainCodeAction: CHAINCODE_ACTIONS.CREATE,
+            channelName: CHAINCODE_CHANNEL,
+            data: obj,
+            chainCodeFunctionName: "create",
+            chainCodeName: CHAINCODE_NAMES.BUYORDER,
+          });
+      
+          console.log(message);
+        })
+        .on("end", function () {
+          console.log("end");
+        });
+    }
+    readFile();
+    res.status(201).json({
+      status: 201,
+      message: "message"});
+
+  }catch (e) {
+    res.status(404).json({
+      status:404,
+      message:"Not Found"
+    });
+  }
+})
+
+app.post('/bulkSellorderchaincode',passport.authenticate("jwt", {session:false}), async(req, res)=>{
+  try{
+    // let {MbeId}= req.user;
+
+    async function readFile() {
+      fs.createReadStream("./data/sellOrder.csv")
+        .pipe(parse({ delimiter: ",", from_line: 2 }))
+        .on("data", async function (row) {
+          let obj = {
+            // OrderId: row[0],
+            Id:row[0]+ generateId(),
+            CreatedOn: getNow(),
+            CreatedBy: req.user.MbeId,
+            IsDelete: 'false',
+            IsHidden: 'false',
+            IsProcessed: 'false',
+            MbeId: row[1],
+            Isin: row[2],
+            IssuerName: row[3],
+            TransactionsType: row[4],
+            Price: row[6],
+            NumOfToken: row[5]
+          };
+          let message = await invokeTransaction({
+            metaInfo: { userName:req.user.MbeId, org: "org1MSP" },
+            chainCodeAction: CHAINCODE_ACTIONS.CREATE,
+            channelName: CHAINCODE_CHANNEL,
+            data: obj,
+            chainCodeFunctionName: "create",
+            chainCodeName: CHAINCODE_NAMES.SELLORDER,
+          });
+      
+          console.log(message);
+        })
+        .on("end", function () {
+          console.log("end");
+        });
+    }
+    readFile();
+    res.status(201).json({
+      status: 201,
+      message: "message",
+    });
+  }catch (e) {
+    res.status(404).json({
+      status:404,
+      message:"Not Found"
+    });
+  }
+})
 
 app.post("/pushSellorders", async (req, res) => {
   try {
@@ -150,6 +327,54 @@ app.post("/pushBuyorders", async (req, res) => {
   }
 });
 
+app.post('/bulkWallet', passport.authenticate("jwt", {session:false}), async(req,res)=>{
+  try{
+    async function readFile() {
+      fs.createReadStream("./data/wallet.csv")
+        .pipe(parse({ delimiter: ",", from_line: 2 }))
+        .on("data", async function (row) {
+          let obj = {
+            Id:generateId(),
+            CreatedOn:getNow(),
+            CreatedBy: req.user.MbeId,
+            IsDelete:"false",
+            IsHidden:"false",
+            IsUpdated:'false',
+            MbeId: row[0],
+            CBDCbalance: row[1],
+          };
+
+          let message = await invokeTransaction({
+            metaInfo:{userName:req.user.MbeId, org:"org1MSP"},
+            chainCodeAction:'create',
+            channelName:'common',
+            data:obj,
+            chainCodeFunctionName:'create',
+            chainCodeName:'CBDCwallet'
+        })
+        console.log(message);
+    
+
+        })
+        .on("end", function () {
+          console.log("end");
+        });
+    }
+    readFile();
+    res.status(201).json({
+      status:201,
+      message:"message"
+  })
+  }catch (e) {
+     res.json({
+      status:404,
+      message:"Not found"
+    }); 
+  }
+})
+
+
+
 app.post("/pushWallets", async (req, res) => {
   try {
     async function readFile() {
@@ -185,6 +410,7 @@ app.post("/pushWallets", async (req, res) => {
 });
 
 const TransactionsModel = require('./models/transactions');
+const { session } = require("passport");
 
 app.post("/tokenize",passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
@@ -521,7 +747,7 @@ app.get("/compareOrderBook", async (req, res) => {
   }
 });
 
-app.get("/purchaselog",passport.authenticate("jwt", { session: false }), async(req,res)=>{
+app.get("/purchaselog", async(req,res)=>{
   try{
       let purchaseLogData= await PurchaseLog.find();
 
@@ -591,7 +817,7 @@ app.get('/buyOrder', async(req, res)=>{
   }
 });
 
-app.get('/buyOrdersingle',passport.authenticate("jwt", { session: false }), async(req, res)=>{
+app.get('/buyOrdersingle', async(req, res)=>{
   try{
       let buyOrder = await BuyOrder.find({MbeId:req.user.MbeId});
 
@@ -627,7 +853,7 @@ app.get('/sellOrder', async(req, res)=>{
   }
 });
 
-app.get('/sellOrderSingle',passport.authenticate("jwt", { session: false }), async(req, res)=>{
+app.get('/sellOrderSingle', async(req, res)=>{
   try{
       let sellOrder = await SellOrder.find({MbeId:req.user.MbeId});
 
@@ -676,7 +902,7 @@ app.post('/walletbalanceAddition',  passport.authenticate("jwt", { session: fals
 module.exports = app;
 
 
-app.get('/listInvestors',passport.authenticate("jwt", { session: false }), async (req, res) => {
+app.get('/listInvestors',async (req, res) => {
   try {
    
     // console.log("hihihihi")

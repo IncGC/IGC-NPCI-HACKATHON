@@ -22,6 +22,8 @@ const trade = require('../trade');
 
 router.use('/trade', trade);
 
+router.use('/bond', require('../routes/investor'));
+
                     /// CBDC wallet ///
 router.post('/cbdcwallet', passport.authenticate("jwt", { session: false }),chaincode.cbdcwallet);
 router.put('/cbdcwallet',passport.authenticate("jwt",{session: false} ), chaincode.cbdcwalletUpdate);

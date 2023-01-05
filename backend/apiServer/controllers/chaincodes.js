@@ -1,7 +1,7 @@
 const { invokeTransaction } = require("../app/invoke");
 
 
-const {fs}= require('fs');
+const fs= require('fs');
 const {
   CHAINCODE_ACTIONS,
   CHAINCODE_NAMES,
@@ -17,6 +17,10 @@ const {
   Wallet,
   PurchaseLog,
 } = require("../models/Trade");
+
+// const bondCsv = require('../data/bond.csv');
+
+const { parse } = require("csv-parse");
 
 exports.cbdcwallet = async (req, res) => {
   try{
@@ -188,93 +192,89 @@ exports.bondHoldings = async (req, res) => {
     let {MbeId}= req.user;
 
     // console.log(req.body);
-    // async function readFile() {
-    //   fs.createReadStream("../data/bond.csv")
-    //     .pipe(parse({ delimiter: ",", from_line: 2 }))
-    //     .on("data", async function (row) {
-    //       let obj = {
-    //         // "Isin": row[0],
-    //         Id: generateId(),
-    //         CreatedOn: getNow(),
-    //         CreatedBy: req.user.MbeId,
-    //         IsDelete: 'false',
-    //         IsHidden: 'false',
-    //         IsTokenized: 'false',
-    //         IsProcessed: 'false',
-    //         Isin: row[0],
-    //         MbeId: row[1],
-    //         IssuerName: row[2],
-    //         CouponRate: row[3],
-    //         FaceValue: row[4],
-    //         Ltp: row[5],
-    //         CreditRating: row[6],
-    //         MaturityDate: row[7],
-    //         SecurityDescription: row[8],
-    //         Currency: row[9],
-    //         LotQty: row[10],
-    //         TokenizedLot: row[11],
-    //         TotalTokenQty: row[12],
-    //         RemainingToken: row[13],
-    //       };
-    //       // let record = new Bonds(obj);
-    //       // record.save();
-    //       let message = await invokeTransaction({
-    //         metaInfo: { userName:req.user.MbeId, org: "org1MSP" },
-    //         chainCodeAction: "create",
-    //         channelName: "common",
-    //         data: obj,
-    //         chainCodeFunctionName: "create",
-    //         chainCodeName: "BondHolding",
-    //       });
-    //       // console.log("hi ");
-    //       console.log(message);
-    //       res.status(201).json({
-    //         status: 201,
-    //         message: message,
-    //       });
+    async function readFile() {
+      fs.createReadStream(bondCsv)
+        .pipe(parse({ delimiter: ",", from_line: 2 }))
+        .on("data", async function (row) {
+          let obj = {
+            // "Isin": row[0],
+            Id: generateId(),
+            CreatedOn: getNow(),
+            CreatedBy: req.user.MbeId,
+            IsDelete: 'false',
+            IsHidden: 'false',
+            IsTokenized: 'false',
+            IsProcessed: 'false',
+            Isin: row[0],
+            MbeId: row[1],
+            IssuerName: row[2],
+            CouponRate: row[3],
+            FaceValue: row[4],
+            CreditRating  : row[5],
+            MaturityDate: row[6],
+            PurchasePrice: row[7],
+            NumOfToken: row[8],
+            CurrentPrice: row[9],
+            LotQty: row[10],
+            TokenizedLot: row[11],
+            TotalTokenQty: row[12],
+            RemainingToken: row[13],
+          };
+          // let record = new Bonds(obj);
+          // record.save();
+          let message = await invokeTransaction({
+            metaInfo: { userName:req.user.MbeId, org: "org1MSP" },
+            chainCodeAction: "create",
+            channelName: "common",
+            data: obj,
+            chainCodeFunctionName: "create",
+            chainCodeName: "BondHolding",
+          });
+          // console.log("hi ");
+        
 
-    //     })
-    //     .on("end", function () {
-    //       console.log("end");
-    //     });
-    // }
+        })
+        .on("end", function () {
+          console.log("end");
+        });
+    }
 
+ readFile()
 
+    // const bondHoldingData = {
+    //   Id: generateId(),
+    //   CreatedOn: getNow(),
+    //   CreatedBy: MbeId,
+    //   IsDelete: 'false',
+    //   IsHidden: 'false',
+    //   IsTokenized: 'false',
+    //   IsProcessed: 'false',
+    //   Isin,
+    //   MbeId,
+    //   IssuerName,
+    //   CouponRate,
+    //   FaceValue,
+    //   CreditRating,
+    //   MaturityDate,
+    //   PurchasePrice,
+    //   NumOfToken,
+    //   CurrentPrice,
+    //   LotQty,
+    //   TokenizedLot,
+    //   TotalTokenQty,
+    //   RemainingToken,
+    // };
 
-    const bondHoldingData = {
-      Id: generateId(),
-      CreatedOn: getNow(),
-      CreatedBy: MbeId,
-      IsDelete: 'false',
-      IsHidden: 'false',
-      IsTokenized: 'false',
-      IsProcessed: 'false',
-      Isin,
-      MbeId,
-      IssuerName,
-      CouponRate,
-      FaceValue,
-      CreditRating,
-      MaturityDate,
-      PurchasePrice,
-      NumOfToken,
-      CurrentPrice,
-      LotQty,
-      TokenizedLot,
-      TotalTokenQty,
-      RemainingToken,
-    };
-
-    console.log(bondHoldingData);
-    let message = await invokeTransaction({
-      metaInfo: { userName:MbeId, org: "org1MSP" },
-      chainCodeAction: "create",
-      channelName: "common",
-      data: bondHoldingData,
-      chainCodeFunctionName: "create",
-      chainCodeName: "BondHolding",
-    });
-    console.log("hi ");
+    // console.log(bondHoldingData);
+    // let message = await invokeTransaction({
+    //   metaInfo: { userName:MbeId, org: "org1MSP" },
+    //   chainCodeAction: "create",
+    //   channelName: "common",
+    //   data: bondHoldingData,
+    //   chainCodeFunctionName: "create",
+    //   chainCodeName: "BondHolding",
+    // });
+    // console.log("hi ");
     console.log(message);
     res.status(201).json({
       status: 201,
