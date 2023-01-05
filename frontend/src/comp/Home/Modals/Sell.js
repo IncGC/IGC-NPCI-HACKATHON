@@ -20,9 +20,10 @@ function Sell({ isOpen, data, closeModal }) {
   // const [total, setTotal] = useState(null)
 
   const [details, setDetails] = useState({
-    "orderId": "S_ORDER" + data.Isin,
+    "OrderId": "S_ORDER" + data.Isin,
     "MbeId": email,
-    "Isin": data.Isin
+    "Isin": data.Isin,
+    "IssuerName": data.IssuerName
   })
 
   const onChange = e => {
@@ -83,7 +84,7 @@ function Sell({ isOpen, data, closeModal }) {
           />
           <Input
             lable='Total Number of Tokens'
-            value={data.TotalTokenQty}
+            value={data.TokenQtyRemaining}
             lableCls="w-auto"
             wrapperCls='grid-col-full'
           />

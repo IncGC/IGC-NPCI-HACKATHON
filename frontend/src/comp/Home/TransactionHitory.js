@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import useStore from "../../store";
 
 import { fetchTransactions } from '../../apis/apis';
-import getTypeClr from '../../helper/getTypeClr';
 
 import { ReactComponent as Print } from '../../assets/svg/files/print.svg';
 import CertificateAsPdf from './Modals/CertificateAsPdf';
@@ -13,7 +12,7 @@ function TransactionHitory() {
 
   const [transactions, setTransactions] = useState([])
   const [loading, setLoading] = useState(true)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState({ state: "", data: {} })
 
   useEffect(() => {
     const onSuccess = (payload) => {
@@ -24,14 +23,15 @@ function TransactionHitory() {
     fetchTransactions({ email }, onSuccess)
   }, [email])
 
-  const updateOpen = () => setOpen(p => !p)
+  const updateOpen = (state, data = {}) => setOpen({ state, data })
+  const closeModal = () => setOpen({ state: "", data: {} })
 
   if (loading) return <Loader wrapperCls='h-[calc(100vh-64px)]' />
 
   return (
     <section className="dfc gap-0 h-[calc(100vh-64px)] overflow-y-hidden">
       <h1 className='py-2 text-2xl text-center border-b border-[rgba(255,255,255,.6)]'>
-        Transactions History
+        Trade Book
       </h1>
 
       <div className="scroll-y overflow-x-auto">
@@ -52,16 +52,17 @@ function TransactionHitory() {
 
           <tbody>
             {
-              transactions.map((li, i) => (
+              transactions.filter((a, i) => 'Price' in transactions[i])
+                .map(li => (
                 <tr
                   key={li._id}
                   className="text-sm even:bg-slate-50 hover:bg-slate-100 cursor-pointer"
                 >
-                  <td className="pl-8 pr-4 py-2"> {Intl.DateTimeFormat('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit'}).format(Date.parse(li.createdAt))} </td>
+                  <td className="pl-8 pr-4 py-2"> {Intl.DateTimeFormat('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(Date.parse(li.createdAt))} </td>
                   <td className="px-4 py-2"> {li.Isin} </td>
-                  <td className="px-4 py-2 break-words"> {li.OrderId} </td>
+                  <td className="px-4 py-2 break-words"> {li.OrderId || li.BuyOrderId || li.SellOrderId || li._id} </td>
                   <td className="px-4 py-2 font-medium"> {li.IssuerName} </td>
-                  <td className={`px-4 py-2 ${getTypeClr(li.TransactionsType)}`}> {li.TransactionsType} </td>
+                  <td className="px-4 py-2"> {li.IsProcessed ? "Trade" : li.TransactionsType} </td>
                   <td className="px-4 py-2"> {li.NumOfToken} </td>
                   <td className="px-4 py-2"> {Number(li.NumOfToken) * Number(li.Price)} </td>
                   <td className={`px-4 py-2 text-xs text-emerald-400`}>
@@ -71,9 +72,10 @@ function TransactionHitory() {
                   </td>
                   <td className='px-4 py-2'>
                     {
+                      li.IsProcessed &&
                       <Print
                         className="mx-auto"
-                        onClick={updateOpen}
+                        onClick={() => updateOpen("CertificateAsPdf", li)}
                       />
                     }
                   </td>
@@ -84,10 +86,14 @@ function TransactionHitory() {
         </table>
       </div>
 
-      <CertificateAsPdf
-        isOpen={open}
-        closeModal={updateOpen}
-      />
+      {
+        open.state === "CertificateAsPdf" &&
+        <CertificateAsPdf
+          isOpen
+          data={open.data}
+          closeModal={closeModal}
+        />
+      }
     </section>
   )
 }

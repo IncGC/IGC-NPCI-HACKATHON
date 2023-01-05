@@ -17,12 +17,12 @@ function TokenHoldings() {
 
   useEffect(() => {
     const onSuccess = async res => {
-      const bidPricePromises = res.map(async current => {
-        const innerRes = await fetchBidPrice()
-        const bidPriceRes = innerRes.message
-        var bidPrice = 0
-        var currentTime = 0
-        console.log(innerRes)
+      const innerRes1 = await fetchBidPrice()
+      const bidPriceRes = innerRes1.message
+
+      const final1 = res.map(current => {
+        let bidPrice = 0
+        let currentTime = 0
 
         for (let i = 0; i < bidPriceRes.length; i++) {
           if (current.Isin === bidPriceRes[i].Isin) {
@@ -45,14 +45,12 @@ function TokenHoldings() {
         }
       })
 
-      const final1 = await Promise.all(bidPricePromises)
+      const innerRes = await fetchAskPrice()
+      const askPriceRes = innerRes.message
 
-      const askPricePromises = final1.map(async current => {
-        const innerRes = await fetchAskPrice()
-        const askPriceRes = innerRes.message
+      const final2 = final1.map(current => {
         var askPrice = 0
         var currentTime = 0
-        console.log(innerRes)
 
         for (let i = 0; i < askPriceRes.length; i++) {
           if (current.Isin === askPriceRes[i].Isin) {
@@ -74,9 +72,6 @@ function TokenHoldings() {
           AskPrice: askPrice
         }
       })
-
-
-      const final2 = await Promise.all(askPricePromises)
 
       setTokenHoldings(final2)
       setLoading(false)
@@ -151,10 +146,10 @@ function TokenHoldings() {
                         {li.AskPrice || 0}
                       </button>
                     </td>
-                    <td className="px-4 py-2 text-center"> {li.TotalTokenQty} </td>
+                    <td className="px-4 py-2 text-center"> {li.TokenQtyRemaining} </td>
                     <td className="px-4 py-2 text-center"> {li.TokenizedLot} </td>
                     {/* <td className="px-4 py-2 text-center"> {li.purchasePrice || "-"} </td> */}
-                    <td className="px-4 py-2 text-center"> {Number(li.Ltp) * Number(li.TotalTokenQty) || "-"} </td>
+                    <td className="px-4 py-2 text-center"> {Math.round(Number(li.Ltp) * Number(li.TokenQtyRemaining)) || "-"} </td>
                     <td className="px-4 py-2 text-center">
                       <button
                         className='px-3 py-1.5 rounded border border-red-500 hover:bg-red-500 hover:text-white'

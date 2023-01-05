@@ -6,7 +6,7 @@ import { addWalletBalance } from '../../../apis/apis';
 
 import Modal from '../../UIComp/Modal';
 
-function AddBalance({ isOpen, closeModal }) {
+function AddBalance({ isOpen, closeModal, setCBDCBalance }) {
   const MbeId = useStore(state => state.email)
   // const [amount, setAmount] = useState({})
   const [details, setDetails] = useState({
@@ -20,7 +20,8 @@ function AddBalance({ isOpen, closeModal }) {
     }))
   }
 
-  const onSuccess = (message) => {
+  const onSuccess = () => {
+    setCBDCBalance(p => Number(p) + Number(details.amount))
     successNotify("Balance Added.")
     closeModal()
   }

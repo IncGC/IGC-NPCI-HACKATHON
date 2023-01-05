@@ -27,7 +27,8 @@ function Buy({ isOpen, data, closeModal }) {
   const [details, setDetails] = useState({
     "OrderId": "B_ORDER" + data.Isin,
     "MbeId": email,
-    "Isin": data.Isin
+    "Isin": data.Isin,
+    "IssuerName": data.IssuerName
   })
 
   const onChange = e => {

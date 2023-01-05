@@ -24,7 +24,7 @@ const {
   PurchaseLog,
 } = require("../models/Trade");
 
-//  registerUser({ OrgMSP: "org3MSP", userId: "mbe@gmail.com" });
+//  registerUser({ OrgMSP: "org1MSP", userId: "prudhvi@inclusivegrowthchain.com" });
 
 exports.createInvestor = async (req, res) => {
   try {
@@ -34,8 +34,8 @@ exports.createInvestor = async (req, res) => {
       aadharCard,
     } = req.body;
 
-    const panCarddata = await PanCardModel.findOne({ panCard });
-    const nseData = await NseModel.findOne({ panCard });
+    var panCarddata = await PanCardModel.findOne({ panCard });
+    var nseData = await NseModel.findOne({ aadharCard });
     // console.log(panCarddata);
     const salt = await bcrypt.genSalt(10);
     let generatedPassword = "pwd_" + panCarddata.panCard;
@@ -176,7 +176,7 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   let exiRes = await UserModel.findOne({
-    email,
+    email
   });
 
   console.log({ exiRes });

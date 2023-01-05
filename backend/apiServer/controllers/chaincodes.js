@@ -80,12 +80,12 @@ exports.getcbdcwallet = async (req, res) => {
   try {
     let { MbeId } = req.user;
 
-    let query = { selector: { MbeId } };
+    let query = { selector: { MbeId: "prudhvi@inclusivegrowthchain.com" } };
 
     let queryString = JSON.stringify(query);
 
     let dataStr = await invokeTransaction({
-      metaInfo: { userName: req.user.MbeId, org: 'org1MSP' },
+      metaInfo: { userName: req.user.MbeId, org: "org1MSP" },
       chainCodeAction: CHAINCODE_ACTIONS.GET,
       channelName: CHAINCODE_CHANNEL,
       data: queryString,
@@ -95,10 +95,10 @@ exports.getcbdcwallet = async (req, res) => {
 
     res.set("Content-Type", "application/json");
     // res.status(200).send(dataStr);
-    let data = JSON.parse(dataStr)
-    console.log(dataStr)
+    let data = JSON.parse(dataStr);
+    console.log(dataStr);
 
-        console.log(data);
+    console.log(data);
         res.status(200).json({
             status:200,
             message:data

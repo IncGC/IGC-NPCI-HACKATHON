@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
-import useStore from '../../../store';
 
 import { fetchBondInvestors } from '../../../apis/apis';
-// import investorList from '../../../constants/investorList';
-
 import Loader from '../../Common/Loader';
 import Modal from '../../UIComp/Modal';
 
@@ -39,7 +36,7 @@ function InvestorsList({ isOpen, title = "", needInvesterName = true, updateOpen
             <tr className="sticky top-0 text-sm font-medium bg-slate-100 shadow-[0_1px_3px_0_rgba(0,0,0,.1)] z-1">
               {/* <td className="w-36 px-4 py-2">MBE Id</td> */}
               {
-                needInvesterName &&
+                // needInvesterName &&
                 <td className="w-52 px-4 py-2">MBE Id</td>
               }
               <td className="w-32 px-4 py-2 text-center">No. of tokens</td>
@@ -50,7 +47,7 @@ function InvestorsList({ isOpen, title = "", needInvesterName = true, updateOpen
           <tbody>
             {
               data
-                .filter((a, i) => data[i].Isin === Isin && data[i].TotalTokenQty !== 0)
+                .filter((a, i) => (data[i].Isin === Isin && (data[i].TotalTokenQty !== 0 || data[i].TotalTokenQty !== "0")))
                 .map(li => (
                   <tr
                     key={li._id}
@@ -58,7 +55,7 @@ function InvestorsList({ isOpen, title = "", needInvesterName = true, updateOpen
                   >
                     {/* <td className="px-4 py-2"> {li.email} </td> */}
                     {
-                      needInvesterName &&
+                      // needInvesterName &&
                       <td className="px-4 py-2 font-medium">
                         <button
                           className='p-0 hover:scale-105 transition-transform'

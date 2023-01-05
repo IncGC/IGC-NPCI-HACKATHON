@@ -1,7 +1,7 @@
 import endPoints from "../utils/endPoints";
 import sendApiReq from "../utils/sendApiReq";
 
-export async function getInvestorLists(token, onSuccess) {
+export async function getInvestorLists(onSuccess) {
   try {
     const res = await sendApiReq({})
     onSuccess(res.message)
@@ -73,8 +73,23 @@ export async function getPurchaseLog(onSuccess) {
     })
 
     console.log(res)
-    if (res.status === 200)
-      onSuccess(res.message)
+    if (res.status === 200) {
+      let final = res.message.reduce((prev, curr) => {
+        let isPresent = prev.find(p => p.Isin === curr.Isin)
+
+        if (isPresent) {
+          isPresent.TradeValue = Number(isPresent.TradeValue) + Number(curr.TradeValue)
+          isPresent.NumOfToken = Number(isPresent.NumOfToken) + Number(curr.NumOfToken)
+
+        } else {
+          prev.push(curr)
+        }
+
+        return prev
+      }, [])
+
+      onSuccess(final)
+    }
 
   } catch (error) {
     console.log(error)
@@ -150,9 +165,9 @@ export async function fetchSingleUserBuyTransactions(data, onSuccess) {
 
 export async function fetchAllTransactions(onSuccess) {
   try {
-    const payload = await sendApiReq({
-      url: endPoints.transactions,
-    })
+    // const payload = await sendApiReq({
+    //   url: endPoints.transactions,
+    // })
 
     const res1 = await sendApiReq({
       url: endPoints.fetchAllUserSellTransactions,
@@ -162,18 +177,34 @@ export async function fetchAllTransactions(onSuccess) {
       url: endPoints.fetchAllUserBuyTransactions,
     })
 
-    if (payload.status === 200) {
+    // if (payload.status === 200) {
+    //   let final = []
+
+    //   final.push(...payload.message)
+
+    //   if (res1.message) {
+    //     if (Array.isArray(res1.message)) {
+    //       final.push(...res1.message)
+    //     } else {
+    //       final.push(res1.message)
+    //     }
+    //   }
+
+    //   if (res2.message) {
+    //     if (Array.isArray(res2.message)) {
+    //       final.push(...res2.message)
+    //     } else {
+    //       final.push(res2.message)
+    //     }
+    //   }
+
+    //   onSuccess(final)
+    // }
+
+    if (res1.status === 200) {
       let final = []
 
-      final.push(...payload.message)
-
-      if (res1.message) {
-        if (Array.isArray(res1.message)) {
-          final.push(...res1.message)
-        } else {
-          final.push(res1.message)
-        }
-      }
+      final.push(...res1.message)
 
       if (res2.message) {
         if (Array.isArray(res2.message)) {

@@ -43,7 +43,7 @@ function TokenisedBond() {
   return (
     <section className="dfc gap-0 h-[calc(100vh-64px)] overflow-y-hidden">
       <h1 className='py-2 text-2xl text-center border-b border-[rgba(255,255,255,.6)]'>
-        Tokenised Bonds
+        Tokenized Bonds
       </h1>
 
       <div className="scroll-y overflow-x-auto">
@@ -61,7 +61,7 @@ function TokenisedBond() {
               <td className="w-24 px-4 py-2">Ltp</td>
               <td className="w-28 px-4 py-2">Current Price</td>
               <td className="w-28 px-4 py-2 text-center">List of Investors</td>
-              <td className="w-40 px-4 py-2 text-center">Number of tokens detokenized</td>
+              {/* <td className="w-40 px-4 py-2 text-center">Number of tokens detokenized</td> */}
               {/* <td className="w-28 px-4 py-2 text-center">Detokenized Value</td> */}
             </tr>
           </thead>
@@ -80,9 +80,9 @@ function TokenisedBond() {
                   }
                   <td className="px-4 py-2"> {li.CouponRate} </td>
                   <td className="px-4 py-2 text-center"> {li.MaturityDate} </td>
-                  <td className="px-4 py-2 text-center"> {li.TotalTokenQty} </td>
+                  <td className="px-4 py-2 text-center"> {li.TokenQtyRemaining} </td>
                   <td className="px-4 py-2"> {li.Ltp} </td>
-                  <td className="px-4 py-2"> {li.askPrice || 0} </td>
+                  <td className="px-4 py-2"> {Math.round(Number(li.Ltp) * Number(li.TokenQtyRemaining))} </td>
                   <td className="px-4 py-2 text-center">
                     <button
                       className="w-16 rounded border border-emerald-600 hover:bg-emerald-600 hover:text-white"
@@ -91,9 +91,9 @@ function TokenisedBond() {
                       View
                     </button>
                   </td>
-                  <td className="px-4 py-2 text-center">
+                  {/* <td className="px-4 py-2 text-center">
                     {li.askPrice || 0}
-                  </td>
+                  </td> */}
                   {/* <td className="px-4 py-2 text-center">
                     {li.bidPrice || 0}
                   </td> */}

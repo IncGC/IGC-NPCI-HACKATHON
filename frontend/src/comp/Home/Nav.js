@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useStore from '../../store';
 
+import { fetchCBDCBalance, getUserDetails } from '../../apis/apis';
+
 import { ReactComponent as UserProfile } from '../../assets/svg/users/profile.svg';
 import { DropDownWrapper } from '../UIComp/DropDown';
 import AddBalance from './Modals/AddBalance';
-import { fetchCBDCBalance, getUserDetails } from '../../apis/apis';
-// import { getUserDetails } from '../../apis/custodianApis';
 
 const routes = {
   investor: [
@@ -19,7 +19,7 @@ const routes = {
       to: "/investor/bond-holdings",
     },
     {
-      key: "Transactions Hitory",
+      key: "Trade book",
       to: "/investor/transactions-hitory",
     },
   ],
@@ -33,7 +33,7 @@ const routes = {
       to: "/custodian/tokenised-bond",
     },
     {
-      key: "Transactions list",
+      key: "Order book",
       to: "/custodian/transactions-hitory",
     },
     {
@@ -51,7 +51,7 @@ const routes = {
       to: "/regulator/tokenised-bond",
     },
     {
-      key: "Transactions list",
+      key: "Order book",
       to: "/regulator/transactions-hitory",
     },
     {
@@ -69,7 +69,7 @@ const routes = {
       to: "/mbe/tokenised-bond",
     },
     {
-      key: "Transactions list",
+      key: "Order book",
       to: "/mbe/transactions-hitory",
     },
     {
@@ -79,20 +79,20 @@ const routes = {
   ],
 }
 
-const Name = {
-  investor: "Investor",
-  custodian: "NSDL(Custodian/Depository)",
-  regulator: "NSE",
-  mbe: "MBE",
-}
+// const Name = {
+//   investor: "Investor",
+//   custodian: "NSDL(Custodian/Depository)",
+//   regulator: "NSE",
+//   mbe: "MBE",
+// }
 
 function Nav() {
   const isLoggedIn = useStore(state => state.isLoggedIn)
   const logOut = useStore(state => state.logOut)
   const email = useStore(state => state.email)
-  const [userDetails, setUserDetails] = useState({})
   const role = useStore(state => state.role)
 
+  const [userDetails, setUserDetails] = useState({})
   const [CBDCBalance, setCBDCBalance] = useState(0)
   const [open, setOpen] = useState(false)
   const [list, setList] = useState([])
@@ -110,9 +110,11 @@ function Nav() {
       setCBDCBalance(payload?.CBDCbalance || 0)
     }
 
-    fetchCBDCBalance({ "MbeId": email }, onSuccessCBDCBalanceFetch)
-    getUserDetails({ "email": email }, onSuccessUserDetails)
-  }, [role])
+    if (email) {
+      fetchCBDCBalance({ "MbeId": email }, onSuccessCBDCBalanceFetch)
+      getUserDetails({ "email": email }, onSuccessUserDetails)
+    }
+  }, [role, email])
 
   const onClk = val => {
     if (val === "Log Out") {
@@ -174,7 +176,7 @@ function Nav() {
               needArrow
               boxCls="profile-dd"
             >
-              <UserProfile /> <span className='text-xs'>{email === 'custodian@gmail.com' ? "Custodian" : userDetails.firstName}</span>
+              <UserProfile /> <span className='text-xs'>{email === 'custodian@gmail.com' ? "Custodian" : email === 'mbe@gmail.com' ? "MBE" : email === 'regulator@gmail.com' ? 'Regulator' : userDetails.firstName}</span>
             </DropDownWrapper>
           </> : <>
             <Link
@@ -197,6 +199,7 @@ function Nav() {
       <AddBalance
         isOpen={open}
         closeModal={updateOpen}
+        setCBDCBalance={setCBDCBalance}
       />
     </>
   )

@@ -15,7 +15,6 @@ import Loader from '../Common/Loader';
 
 function ListOfInvestors() {
   const role = useStore(state => state.role)
-  const token = useStore(state => state.token)
   const { state: tokenDetails } = useLocation()
 
   const [isLoading, setIsLoading] = useState(true)
@@ -40,7 +39,7 @@ function ListOfInvestors() {
       setIsLoading(false)
     }
 
-    getInvestorLists(token, onSuccess)
+    getInvestorLists(onSuccess)
   }, [])
 
   const updateOpen = (state, data) => setOpen({ state, data })
@@ -102,7 +101,7 @@ function ListOfInvestors() {
               }
               <td className="w-32 px-4 py-2 text-center">Bond holdings</td>
               <td className="w-32 px-4 py-2 text-center">Token holdings</td>
-              <td className="w-28 px-4 py-2 text-center">Transactions History</td>
+              <td className="w-28 px-4 py-2 text-center">Transactions List</td>
               <td className="w-24 px-4 py-2 text-center">CBDC Balance</td>
             </tr>
           </thead>
@@ -110,7 +109,7 @@ function ListOfInvestors() {
           <tbody>
             {
               data
-                .filter(li => (li.email.toLowerCase().match(filter) || `${li.firstName} ${li.lastName}`.toLowerCase().match(filter)) && li.email !== 'custodian@gmail.com')
+                .filter(li => (li.email.toLowerCase().match(filter) || `${li.firstName} ${li.lastName}`.toLowerCase().match(filter)) && (li.email !== 'custodian@gmail.com' && li.email !== 'mbe@gmail.com' && li.email !== 'regulator@gmail.com'))
                 .map(li => (
                   <tr
                     key={li._id}

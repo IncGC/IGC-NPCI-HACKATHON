@@ -25,7 +25,7 @@ const authSlice = (set, get) => ({
     cookies.remove("NPCI-role")
     cookies.remove("NPCI-email")
     cookies.remove("NPCI-token")
-    set({ role: "", isLoggedIn: false })
+    set({ role: "", email: "", token: "", isLoggedIn: false })
   },
   setDetails: (keyData, valueData) =>
     set((state) => ({

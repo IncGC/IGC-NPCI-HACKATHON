@@ -14,12 +14,12 @@ function Tokenise({ isOpen, data, closeModal }) {
     "MbeId": data.MbeId,
   })
 
-  const onChange = e => {
-    setDetails(p => ({
-      ...p,
-      [e.target.name]: e.target.value
-    }))
-  }
+  // const onChange = e => {
+  //   setDetails(p => ({
+  //     ...p,
+  //     [e.target.name]: e.target.value
+  //   }))
+  // }
 
   const onSubmit = () => {
     console.log(details)

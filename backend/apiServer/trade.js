@@ -479,6 +479,105 @@ app.post("/tokenize",passport.authenticate("jwt", { session: false }), async (re
   }
 });
 
+
+
+app.post('/tokenizeCC', passport.authenticate("jwt", {session:false}), async(req, res)=>{
+  try {
+      
+      let {
+          Isin,
+          MbeId,
+  
+      } = req.body
+
+      let query = {selector:{Isin,MbeId}};
+
+      let queryString = JSON.stringify(query);
+
+      let bondDetails = await invokeTransaction({
+          metaInfo:{userName:req.user.MbeId, org:'org1MSP'},
+          chainCodeAction:'get',
+          channelName:'common',
+          data:queryString,
+          chainCodeFunctionName:'querystring',
+          chainCodeName:'BondHolding'
+      })
+
+      console.log(bondDetails);
+
+      if (
+          parseFloat(bondDetails[0].LotQty) > 0 &&
+          parseFloat(bondDetails[0].LotQty) >= parseFloat(req.body.LotNumber)
+        ) {
+          let _tokenizedLot =
+            parseFloat(bondDetails[0].TokenizedLot) +
+            parseFloat(req.body.LotNumber);
+          let _newLotQty =
+            parseFloat(bondDetails[0].LotQty) - parseFloat(req.body.LotNumber);
+          let _totalTokenQty =
+            parseFloat(bondDetails[0].TotalTokenQty) +
+            parseFloat(req.body.TotalTokenQty);
+          let _TokenQtyRemaining =
+            parseFloat(bondDetails[0].TokenQtyRemaining) +
+            parseFloat(req.body.TotalTokenQty);
+    
+            console.log(bondDetails[0])
+            console.log( req.body.TotalTokenQty)
+          
+            const bondHoldingData = {
+              Id: generateId(),
+              CreatedOn: getNow(),
+              CreatedBy: MbeId,
+              IsDelete: 'false',
+              IsHidden: 'false',
+              IsTokenized: 'true',
+              IsProcessed: 'false',
+              Isin,
+              MbeId,
+              IssuerName,
+              CouponRate,
+              FaceValue,
+              CreditRating,
+              MaturityDate,
+              PurchasePrice,
+              NumOfToken,
+              CurrentPrice,
+              LotQty:_newLotQty,
+              TokenizedLot:_tokenizedLot,
+              TotalTokenQty:_totalTokenQty,
+              RemainingToken:_TokenQtyRemaining,
+            };
+  console.log(bondHoldingData);
+  var token = await invokeTransaction({
+    metaInfo: { userName:req.user.MbeId, org: "org1MSP" },
+    chainCodeAction: "update",
+    channelName: "common",
+    data: bondHoldingData,
+    chainCodeFunctionName: "update",
+    chainCodeName: "BondHolding",
+  });
+  
+  console.log(token);
+
+}
+res.status(201).json({
+  status: 201,
+  message: "token",
+});
+  }
+  
+  catch (e) {
+      res.json({
+       status:400,
+       message:"Not found"
+     }); 
+   }
+})
+
+
+
+
+
 app.post("/deTokenize", passport.authenticate("jwt", { session: false }),async (req, res) => {
   try {
     let bondDetails = await Bonds.find({
@@ -680,7 +779,7 @@ app.post("/placeBuyOrder",passport.authenticate("jwt", { session: false }), asyn
       let sellorderBook = await SellOrder.findOne({
         Isin: req.body.Isin,
         NumOfToken: req.body.NumOfToken,
-        // IssuerName:req.body.IssuerName,
+        IssuerName:req.body.IssuerName,
         Price: req.body.Price,
         IsProcessed: false,
       });
@@ -771,6 +870,27 @@ app.get("/balance", async(req,res)=>{
       let balanceData= await Wallet.findOne({MbeId});
 
       console.log(balanceData);
+      let query = { selector: { MbeId } };
+
+      let queryString = JSON.stringify(query);
+  
+      let dataStr = await invokeTransaction({
+        metaInfo: { userName:MbeId, org: "org1MSP" },
+        chainCodeAction: CHAINCODE_ACTIONS.GET,
+        channelName: CHAINCODE_CHANNEL,
+        data: queryString,
+        chainCodeFunctionName: "querystring",
+        chainCodeName: "CBDCwallet",
+      });
+  
+      res.set("Content-Type", "application/json");
+      // res.status(200).send(dataStr);
+      let data = JSON.parse(dataStr);
+      console.log(dataStr);
+  
+      console.log(data);
+
+
       res.status(200).json({
         status:200,
         message:balanceData

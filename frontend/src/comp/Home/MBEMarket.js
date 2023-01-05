@@ -14,12 +14,13 @@ function MBEMarket() {
 
   useEffect(() => {
     const onSuccess = async res => {
-      const bidPricePromises = res.map(async current => {
-        const innerRes = await fetchBidPrice()
-        const bidPriceRes = innerRes.message
-        var bidPrice = 0
-        var currentTime = 0
-        console.log(innerRes)
+      const innerRes1 = await fetchBidPrice()
+      const innerRes2 = await fetchAskPrice()
+
+      const bidPriceRes = innerRes1.message
+      const final1 = res.map(current => {
+        let bidPrice = 0
+        let currentTime = 0
 
         for (let i = 0; i < bidPriceRes.length; i++) {
           if (current.Isin === bidPriceRes[i].Isin) {
@@ -30,7 +31,7 @@ function MBEMarket() {
             else {
               if (currentTime <= Date.parse(bidPriceRes[i].createdAt))
                 currentTime = Date.parse(bidPriceRes[i].createdAt)
-                bidPrice = bidPriceRes[i].Price
+              bidPrice = bidPriceRes[i].Price
             }
           }
         }
@@ -40,15 +41,11 @@ function MBEMarket() {
           BidPrice: bidPrice
         }
       })
-      
-      const final1 = await Promise.all(bidPricePromises)
 
-      const askPricePromises = final1.map(async current => {
-        const innerRes = await fetchAskPrice()
-        const askPriceRes = innerRes.message
-        var askPrice = 0
-        var currentTime = 0
-        console.log(innerRes)
+      const askPriceRes = innerRes2.message
+      const final2 = final1.map(current => {
+        let askPrice = 0
+        let currentTime = 0
 
         for (let i = 0; i < askPriceRes.length; i++) {
           if (current.Isin === askPriceRes[i].Isin) {
@@ -59,7 +56,7 @@ function MBEMarket() {
             else {
               if (currentTime <= Date.parse(askPriceRes[i].createdAt))
                 currentTime = Date.parse(askPriceRes[i].createdAt)
-                askPrice = askPriceRes[i].Price
+              askPrice = askPriceRes[i].Price
             }
           }
         }
@@ -69,9 +66,6 @@ function MBEMarket() {
           AskPrice: askPrice
         }
       })
-
-
-      const final2 = await Promise.all(askPricePromises)
 
       setMarket(final2)
       setLoading(false)

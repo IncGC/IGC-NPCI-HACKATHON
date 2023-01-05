@@ -18,12 +18,12 @@ function Detokenzise({ isOpen, data, closeModal }) {
     "MbeId": email,
   })
 
-  const onChange = e => {
-    setDetails(p => ({
-      ...p,
-      [e.target.name]: e.target.value
-    }))
-  }
+  // const onChange = e => {
+  //   setDetails(p => ({
+  //     ...p,
+  //     [e.target.name]: e.target.value
+  //   }))
+  // }
 
   const onSubmit = () => {
     console.log(details)
@@ -106,7 +106,7 @@ function Detokenzise({ isOpen, data, closeModal }) {
                 }))
                 setDetails(p => ({
                   ...p,
-                  "tokenQty": e.target.value * 200000
+                  "tokenQty": (e.target.value * 200000).toString()
                 }))
               }}
               className="no-number-arrows"

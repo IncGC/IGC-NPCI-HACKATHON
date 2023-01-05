@@ -1,14 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import useStore from '../../store';
 
-import custodianTransaction from '../../constants/custodianTransaction';
-import { fetchAllTransactions, fetchAllUserBuyTransactions, fetchAllUserSellTransactions } from '../../apis/custodianApis';
+import { fetchAllTransactions } from '../../apis/custodianApis';
 import getTypeClr from '../../helper/getTypeClr';
 
-import { ReactComponent as Filter } from '../../assets/svg/common/filter.svg';
+// import { ReactComponent as Filter } from '../../assets/svg/common/filter.svg';
 import { ReactComponent as Print } from '../../assets/svg/files/print.svg';
-import { DropDownWrapper, Menu } from '../UIComp/DropDown';
+// import { DropDownWrapper, Menu } from '../UIComp/DropDown';
 import CertificateAsPdf from '../Home/Modals/CertificateAsPdf';
 import InvestorsList from './Modals/InvestorsList';
 import UserInfoModal from './Modals/UserInfo';
@@ -20,13 +19,13 @@ function TransactionList() {
   const role = useStore(state => state.role)
   const { state: tokenDetails } = useLocation()
 
-  const [authorisation, setAuthorisation] = useState("")
+  // const [authorisation, setAuthorisation] = useState("")
   // const [dateFilter, setDateFilter] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [status, setStatus] = useState("")
-  const [type, setType] = useState("")
-  const [list, setList] = useState("")
+  // const [status, setStatus] = useState("")
   const [open, setOpen] = useState({ state: "", data: {} })
+  // const [type, setType] = useState("")
+  const [list, setList] = useState([])
 
   useEffect(() => {
     const onSuccess1 = res => {
@@ -37,36 +36,36 @@ function TransactionList() {
     fetchAllTransactions(onSuccess1)
   }, [])
 
-  const data = useMemo(() => {
-    let cloned = [...custodianTransaction]
+  // const data = useMemo(() => {
+  //   let cloned = [...list]
 
-    // if (dateFilter) {
-    //   let start = new Date(dateFilter.start).getTime()
-    //   let end = new Date(dateFilter.end).getTime()
-    //   cloned = cloned.filter(l => {
-    //     let currDate = new Date(l.MaturityDate).getTime()
-    //     return currDate >= start && currDate <= end
-    //   })
-    // }
+  //   // if (dateFilter) {
+  //   //   let start = new Date(dateFilter.start).getTime()
+  //   //   let end = new Date(dateFilter.end).getTime()
+  //   //   cloned = cloned.filter(l => {
+  //   //     let currDate = new Date(l.MaturityDate).getTime()
+  //   //     return currDate >= start && currDate <= end
+  //   //   })
+  //   // }
 
-    if (authorisation) {
-      cloned = cloned.filter(l => l.authorisedStaus.match(authorisation))
-    }
+  //   if (authorisation) {
+  //     cloned = cloned.filter(l => l.authorisedStaus.match(authorisation))
+  //   }
 
-    if (status) {
-      cloned = cloned.filter(l => l.status.match(status))
-    }
+  //   if (status) {
+  //     cloned = cloned.filter(l => l.status.match(status))
+  //   }
 
-    if (type) {
-      cloned = cloned.filter(l => l.TransactionsType.match(type))
-    }
+  //   if (type) {
+  //     cloned = cloned.filter(l => l.TransactionsType.match(type))
+  //   }
 
-    return cloned
-  }, [type, status, authorisation])
+  //   return cloned
+  // }, [type, status, authorisation])
 
-  const updateType = val => setType(p => p === val ? "" : val)
-  const updateStatus = val => setStatus(p => p === val ? "" : val)
-  const updateAuthorisation = val => setAuthorisation(p => p === val ? "" : val)
+  // const updateType = val => setType(p => p === val ? "" : val)
+  // const updateStatus = val => setStatus(p => p === val ? "" : val)
+  // const updateAuthorisation = val => setAuthorisation(p => p === val ? "" : val)
 
   const updateOpen = (state, data = {}) => setOpen({ state, data })
   const closeModal = () => setOpen({ state: "", data: {} })
@@ -76,7 +75,7 @@ function TransactionList() {
   return (
     <section className="dfc gap-0 h-[calc(100vh-64px)] overflow-y-hidden">
       <div className='df gap-4 p-4 border-b border-[rgba(0,0,0,.1)] relative'>
-        <Menu
+        {/* <Menu
           label={<Filter className={authorisation || status || type ? "opacity-100" : "opacity-70"} />}
           needArrow
           rootCls="p-0"
@@ -110,7 +109,7 @@ function TransactionList() {
           >
             Authorisation
           </DropDownWrapper>
-        </Menu>
+        </Menu> */}
 
         {/* <FilterByDate setDateFilter={setDateFilter} /> */}
 
@@ -138,7 +137,7 @@ function TransactionList() {
             <span className='mr-auto'></span>
           </> :
             <h1 className='mx-auto text-lg font-medium text-center'>
-              Transactions History
+              Order Book
             </h1>
         }
       </div>
@@ -150,7 +149,7 @@ function TransactionList() {
               {/* <td className="w-32 pl-8 pr-4 py-2">Date</td> */}
               <td className="w-32 px-4 py-2">Transaction Id</td>
               <td className="w-24 px-4 py-2">Type</td>
-              <td className="w-32 px-4 py-2">Investors</td>
+              {/* <td className="w-32 px-4 py-2">Investors</td> */}
               <td className="w-28 px-4 py-2">Status</td>
               <td className="w-24 px-4 py-2">Authorization</td>
               <td className="w-24 px-4 py-2">Amount</td>
@@ -164,25 +163,28 @@ function TransactionList() {
           <tbody>
             {
               list
+                .filter((a, i) => 'Price' in list[i])
                 // .filter((l, i) => tokenDetails ? i < 10 : true)
-                .map((li, i) => (
+                .map(li => (
                   <tr
                     key={li._id}
                     className="text-sm even:bg-slate-50 hover:bg-slate-100 cursor-pointer"
                   >
-                    <td className="pl-8 pr-4 py-2"> {li.OrderId} </td>
-                    <td className="px-4 py-2"> {li.TransactionsType} </td>
+                    <td className="pl-8 pr-4 py-2 break-words"> {li.OrderId || li.BuyOrderId || li.SellOrderId || li._id} </td>
+                    <td className="px-4 py-2">
+                      {li.IsProcessed ? "Trade" : li.TransactionsType}
+                    </td>
                     {/* <td className={`px-4 py-2 font-medium ${getTypeClr(li.TransactionsType)}`}>
                       {li.TransactionsType}
                     </td> */}
-                    <td className="px-4 py-2">
+                    {/* <td className="px-4 py-2">
                       <button
                         className="w-16 rounded border border-emerald-600 hover:bg-emerald-600 hover:text-white"
-                        onClick={() => updateOpen("InvestorsList")}
+                        onClick={() => updateOpen("InvestorsList", li)}
                       >
                         View
                       </button>
-                    </td>
+                    </td> */}
                     <td className={`px-4 py-2 ${getTypeClr(li.status)}`}>
                       {
                         li.IsProcessed ? "Success" : "Pending"
@@ -198,10 +200,10 @@ function TransactionList() {
                       role !== "mbe" &&
                       <td className='px-4 py-2'>
                         {
-                          i % 5 !== 0 &&
+                          li.IsProcessed &&
                           <Print
                             className="mx-auto"
-                            onClick={() => updateOpen("CertificateAsPdf")}
+                            onClick={() => updateOpen("CertificateAsPdf", li)}
                           />
                         }
                       </td>
@@ -217,6 +219,7 @@ function TransactionList() {
         open.state === "CertificateAsPdf" &&
         <CertificateAsPdf
           isOpen
+          data={open.data}
           closeModal={closeModal}
         />
       }
@@ -225,10 +228,11 @@ function TransactionList() {
         open.state === "InvestorsList" &&
         <InvestorsList
           isOpen
-          title={tokenDetails?.IssuerName || "SHRIRAM TRANSPORT"}
+          title={open.data?.Isin || "SHRIRAM TRANSPORT"}
           updateOpen={updateOpen}
           closeModal={closeModal}
           needInvesterName={role !== "mbe"}
+          Isin={open.data?.Isin}
         />
       }
 
@@ -237,7 +241,7 @@ function TransactionList() {
         <UserInfoModal
           isOpen
           data={open.data}
-          closeModal={() => updateOpen("InvestorsList")}
+          closeModal={() => updateOpen("InvestorsList", open.data)}
         />
       }
     </section>
