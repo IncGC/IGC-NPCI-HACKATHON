@@ -495,7 +495,7 @@ app.post('/tokenizeCC', passport.authenticate("jwt", {session:false}), async(req
       let queryString = JSON.stringify(query);
 
       let bondDetails = await invokeTransaction({
-          metaInfo:{userName:req.user.MbeId, org:'org1MSP'},
+          metaInfo:{userName:"muhsin@inclusivegrowthchain.com", org:'org1MSP'},
           chainCodeAction:'get',
           channelName:'common',
           data:queryString,
@@ -537,24 +537,27 @@ app.post('/tokenizeCC', passport.authenticate("jwt", {session:false}), async(req
               IssuerName,
               CouponRate,
               FaceValue,
+              Ltp:'2000',
               CreditRating,
               MaturityDate,
+              LatestBidPrice:'1000',
+              LatestAskPrice:'999',
               PurchasePrice,
               NumOfToken,
               CurrentPrice,
               LotQty:_newLotQty,
-              TokenizedLot:_tokenizedLot,
-              TotalTokenQty:_totalTokenQty,
-              RemainingToken:_TokenQtyRemaining,
+              DetokenizedTokens:_tokenizedLot,
+              DetokenizedValue:_totalTokenQty,
+              // RemainingToken:_TokenQtyRemaining,
             };
-  console.log(bondHoldingData);
+  // console.log(bondHoldingData);
   var token = await invokeTransaction({
-    metaInfo: { userName:req.user.MbeId, org: "org1MSP" },
-    chainCodeAction: "update",
+    metaInfo: { userName:"muhsin@inclusivegrowthchain.com", org: "org1MSP" },
+    chainCodeAction: "create",
     channelName: "common",
     data: bondHoldingData,
-    chainCodeFunctionName: "update",
-    chainCodeName: "BondHolding",
+    chainCodeFunctionName: "create",
+    chainCodeName: "TokenHolding",
   });
   
   console.log(token);
